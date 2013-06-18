@@ -49,17 +49,17 @@ class castleImport
 		//gear
 		foreach($xml->characterInfo->characterTab->items->item as $item) 
 		{
-	
-			$out['items'][(string)$item['slot']]['id']  = (string) $item['id'];
-			$out['items'][(string)$item['slot']]['name']  = (string) $item['name'];
-			$out['items'][(string)$item['slot']]['level']  = (int) $item['level'];
-			$out['items'][(string)$item['slot']]['rarity']  = (int) $item['rarity'];
-			$out['items'][(string)$item['slot']]['icon']  = (int) $item['icon'];
+			$sn = (int)$item['slot'] +1;
+			$out['items'][$sn]['id']  = (string) $item['id'];
+			$out['items'][$sn]['name']  = (string) $item['name'];
+			$out['items'][$sn]['level']  = (int) $item['level'];
+			$out['items'][$sn]['rarity']  = (int) $item['rarity'];
+			$out['items'][$sn]['icon']  = (int) $item['icon'];
 			for($i=0;!empty($item['gem'.$i.'Id']);$i++)
 			{
-				$out['items'][(string)$item['slot']]['gemIds'][$i] = (int) $item['gem'.$i.'Id'];
+				$out['items'][$sn]['gemIds'][$i] = (int) $item['gem'.$i.'Id'];
 			}
-			$out['items'][(string)$item['slot']]['permanentEnchantItemId']  = (int) $item['permanentEnchantItemId'];
+			$out['items'][$sn]['permanentEnchantItemId']  = (int) $item['permanentEnchantItemId'];
 		}
 		//stats
 		//base
