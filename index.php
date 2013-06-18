@@ -11,7 +11,14 @@ foreach($chardata['items'] as $i => $value)
 	$chardata['items'][$i]['stats'] = get_item_stats($chardata['items'][$i]['id']);
 	$chardata['items'][$i]['gems'] = get_item_gems($chardata['items'][$i]['id']);
 }
+
+ob_start();
 print_r($chardata); //to do 
+$debug = ob_get_contents();
+ob_end_clean();
+
+$tpl->assign_vars("DEBUG", "<pre>".$debug."</pre>");
+
 $tpl->set_vars(array(
 			'page_title'		=> 'PvP@Castle Home',
 			'author'			=> 'author',

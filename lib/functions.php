@@ -6,7 +6,7 @@ function get_item_stats($id)
 				`stat_type4`, `stat_value4`, `stat_type5`, `stat_value5`,  
 				`stat_type6`, `stat_value6`, `stat_type7`, `stat_value7`,  
 				`stat_type8`, `stat_value8` 
-			FROM `world`.`item_template` 
+			FROM `item_template` 
 			WHERE `entry` = \''.$id.'\'';
 	$result = mysql_query($query);
 	$data = mysql_fetch_array($result);
@@ -28,7 +28,7 @@ function get_item_stats($id)
 function get_item_gems($id)
 {
 	$query = 'SELECT `socketColor_1`, `socketColor_2`, `socketColor_3`, `socketBonus`
-			FROM `world`.`item_template` 
+			FROM `item_template` 
 			WHERE `entry` = \''.$id.'\'';
 	$result = mysql_query($query);
 	$data = mysql_fetch_array($result);

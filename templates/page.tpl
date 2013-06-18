@@ -68,6 +68,8 @@
         <!-- Overview
         ================================================== -->
 	{include file="{$TEMPLATEFILE}"}
+
+	{$DEBUG}
 		</div>
 	</div>
 </div>

@@ -88,6 +88,10 @@ $_faction_color = array(
 	1	=> "#CC0000"
 );
 
+##########################
+# Items
+##########################
+
 # socket->id to Color->name
 # http://archive.trinitycore.info/Item_template_tc2#socketColor
 $_socket_Color = array(
@@ -141,7 +145,7 @@ $_stat_typ = array(
 	43 => 'ITEM_MOD_MANA_REGENERATION',
 	44 => 'ITEM_MOD_ARMOR_PENETRATION_RATING',
 	45 => 'ITEM_MOD_SPELL_POWER',
-	46 => 'ITEM_MOD_ HEALTH_REGEN',
+	46 => 'ITEM_MOD_HEALTH_REGEN',
 	47 => 'ITEM_MOD_SPELL_PENETRATION',
 	48 => 'ITEM_MOD_BLOCK_VALUE'
 );
