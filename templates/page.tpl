@@ -6,8 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="{$DESCRIPTION}">
     <meta name="author" content="{$AUTHOR}">
-	<link rel="shortcut icon" href="{$ICON}" type="image/png" />
-	<link rel="icon" href="{$ICON}" type="image/png" />
+    <link rel="shortcut icon" href="{$ICON}" type="image/png" />
+    <link rel="icon" href="{$ICON}" type="image/png" />
     <!-- Le styles -->
     {$CSS_FILES}    
     <link href="{$BOOTSRAPPATH}css/bootstrap.css" rel="stylesheet">
@@ -15,10 +15,7 @@
     <link href="{$BOOTSRAPPATH}css/bootstrap.css" rel="stylesheet">
     <link href="{$BOOTSRAPPATH}css/bootstrap-responsive.css" rel="stylesheet">
     <link href="{$BOOTSRAPPATH}css/docs.css" rel="stylesheet">
-	
-    <!-- special place for chart.js  -->
-    <script src="./js/Chart.js"></script>
-	
+    <link href="css/base.css" rel="stylesheet">	
 	<style>
       body {
         padding-top: 40px; /* 60px to make the container go all the way to the bottom of the topbar */
@@ -62,16 +59,16 @@
 
 <div class="container">
     <div class="row">
-      <div class="span12">
+        <div class="span12">
 	
 
-        <!-- Overview
-        ================================================== -->
-	{include file="{$TEMPLATEFILE}"}
+            <!-- Overview
+            ================================================== -->
+            {include file="{$TEMPLATEFILE}"}
 
-	{$DEBUG}
-		</div>
-	</div>
+            {include file="debug.tpl"}}
+        </div>
+    </div>
 </div>
 
     <!-- Footer

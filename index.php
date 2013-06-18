@@ -12,21 +12,20 @@ foreach($chardata['items'] as $i => $value)
 	$chardata['items'][$i] = add_item_gems($chardata['items'][$i]);
 }
 
-ob_start();
-print_r($chardata); //to do 
-$debug = ob_get_contents();
-ob_end_clean();
+$tpl->assign_vars("char", $chardata);
 
-$tpl->assign_vars("DEBUG", "<pre>".$debug."</pre>");
+// export lookup-tables
+$tpl->assign_vars("_race_name", $_race_name);
+$tpl->assign_vars("_class_name", $_class_name);
 
 $tpl->set_vars(array(
-			'page_title'		=> 'PvP@Castle Home',
-			'author'			=> 'author',
+			'page_title'		=> 'Envy Gear-Check',
+			'author'		=> 'author',
 			'nav_active'		=> 'Home',
 			'sub_nav_active'	=> 'Home',
-			'subHeadBig'		=> 'PvP@Castle Home',
-			'subHeadSmall'		=> 'PvP@Castle Home',
-			'description'		=> 'PvP@Castle',
+			'subHeadBig'		=> 'Envy Gear-Check',
+			'subHeadSmall'		=> 'WoW-Castle PvE 3.3.5',
+			'description'		=> 'Armory-basierter Gearcheck für WoW-Castle.de (blizzlike, pve, 3.3.5)',
 			'template_file'		=> 'index.tpl',
 			));
 $tpl->display();
