@@ -102,28 +102,28 @@ $_socket_Color = array(
 );
 
 # http://images3.wikia.nocookie.net/__cb20090410062624/wowwiki/images/a/ae/InventorySlots.jpg
-$_gearSlot_name => array(
-			1 => 'head', 
-			2 => 'neck'
-			3 => 'shoulder',
-			15 => 'back',
-			5 => 'chest',
-			4 => 'shirt',
-			19 => 'tabard',
-			9 => 'wrist',
+$_gearSlot_name = array(
+	1 => 'head', 
+	2 => 'neck',
+	3 => 'shoulder',
+	15 => 'back',
+	5 => 'chest',
+	4 => 'shirt',
+	19 => 'tabard',
+	9 => 'wrist',
+	
+	10 => 'hands',
+	6 => 'waist', //belt
+	7 => 'legs',
+	8 => 'feet',
+	11 => 'finger1',
+	12 => 'finger2',
+	13 => 'trinket1',
+	14 => 'trinket2',
 			
-			10 => 'hands',
-			6 => 'waist', //belt
-			7 => 'legs',
-			8 => 'feet',
-			11 => 'finger1',
-			12 => 'finger2',
-			13 => 'trinket1',
-			14 => 'trinket2',
-			
-			16 => 'mainHand',
-			17 => 'offHand',
-			18 => 'relik'
+	16 => 'mainHand',
+	17 => 'offHand',
+	18 => 'relik'
 );
 
 # stat->id to stat->typ
