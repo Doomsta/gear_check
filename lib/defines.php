@@ -87,9 +87,10 @@ $_faction_color = array(
 	0	=> "#0000FF",
 	1	=> "#CC0000"
 );
-# stat->id to stat->sring
+
+# stat->id to stat->typ
 # http://collab.kpsn.org/display/tc/Item+template+tc2#Itemtemplatetc2-stat_type
-$stat_type = array(
+$_stat_typ = array(
 	0 => 'ITEM_MOD_MANA',
 	1 => 'ITEM_MOD_HEALTH', 
 	3 => 'ITEM_MOD_AGILITY',

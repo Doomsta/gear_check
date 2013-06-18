@@ -1,7 +1,17 @@
 <?php
-include ('common.php');
+$rootpath = './';
+include ($rootpath.'common.php');
+require_once($rootpath.'lib/castleImport.class.php');
 
-
+$castle = new castleImport();
+$cn = 'Doomsta';
+$chardata = $castle->getChar($cn);
+foreach($chardata['items'] as $i => $value)
+{
+	$chardata['items'][$i]['stats'] = get_item_stats($chardata['items'][$i]['id']);
+	$chardata['items'][$i]['gems'] = get_item_gems($chardata['items'][$i]['id']);
+}
+print_r($chardata); //to do 
 $tpl->set_vars(array(
 			'page_title'		=> 'PvP@Castle Home',
 			'author'			=> 'author',
