@@ -88,6 +88,15 @@ $_faction_color = array(
 	1	=> "#CC0000"
 );
 
+# socket->id to Color->name
+# http://archive.trinitycore.info/Item_template_tc2#socketColor
+$_socket_Color array(
+	1 => 'Meta',
+	2 => 'Red',
+ 	4 => 'Yellow',
+	8 => 'Blue'
+);
+
 # stat->id to stat->typ
 # http://collab.kpsn.org/display/tc/Item+template+tc2#Itemtemplatetc2-stat_type
 $_stat_typ = array(
@@ -97,8 +106,8 @@ $_stat_typ = array(
 	4 => 'ITEM_MOD_STRENGTH',
 	5 => 'ITEM_MOD_INTELLECT',
 	6 => 'ITEM_MOD_SPIRIT',
-	7 =>'ITEM_MOD_STAMINA',
-	12 =>'ITEM_MOD_DEFENSE_SKILL_RATING',
+	7 => 'ITEM_MOD_STAMINA',
+	12 => 'ITEM_MOD_DEFENSE_SKILL_RATING',
 	13 => 'ITEM_MOD_DODGE_RATING',
 	14 => 'ITEM_MOD_PARRY_RATING',
 	15 => 'ITEM_MOD_BLOCK_RATING',
