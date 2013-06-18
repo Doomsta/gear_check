@@ -90,7 +90,7 @@ $_faction_color = array(
 
 # socket->id to Color->name
 # http://archive.trinitycore.info/Item_template_tc2#socketColor
-$_socket_Color array(
+$_socket_Color = array(
 	1 => 'Meta',
 	2 => 'Red',
  	4 => 'Yellow',
