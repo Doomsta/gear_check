@@ -57,7 +57,7 @@ class castleImport
 			$out['items'][$sn]['icon']  = (int) $item['icon'];
 			for($i=0;!empty($item['gem'.$i.'Id']);$i++)
 			{
-				$out['items'][$sn]['gemIds'][$i] = (int) $item['gem'.$i.'Id'];
+				$out['items'][$sn]['gems'][$i]['id'] = (int) $item['gem'.$i.'Id'];
 			}
 			$out['items'][$sn]['permanentEnchantItemId']  = (int) $item['permanentEnchantItemId'];
 		}

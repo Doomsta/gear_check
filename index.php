@@ -9,7 +9,7 @@ $chardata = $castle->getChar($cn);
 foreach($chardata['items'] as $i => $value)
 {
 	$chardata['items'][$i]['stats'] = get_item_stats($chardata['items'][$i]['id']);
-	$chardata['items'][$i]['gems'] = get_item_gems($chardata['items'][$i]['id']);
+	$chardata['items'][$i]['gems'] = add_item_gems($chardata['items'][$i]);
 }
 
 ob_start();
