@@ -66,7 +66,7 @@
             ================================================== -->
             {include file="{$TEMPLATEFILE}"}
 
-            {include file="debug.tpl"}}
+            {include file="debug.tpl"}
         </div>
     </div>
 </div>

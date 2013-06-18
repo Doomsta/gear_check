@@ -26,7 +26,7 @@ $tpl->set_vars(array(
 			'subHeadBig'		=> 'Envy Gear-Check',
 			'subHeadSmall'		=> 'WoW-Castle PvE 3.3.5',
 			'description'		=> 'Armory-basierter Gearcheck für WoW-Castle.de (blizzlike, pve, 3.3.5)',
-			'template_file'		=> 'index.tpl',
+			'template_file'		=> 'character.tpl',
 			));
 $tpl->display();
 ?>
