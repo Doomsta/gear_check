@@ -11,8 +11,8 @@ $_race_name = array(
 	2	=> "Ork",
 	3	=> "Zwerg",
 	4	=> "Nachtelf",
-	5	=> "Untote",
-	6	=> "Taure",
+	5	=> "Untoter",
+	6	=> "Tauren",
 	7	=> "Gnom",
 	8	=> "Troll",
 	9	=> "Goblin",	# 4.x
@@ -45,16 +45,16 @@ unset($_race_faction[22]);
 # class->id to class->name
 # according to ChrClasses.dbc
 $_class_name = array(
-	1	=> "Warrior",
+	1	=> "Krieger",
 	2	=> "Paladin",
-	3	=> "Hunter",
-	4	=> "Rogue",
-	5	=> "Priest",
-	6	=> "Death Knight",
-	7	=> "Shaman",
-	8	=> "Mage",
-	9	=> "Warlock",
-	11	=> "Druid"
+	3	=> "J&auml;ger",
+	4	=> "Schurken",
+	5	=> "Priester",
+	6	=> "Todesritter",
+	7	=> "Schamane",
+	8	=> "Magier",
+	9	=> "Hexenmeister",
+	11	=> "Druide"
 );
 	
 # class->id to class->color
@@ -123,7 +123,7 @@ $_gearSlot_name = array(
 			
 	16 => 'mainHand',
 	17 => 'offHand',
-	18 => 'relik'
+	18 => 'relic'
 );
 
 # stat->id to stat->typ
