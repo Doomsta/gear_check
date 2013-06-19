@@ -83,10 +83,11 @@ class castleImport
 		$out['stats']['melee']['attackPower'] = (string) $xml->characterInfo->characterTab->melee->power['effective'];
 		$out['stats']['melee']['hasteRating'] = (string) $xml->characterInfo->characterTab->spell->hasteRating['hasteRating'];
 		$out['stats']['melee']['crit'] = (string) $xml->characterInfo->characterTab->melee->critChance['percent'];
-		$out['stats']['melee']['hitRating'] = (string) $xml->characterInfo->characterTab->melee->hitRating['increasedHitRating'];
+		$out['stats']['melee']['hitRating'] = (string) $xml->characterInfo->characterTab->melee->hitRating['value'];
 		$out['stats']['melee']['hitPercent'] = (string) $xml->characterInfo->characterTab->melee->hitRating['increasedHitPercent'];
+		$out['stats']['melee']['expertiseRating'] = (string) $xml->characterInfo->characterTab->melee->expertise['rating'];
 		$out['stats']['melee']['expertise'] = (string) $xml->characterInfo->characterTab->melee->expertise['value'];
-		$out['stats']['melee']['arpPercent'] = (string) $xml->characterInfo->characterTab->melee->hitRating['reducedArmorRating']; 
+		$out['stats']['melee']['arpRating'] = (string) $xml->characterInfo->characterTab->melee->hitRating['reducedArmorRating']; 
 		$out['stats']['melee']['arpPercent'] = (string) $xml->characterInfo->characterTab->melee->hitRating['reducedArmorPercent']; 
 		//ranged
 		$out['stats']['ranged']['dmgMin'] = (string) $xml->characterInfo->characterTab->ranged->damage['min'];
@@ -117,9 +118,114 @@ class castleImport
 		$out['stats']['def']['resilienceRating'] = (string) $xml->characterInfo->characterTab->defenses->resilience['value'];
 		$out['stats']['def']['resilienceHitPercent'] = (string) $xml->characterInfo->characterTab->defenses->resilience['hitPercent'];
 		$out['stats']['def']['resilienceDamagePercent'] = (string) $xml->characterInfo->characterTab->defenses->resilience['damagePercent'];
-		return ($out);
+		return $out;
 	}
 	
+	function HandleArmoryQuirks($xml) {
+		// Armory has several issues currently:
+		// - Armor Penetration is missing (WIP)
+		// - Expertise is missing (WIP)
+		// - Offhand Damage Min/Max/Dps/Speed is missing (TODO)
+		// Let's calculate them here
+
+		$expertise = 0;
+		$armorpen = 0;
+		$gems = array();
+
+		// items
+		foreach ($xml['items'] as $item)
+		{
+			if (isset($item['stats']['ITEM_MOD_ARMOR_PENETRATION_RATING']))
+				$armorpen += $item['stats']['ITEM_MOD_ARMOR_PENETRATION_RATING'];
+			if (isset($item['stats']['ITEM_MOD_EXPERTISE_RATING']))
+				$expertise += $item['stats']['ITEM_MOD_EXPERTISE_RATING'];
+
+			// count gems
+			foreach ($item['gems'] as $gem)
+			{
+				if (!isset($gem['id']))
+					continue;
+				elseif (isset($gems[$gem['id']]))
+					$gems[$gem['id']]++;
+				else
+					$gems[$gem['id']] = 1;
+			}
+
+			// socket bonus (TODO)
+		}
+
+		// gems
+		foreach ($gems as $id => $count)
+		{
+			// needs to be reworked to use dbc data...somehow (GemProperties.dbc)
+			switch ($id) {
+				case 40117:
+					$armorpen += $count * 20;
+					break;
+				case 42153:
+					$armorpen += $count * 34;
+					break;
+				case 40140:
+					$armorpen += $count * 10;
+					break;
+				// TODO: add more gems (temporary)
+				default: // all other gems, non relevant...
+					break;
+			}
+		}
+
+		// racial bonuses
+		$expertiseBonus = array();
+
+		// determine weapon types
+		for ($i = 16; $i < 17; $i++)
+		{
+			if (!isset($xml['items'][$i]))
+				continue;
+	
+			$query = "SELECT subclass FROM item_template WHERE entry = ".$xml['items'][$i]['id']."";
+			$result = mysql_query($query);
+			$row = mysql_fetch_assoc($result);
+
+			$subclass = intval($row['subclass']);
+
+			switch ($xml['raceId'])
+			{
+				case 1:
+				# - Humans get +3 expertise with One or Two-Handed Swords and Maces.
+					if (in_array($subclass, array(7, 8, 4, 5)))
+						$expertiseBonus[$i] = 3;
+					break;
+				case 2:
+				# - Orcs get +5 expertise with One and Two-Handed Axes, and Fist Weapons.
+					if (in_array($subclass, array(0, 1, 13)))
+						$expertiseBonus[$i] = 5;
+					break; 
+				case 3:
+				#- Dwarves get +5 expertise with One and Two-Handed Maces.
+					if (in_array($subclass, array(4, 5)))
+						$expertiseBonus[$i] = 5;
+					break;
+			}
+		}		
+
+		// export back to xml
+		$xml['stats']['melee']['expertiseRating'] = $expertise;
+		$xml['stats']['melee']['expertise'] = $expertise /  30.7547607422;
+		$xml['stats']['melee']['expertiseMainHand'] = $xml['stats']['melee']['expertise'];
+		if (isset($expertiseBonus[16])) // mh bonus
+			$xml['stats']['melee']['expertiseMainHand'] += $expertiseBonus[16];
+		$xml['stats']['melee']['expertiseOffHand'] = $xml['stats']['melee']['expertise'] + $expertiseOffHandBonus;
+		if (isset($expertiseBonus[17])) // oh bonus
+			$xml['stats']['melee']['expertiseOffHand'] += $expertiseBonus[17];
+		$xml['stats']['melee']['arpRating'] = $armorpen;
+		$xml['stats']['melee']['arpPercent'] = $armorpen / 13.99;
+		
+		return $xml;
+
+	}
+
+
 	//############## ARENA/PvP #######################
 	public function getArenaTeams($teamSize = 2, $limit = 20)
 	{

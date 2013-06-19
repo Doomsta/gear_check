@@ -11,6 +11,7 @@ foreach($chardata['items'] as $i => $value)
 	$chardata['items'][$i]['stats'] = get_item_stats($chardata['items'][$i]['id']);
 	$chardata['items'][$i] = add_item_gems($chardata['items'][$i]);
 }
+$chardata = $castle->HandleArmoryQuirks($chardata);
 
 $tpl->assign_vars("char", $chardata);
 
