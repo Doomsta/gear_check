@@ -9,7 +9,7 @@ class castleImport
 		$xml = $this->getXML($this->armoryUrl.'character-sheet.xml?r=WoW-Castle+PvE&cn='.$name);
 		if($xml->characterInfo->character['name'] == false)
 			return false;
-//print_r($xml);
+
 		$out['name'] = (string) $xml->characterInfo->character['name'];
 		$out['prefix'] = (string) $xml->characterInfo->character['prefix'];
 		$out['suffix'] = (string) $xml->characterInfo->character['suffix'];
@@ -61,6 +61,8 @@ class castleImport
 				$out['items'][$sn]['gems'][$i]['id'] = (int) $item['gem'.$i.'Id'];
 			}
 			$out['items'][$sn]['permanentEnchantItemId']  = (int) $item['permanentEnchantItemId'];
+			if (isset($item['permanentEnchantSpellName']))
+				$out['items'][$sn]['permanentEnchantSpellName'] = (string) $item['permanentEnchantSpellName'];
 		}
 		//stats
 		//base
@@ -126,32 +128,37 @@ class castleImport
 		$out['stats']['def']['resilienceDamagePercent'] = (string) $xml->characterInfo->characterTab->defenses->resilience['damagePercent'];
 		return $out;
 	}
-	
+
 	function HandleArmoryQuirks($xml) {
 		// Armory has several issues currently:
 		// - Armor Penetration is missing (WIP)
 		// - Expertise is missing (WIP)
 		// - Hit Percentage is inaccurate (FIXED)
 		// - Melee Haste Percentage is missing (TODO)
-		// - Spell Penetration is missing (TODO)
+		// - Spell Penetration is missing (WIP)
 		// - Defense Rounding is slightly off (TODO, Note: has Diminishing Return!)
+		// - Some Items are missing Enchantment Ids but they show names, description and icon.... (FIXED)
+		// - Some Titles are shown as prefix instead of suffix... (FIXED)
 		// - Offhand Damage Min/Max/Dps/Speed is missing (TODO)
 		// Let's calculate them here!
 
 		$expertise = 0;
 		$armorpen = 0;
+		$spellpen = 0;
 		$gems = array();
 
 		// items
-		foreach ($xml['items'] as $item)
+		foreach ($xml['items'] as $slot => $item)
 		{
 			if (isset($item['stats']['ITEM_MOD_ARMOR_PENETRATION_RATING']))
 				$armorpen += $item['stats']['ITEM_MOD_ARMOR_PENETRATION_RATING'];
 			if (isset($item['stats']['ITEM_MOD_EXPERTISE_RATING']))
 				$expertise += $item['stats']['ITEM_MOD_EXPERTISE_RATING'];
+			if (isset($item['stats']['ITEM_MOD_SPELL_PENETRATION']))
+				$spellpen += $item['stats']['ITEM_MOD_SPELL_PENETRATION'];
 
 			// count gems
-			foreach ($item['gems'] as $gem)
+			foreach ($item['gems'] as $gemslot => $gem)
 			{
 				if (!isset($gem['id']))
 					continue;
@@ -159,6 +166,10 @@ class castleImport
 					$gems[$gem['id']]++;
 				else
 					$gems[$gem['id']] = 1;
+
+				// fix missing socket color for prismatic gems
+				if (!isset($gem['color']))
+					$xml['items'][$slot]['gems'][$gemslot]['color'] = 1;
 			}
 
 			// socket bonus (TODO)
@@ -214,12 +225,70 @@ class castleImport
 						$expertiseBonus[$i] = 5;
 					break; 
 				case 3:
-				#- Dwarves get +5 expertise with One and Two-Handed Maces.
+				# - Dwarves get +5 expertise with One and Two-Handed Maces.
 					if (in_array($subclass, array(4, 5)))
 						$expertiseBonus[$i] = 5;
 					break;
 			}
-		}		
+		}
+
+		// some enchants come without an item like every crafting bonus, so translate to spellid
+		$_enchant_name_to_spell = array();
+		// Tailoring
+		$_enchant_name_to_spell["Sanctified Spellthread"] = 56039;
+		$_enchant_name_to_spell["Master's Spellthread"] = 56034;
+		$_enchant_name_to_spell["Lightweave Embroidery"] = 55642;
+		$_enchant_name_to_spell["Darkglow Embroidery"] = 55769;
+		$_enchant_name_to_spell["Swordguard Embroidery"] = 55777;
+		// Engineering
+		$_enchant_name_to_spell["Hyperspeed Accelerators"] = 54999;
+		$_enchant_name_to_spell["Hand-Mounted Pyro Rocket"] = 54998;
+		$_enchant_name_to_spell["Frag Belt"] = 54793;
+		$_enchant_name_to_spell["Nitro Boosts"] = 55016;
+		$_enchant_name_to_spell["Reticulated Armor Webbing"] = 63770;
+		$_enchant_name_to_spell["Flexweave Underlay"] = 55002;
+		// Leatherworking
+		$_enchant_name_to_spell["Nerubian Leg Reinforcements"] = 60584;
+		$_enchant_name_to_spell["Jormungar Leg Reinforcements"] = 60583;
+		$_enchant_name_to_spell["Fur Lining - Attack Power"] = 57683;
+		$_enchant_name_to_spell["Fur Lining - Stamina"] = 57690;
+		$_enchant_name_to_spell["Fur Lining - Spell Power"] = 57691;
+		$_enchant_name_to_spell["Fur Lining - Fire Resist"] = 57692;
+		$_enchant_name_to_spell["Fur Lining - Frost Resist"] = 57694;
+		$_enchant_name_to_spell["Fur Lining - Shadow Resist"] = 57696;
+		$_enchant_name_to_spell["Fur Lining - Nature Resist"] = 57699;
+		$_enchant_name_to_spell["Fur Lining - Arcane Resist"] = 57701;
+		// Inscription
+		$_enchant_name_to_spell["Master's Inscription of the Axe"] = 61117;
+		$_enchant_name_to_spell["Master's Inscription of the Crag"] = 61118;
+		$_enchant_name_to_spell["Master's Inscription of the Pinnacle"] = 61119;
+		$_enchant_name_to_spell["Master's Inscription of the Storm"] = 61120;
+		// Enchanting
+		$_enchant_name_to_spell["Enchant Ring - Greater Spellpower"] = 44636;
+		$_enchant_name_to_spell["Enchant Ring - Assault"] = 44645;
+		$_enchant_name_to_spell["Enchant Ring - Stamina"] = 59636;
+		// Runeforging
+		$_enchant_name_to_spell["Rune of Razorice"] = 53343;
+		$_enchant_name_to_spell["Rune of Cinderglacier"] = 53341;
+		$_enchant_name_to_spell["Rune of the Fallen Crusader"] = 53344;
+		$_enchant_name_to_spell["Rune of the Stoneskin Gargoyle"] = 62158;
+
+		foreach ($xml['items'] as $slot => $item)
+		{
+
+			if (!isset($item['permanentEnchantItemId']))
+				continue;
+			if ($item['permanentEnchantItemId'] != 0 || !isset($item['permanentEnchantSpellName']))
+				continue;
+			$xml['items'][$slot]['permanentEnchantSpellId'] = $_enchant_name_to_spell[$item['permanentEnchantSpellName']];
+		}
+
+		// wrong title position
+		if ($xml['prefix'] == "der Unsterbliche")
+		{
+			$xml['suffix'] = $xml['prefix'];
+			$xml['prefix'] = "";
+		}
 
 		// export back to xml
 		$xml['stats']['melee']['expertiseRating'] = $expertise;
@@ -233,6 +302,8 @@ class castleImport
 
 		$xml['stats']['melee']['arpRating'] = $armorpen;
 		$xml['stats']['melee']['arpPercent'] = $armorpen / 13.99;
+
+		$xml['stats']['caster']['spellPen'] = $spellpen;
 
 		$xml['stats']['melee']['hitPercent'] = $xml['stats']['melee']['hitRating'] /  32.775;
 		$xml['stats']['caster']['spellHitPercent'] = $xml['stats']['caster']['spellHitRating'] / 26.231818182;
