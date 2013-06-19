@@ -12,7 +12,7 @@ class castleImport
 
 		$out['name'] = (string) $xml->characterInfo->character['name'];
 		$out['prefix'] = (string) $xml->characterInfo->character['prefix'];
-		$out['suffix'] = (string) $xml->characterINfo->character['suffix'];
+		$out['suffix'] = (string) $xml->characterInfo->character['suffix'];
 		$out['classId'] = (int) $xml->characterInfo->character['classId'];
 		$out['raceId'] = (int) $xml->characterInfo->character['raceId'];
 		$out['guildName'] = (string) $xml->characterInfo->character['guildName'];
