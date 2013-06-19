@@ -2,3 +2,15 @@ span.name {
 	font-size: 12pt;
 	font-weight: bold;
 }
+
+img.q1 { border: 3px solid #cccccc; }
+img.q2 { border: 3px solid #26c426; }
+img.q3 { border: 3px solid #2d2de1; }
+img.q4 { border: 3px solid #8c02cd; }
+img.q5 { border: 3px solid #f0940a; }
+img.q7 { border: 3px solid #ccb896; }
+
+img.socket1 { border: 2px solid #cccccc; }
+img.socket2 { border: 2px solid red; }
+img.socket4 { border: 2px solid yellow; }
+img.socket8 { bordeR: 2px solid blue; }
