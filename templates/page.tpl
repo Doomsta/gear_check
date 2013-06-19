@@ -92,6 +92,7 @@
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="{$BOOTSRAPPATH}js/jquery.js"></script>
     <script src="{$BOOTSRAPPATH}js/bootstrap.js"></script>
+    <script type="text/javascript" src="http://cdn.openwow.com/api/tooltip.js"></script>
     {$JS_FILES}
     {$ENDSCRIPT}
   </body>
