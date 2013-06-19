@@ -189,6 +189,13 @@ class castleImport
 				case 40140:
 					$armorpen += $count * 10;
 					break;
+				case 40122:
+					$spellpen += $count * 25;
+					break;
+				case 40182:
+				case 40135:
+					$spellpen += $count * 13;
+					break;
 				// TODO: add more gems (temporary)
 				default: // all other gems, non relevant...
 					break;
