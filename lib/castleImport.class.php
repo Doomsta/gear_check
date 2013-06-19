@@ -178,7 +178,7 @@ class castleImport
 		$expertiseBonus = array();
 
 		// determine weapon types
-		for ($i = 16; $i < 17; $i++)
+		for ($i = 16; $i <= 17; $i++)
 		{
 			if (!isset($xml['items'][$i]))
 				continue;
