@@ -125,6 +125,7 @@ class castleImport
 		// Armory has several issues currently:
 		// - Armor Penetration is missing (WIP)
 		// - Expertise is missing (WIP)
+		// - Hit Percentage is inaccurate (FIXED)
 		// - Offhand Damage Min/Max/Dps/Speed is missing (TODO)
 		// Let's calculate them here
 
@@ -218,8 +219,12 @@ class castleImport
 		$xml['stats']['melee']['expertiseOffHand'] = $xml['stats']['melee']['expertise'];
 		if (isset($expertiseBonus[17])) // oh bonus
 			$xml['stats']['melee']['expertiseOffHand'] += $expertiseBonus[17];
+
 		$xml['stats']['melee']['arpRating'] = $armorpen;
 		$xml['stats']['melee']['arpPercent'] = $armorpen / 13.99;
+
+		$xml['stats']['melee']['hitPercent'] = $xml['stats']['melee']['hitRating'] /  32.775;
+		$xml['stats']['caster']['spellHitPercent'] = $xml['stats']['caster']['spellHitRating'] / 26.231818182;
 		
 		return $xml;
 
