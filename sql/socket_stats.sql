@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Erstellungszeit: 20. Jun 2013 um 01:31
+-- Erstellungszeit: 20. Jun 2013 um 01:54
 -- Server Version: 5.5.27
 -- PHP-Version: 5.4.7
 
@@ -81,7 +81,24 @@ INSERT INTO `socket_stats` (`id`, `name`, `color`, `stat_type1`, `stat_value1`, 
 (40160, 'Stalwart Ametrine', 3, 13, 10, 12, 10),
 (40159, 'Stark Ametrine', 3, 38, 20, 36, 10),
 (40153, 'Veiled Ametrine', 3, 45, 12, 31, 10),
-(40156, 'Wicked Ametrine', 3, 38, 20, 32, 10);
+(40156, 'Wicked Ametrine', 3, 38, 20, 32, 10),
+(42142, 'Bold Dragon''s Eye', 2, 4, 34, 0, 0),
+(36766, 'Bright Dragon''s Eye', 4, 5, 34, 0, 0),
+(42143, 'Delicate Dragon''s Eye', 2, 3, 34, 0, 0),
+(42152, 'Flashing Dragon''s Eye', 2, 14, 34, 0, 0),
+(42153, 'Fractured Dragon''s Eye', 2, 44, 34, 0, 0),
+(42146, 'Lustrous Dragon''s Eye', 8, 43, 17, 0, 0),
+(42158, 'Mystic Dragon''s Eye', 4, 35, 34, 0, 0),
+(42154, 'Precise Dragon''s Eye', 2, 37, 34, 0, 0),
+(42150, 'Quick Dragon''s Eye', 4, 36, 34, 0, 0),
+(42156, 'Rigid Dragon''s Eye', 4, 31, 34, 0, 0),
+(42144, 'Runed Dragon''s Eye', 2, 45, 39, 0, 0),
+(42149, 'Smooth Dragon''s Eye', 4, 32, 34, 0, 0),
+(36767, 'Solid Dragon''s Eye', 8, 7, 51, 0, 0),
+(42145, 'Sparkling Dragon''s Eye', 8, 6, 34, 0, 0),
+(42155, 'Stormy Dragon''s Eye', 8, 47, 43, 0, 0),
+(42151, 'Subtle Dragon''s Eye', 2, 13, 34, 0, 0),
+(42157, 'Thick Dragon''s Eye', 4, 12, 34, 0, 0);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
