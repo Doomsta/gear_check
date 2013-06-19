@@ -211,11 +211,11 @@ class castleImport
 
 		// export back to xml
 		$xml['stats']['melee']['expertiseRating'] = $expertise;
-		$xml['stats']['melee']['expertise'] = $expertise /  30.7547607422;
+		$xml['stats']['melee']['expertise'] = $expertise / 8.230769231;
 		$xml['stats']['melee']['expertiseMainHand'] = $xml['stats']['melee']['expertise'];
 		if (isset($expertiseBonus[16])) // mh bonus
 			$xml['stats']['melee']['expertiseMainHand'] += $expertiseBonus[16];
-		$xml['stats']['melee']['expertiseOffHand'] = $xml['stats']['melee']['expertise'] + $expertiseOffHandBonus;
+		$xml['stats']['melee']['expertiseOffHand'] = $xml['stats']['melee']['expertise'];
 		if (isset($expertiseBonus[17])) // oh bonus
 			$xml['stats']['melee']['expertiseOffHand'] += $expertiseBonus[17];
 		$xml['stats']['melee']['arpRating'] = $armorpen;
