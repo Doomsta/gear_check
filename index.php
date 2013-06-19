@@ -5,6 +5,8 @@ require_once($rootpath.'lib/castleImport.class.php');
 
 $castle = new castleImport();
 $cn = 'Doomsta';
+if (isset($_GET['cn']))
+	$cn = $_GET['cn'];
 $chardata = $castle->getChar($cn);
 foreach($chardata['items'] as $i => $value)
 {

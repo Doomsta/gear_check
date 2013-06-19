@@ -9,7 +9,7 @@ class castleImport
 		$xml = $this->getXML($this->armoryUrl.'character-sheet.xml?r=WoW-Castle+PvE&cn='.$name);
 		if($xml->characterInfo->character['name'] == false)
 			return false;
-
+//print_r($xml);
 		$out['name'] = (string) $xml->characterInfo->character['name'];
 		$out['prefix'] = (string) $xml->characterInfo->character['prefix'];
 		$out['suffix'] = (string) $xml->characterInfo->character['suffix'];
@@ -81,8 +81,9 @@ class castleImport
 		$out['stats']['melee']['offHandDps'] = 	(string) $xml->characterInfo->characterTab->melee->offHandDamage['dps'];
 		
 		$out['stats']['melee']['attackPower'] = (string) $xml->characterInfo->characterTab->melee->power['effective'];
-		$out['stats']['melee']['hasteRating'] = (string) $xml->characterInfo->characterTab->spell->hasteRating['hasteRating'];
+		$out['stats']['melee']['hasteRating'] = (string) $xml->characterInfo->characterTab->spell->hasteRating['hasteRating']; // XML is missing haste in melee-section
 		$out['stats']['melee']['crit'] = (string) $xml->characterInfo->characterTab->melee->critChance['percent'];
+		$out['stats']['melee']['critRating'] = (string) $xml->characterInfo->characterTab->melee->critChance['rating'];
 		$out['stats']['melee']['hitRating'] = (string) $xml->characterInfo->characterTab->melee->hitRating['value'];
 		$out['stats']['melee']['hitPercent'] = (string) $xml->characterInfo->characterTab->melee->hitRating['increasedHitPercent'];
 		$out['stats']['melee']['expertiseRating'] = (string) $xml->characterInfo->characterTab->melee->expertise['rating'];
@@ -94,26 +95,31 @@ class castleImport
 		$out['stats']['ranged']['dmgMax'] = (string) $xml->characterInfo->characterTab->ranged->damage['max'];
 		$out['stats']['ranged']['Speed'] = (string) $xml->characterInfo->characterTab->ranged->damage['speed'];
 		$out['stats']['ranged']['dps'] = (string) $xml->characterInfo->characterTab->ranged->damage['dps'];
-		$out['stats']['ranged']['expertise'] = (string) $xml->characterInfo->characterTab->melee->expertise['value'];
 		$out['stats']['ranged']['crit'] = (string) $xml->characterInfo->characterTab->ranged->critChance['percent'];
-		$out['stats']['ranged']['hitRating'] = (string) $xml->characterInfo->characterTab->ranged->hitRating['percent'];
+		$out['stats']['ranged']['critRating'] = (string) $xml->characterInfo->characterTab->ranged->critChance['rating'];
+		$out['stats']['ranged']['hitRating'] = (string) $xml->characterInfo->characterTab->ranged->hitRating['value'];
 		$out['stats']['ranged']['attackPower'] = (string) $xml->characterInfo->characterTab->ranged->power['effective'];
 		//caster
 		$out['stats']['caster']['spellPower'] = (string) $xml->characterInfo->characterTab->spell->bonusDamage->holy['value'];
 		$out['stats']['caster']['spellPen'] = (string) $xml->characterInfo->characterTab->spell->penetration['value'];
 		$out['stats']['caster']['spellCrit'] = (string) $xml->characterInfo->characterTab->spell->critChance->holy['percent'];
 		$out['stats']['caster']['spellCritRating'] = (string) $xml->characterInfo->characterTab->spell->critChance['rating'];
+		$out['stats']['caster']['spellHasteRating'] = (string) $xml->characterInfo->characterTab->spell->hasteRating['hasteRating'];
+		$out['stats']['caster']['spellHaste'] = (string) $xml->characterInfo->characterTab->spell->hasteRating['hastePercent'];
 		$out['stats']['caster']['spellHitPercent'] = (string) $xml->characterInfo->characterTab->spell->hitRating['increasedHitPercent'];
 		$out['stats']['caster']['spellHitRating'] = (string) $xml->characterInfo->characterTab->spell->hitRating['value'];
 		$out['stats']['caster']['mana5'] = (string) $xml->characterInfo->characterTab->spell->manaRegen['notCasting'];
 		$out['stats']['caster']['mana5Combat'] = (string) $xml->characterInfo->characterTab->spell->manaRegen['casting'];
 		//def
 		$out['stats']['def']['armor'] = (string) $xml->characterInfo->characterTab->defenses->armor['base'];
-		$out['stats']['def']['dodge'] = (string) $xml->characterInfo->characterTab->defenses->dodge['percent'];
+		$out['stats']['def']['baseDefense'] = (string) $xml->characterInfo->characterTab->defenses->defense['value'];
+		$out['stats']['def']['defense'] = (string) $xml->characterInfo->characterTab->defenses->defense['value'] + $xml->characterInfo->characterTab->defenses->defense['plusDefense'];
+		$out['stats']['def']['defenseRating'] = (string) $xml->characterInfo->characterTab->defenses->defense['rating'];
+		$out['stats']['def']['dodgeChance'] = (string) $xml->characterInfo->characterTab->defenses->dodge['percent'];
 		$out['stats']['def']['dodgeRating'] = (string) $xml->characterInfo->characterTab->defenses->dodge['rating'];
-		$out['stats']['def']['parry'] = (string) $xml->characterInfo->characterTab->defenses->parry['percent'];
+		$out['stats']['def']['parryChance'] = (string) $xml->characterInfo->characterTab->defenses->parry['percent'];
 		$out['stats']['def']['parryRating'] = (string) $xml->characterInfo->characterTab->defenses->parry['rating'];
-		$out['stats']['def']['block'] = (string) $xml->characterInfo->characterTab->defenses->block['percent'];
+		$out['stats']['def']['blockChance'] = (string) $xml->characterInfo->characterTab->defenses->block['percent'];
 		$out['stats']['def']['blockRating'] = (string) $xml->characterInfo->characterTab->defenses->block['rating'];
 		$out['stats']['def']['resilienceRating'] = (string) $xml->characterInfo->characterTab->defenses->resilience['value'];
 		$out['stats']['def']['resilienceHitPercent'] = (string) $xml->characterInfo->characterTab->defenses->resilience['hitPercent'];
@@ -126,8 +132,11 @@ class castleImport
 		// - Armor Penetration is missing (WIP)
 		// - Expertise is missing (WIP)
 		// - Hit Percentage is inaccurate (FIXED)
+		// - Melee Haste Percentage is missing (TODO)
+		// - Spell Penetration is missing (TODO)
+		// - Defense Rounding is slightly off (TODO, Note: has Diminishing Return!)
 		// - Offhand Damage Min/Max/Dps/Speed is missing (TODO)
-		// Let's calculate them here
+		// Let's calculate them here!
 
 		$expertise = 0;
 		$armorpen = 0;
@@ -174,6 +183,8 @@ class castleImport
 					break;
 			}
 		}
+
+		// talents (TODO)
 
 		// racial bonuses
 		$expertiseBonus = array();
@@ -225,7 +236,7 @@ class castleImport
 
 		$xml['stats']['melee']['hitPercent'] = $xml['stats']['melee']['hitRating'] /  32.775;
 		$xml['stats']['caster']['spellHitPercent'] = $xml['stats']['caster']['spellHitRating'] / 26.231818182;
-		
+
 		return $xml;
 
 	}
