@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Erstellungszeit: 20. Jun 2013 um 01:54
+-- Erstellungszeit: 20. Jun 2013 um 03:54
 -- Server Version: 5.5.27
 -- PHP-Version: 5.4.7
 
@@ -98,7 +98,26 @@ INSERT INTO `socket_stats` (`id`, `name`, `color`, `stat_type1`, `stat_value1`, 
 (42145, 'Sparkling Dragon''s Eye', 8, 6, 34, 0, 0),
 (42155, 'Stormy Dragon''s Eye', 8, 47, 43, 0, 0),
 (42151, 'Subtle Dragon''s Eye', 2, 13, 34, 0, 0),
-(42157, 'Thick Dragon''s Eye', 4, 12, 34, 0, 0);
+(42157, 'Thick Dragon''s Eye', 4, 12, 34, 0, 0),
+(40175, 'Dazzling Eye of Zul', 6, 5, 10, 43, 5),
+(40167, 'Enduring Eye of Zul', 6, 12, 10, 7, 15),
+(40179, 'Energized Eye of Zul', 6, 36, 10, 43, 5),
+(40169, 'Forceful Eye of Zul', 6, 36, 10, 7, 15),
+(40174, 'Intricate Eye of Zul', 6, 36, 10, 6, 10),
+(40165, 'Jagged Eye of Zul', 6, 32, 10, 7, 15),
+(40177, 'Lambent Eye of Zul', 6, 31, 10, 43, 5),
+(40171, 'Misty Eye of Zul', 6, 32, 10, 6, 10),
+(40178, 'Opaque Eye of Zul', 6, 35, 10, 43, 5),
+(40180, 'Radiant Eye of Zul', 6, 32, 10, 47, 13),
+(40170, 'Seer''s Eye of Zul', 6, 5, 10, 6, 10),
+(40183, 'Shattered Eye of Zul', 6, 36, 10, 47, 13),
+(40172, 'Shining Eye of Zul', 6, 31, 10, 6, 10),
+(40168, 'Steady Eye of Zul', 6, 35, 10, 7, 15),
+(40176, 'Sundered Eye of Zul', 6, 32, 10, 43, 5),
+(40181, 'Tense Eye of Zul', 6, 31, 10, 47, 13),
+(40164, 'Timeless Eye of Zul', 6, 5, 10, 7, 15),
+(40173, 'Turbid Eye of Zul', 6, 35, 10, 6, 10),
+(40166, 'Vivid Eye of Zul', 6, 31, 10, 7, 15);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
