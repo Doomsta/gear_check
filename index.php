@@ -8,10 +8,16 @@ $cn = 'Doomsta';
 if (isset($_GET['cn']))
 	$cn = $_GET['cn'];
 $chardata = $castle->getChar($cn);
+
+unset($chardata['items']['4']); //shirt
+unset($chardata['items']['19']); //tabart
+
+$tooltips = new tooltips($tpl);
 foreach($chardata['items'] as $i => $value)
 {
 	$chardata['items'][$i]['stats'] = get_item_stats($chardata['items'][$i]['id']);
 	$chardata['items'][$i] = add_item_gems($chardata['items'][$i]);
+    $chardata['items'][$i]['tooltip'] = $tooltips->get_item_tooltip($chardata['items'][$i]);
 }
 $chardata = $castle->HandleArmoryQuirks($chardata);
 
