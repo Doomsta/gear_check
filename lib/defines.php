@@ -244,4 +244,29 @@ $_inventory_type = array(
 	28	=> "Relikt",
 );
 
+#stat->id to name 
+$_stat_name = array(
+      0 => 'Mana',
+      1 => 'Leben',
+      3 => 'Beweglichkeit',
+      4 => 'Staerke',
+      5 => 'Intelligenz',
+      6 => 'Willenskraft',
+      7 => 'Ausdauer',
+      12 => 'Verteidigungswertung',
+      13 => 'Ausweichwertung',
+      14 => 'Parierwertung',
+      15 => 'Blockwertung',
+      31 => 'Trefferwertung',
+      32 => 'kritische Trefferwertung',
+      35 => 'Abhärtungswertung',
+      36 => 'Tempowertung',
+      37 => 'Waffenkunde',
+      38 => 'Angriffskraft',
+      43 => 'Mana alle 5 Sek.'
+      45 => 'Zaubermacht',
+      44 => 'Rüstungsdurchschlagwertung',
+      47 => 'Zauberdurchschlag',
+      48 => 'Blockwert eures Schildes'
+);
 ?>
