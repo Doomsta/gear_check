@@ -271,4 +271,23 @@ $_stat_name = array(
       48 => 'Blockwert eures Schildes'
 );
 
+$_spell_name = array(
+    71397 => 'Immer, wenn Ihr einem Gegner Nahkampf- oder Distanzschaden zufügt, erhaltet Ihr 10 Sek. lang 17 Angriffskraft. Dieser Effekt ist bis zu 20-mal stapelbar.',
+    71406 => 'Eure Nahkampfangriffe haben eine Chance, Euch Partikel des Zorns zu gewähren. Habt Ihr 8 Partikel des Zorns, werden sie wirksam und veranlassen Euch zu einem sofortigen Angriff mit einer Eurer Nahkampfwaffen für 50% Waffenschaden.',
+    71545 => 'Eure Nahkampfangriffe haben eine Chance, Euch Partikel des Zorns zu gewähren. Habt Ihr 8 Partikel des Zorns, werden sie wirksam und veranlassen Euch zu einem sofortigen Angriff mit einer Eurer Nahkampfwaffen für 50% Waffenschaden.',
+    71402 => 'Wenn Ihr Schaden verursacht, besteht eine Chance, dass Ihr 15 Sek. lang 1100 Angriffskraft erhaltet.',
+    71540 => 'Wenn Ihr Schaden verursacht, besteht die Chance, dass Ihr 15 Sek. lang 1250 Angriffskraft hinzugewinnt.',
+    71635 => 'Erhöht den Widerstand gegen Arkan-, Feuer-, Frost-, Natur- und Schattenzauber 10 Sek. lang um 239. (1 Min Abklingzeit)',
+    50364 => 'Erhöht den Widerstand gegen Arkan-, Feuer-, Frost-, Natur- und Schattenzauber 10 Sek. lang um 268. (1 Min Abklingzeit)',
+    71606 => 'Jedes Mal, wenn einer Eurer Zauber regelmäßigen Schaden verursacht, besteht eine Chance, dass Ihr 20 Sek. lang 1074 Zaubermacht hinzugewinnt.',
+    71637 => 'Jedes Mal, wenn einer Eurer Zauber regelmäßigen Schaden verursacht, besteht eine Chance, dass Ihr 20 Sek. lang 1207 Zaubermacht hinzugewinnt.',
+    71602 => 'Eure Offensivzauber haben eine Chance, Eure Zaubermacht um 105 und 20 Sek. lang alle 2 Sek. um weitere 105 zu erhöhen.',
+    71645 => 'Eure Offensivzauber haben eine Chance, Eure Zaubermacht um 121 und 20 Sek. lang alle 2 Sek. um weitere 121 zu erhöhen.',
+    71571 => 'Jedes Mal, wenn Ihr einem Gegner Zauberschaden zufügt, gewinnt Ihr für die nächsten 10 Sek. 18 Zaubermacht hinzu. Bis zu 10-mal stapelbar.',
+    71573 => 'Jedes Mal, wenn Ihr einem Gegner Zauberschaden zufügt, gewinnt Ihr für die nächsten 10 Sek. 20 Zaubermacht hinzu. Bis zu 10-mal stapelbar.',
+    71611 => 'Jedes Mal, wenn Eure Zauber ein Ziel heilen, besteht eine Chance, ein weiteres in der Nähe befindliches Ziel sofort um 5550 to 6450 zu heilen.',
+    71642 => 'Jedes Mal, wenn Eure Zauber ein Ziel heilen, besteht eine Chance, ein weiteres in der Nähe befindliches Ziel sofort um 6280 to 7298 zu heilen.',
+    71519 => 'Eure Angriffe haben eine Chance, die Macht der Völker von Nordend zu erwecken, wodurch Ihr vorübergehend transformiert werdet und Eure Kampfkapazitäten 30 Sek. lang erhöht werden.',
+    71562 => 'Eure Angriffe haben eine Chance, die Macht der Völker von Nordend zu erwecken, wodurch Ihr vorübergehend transformiert werdet und Eure Kampfkapazitäten 30 Sek. lang erhöht werden.'
+);
 ?>
