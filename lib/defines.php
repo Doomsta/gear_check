@@ -175,4 +175,43 @@ class ItemStats {
     const ITEM_MOD_BLOCK_VALUE = 48;
 }
 
+#########################
+# Items
+#########################
+
+$_item_class = array(
+	2 => array(
+		0	=> array("Einh&auml;ndig", "Axt"),
+		1	=> array("Zweih&auml;ndig", "Axt"),
+		2 	=> array("Distanz", "Bogen"),
+		3	=> array("Distanz", "Schusswaffe"),
+		4	=> array("Einh&auml;ndig", "Kolben"),
+		5	=> array("Zweih&auml;ndig", "Kolben"),
+		6	=> array("Zweih&auml;ndig", "Stangenwaffe"),
+		7	=> array("Ein&auml;ndig", "Schwert"),
+		8	=> array("Zweih&auml;dig", "Schwert"),
+		10	=> array("Zweih&auml;ndig", "Stab"),
+		13	=> array(null, "Faustwaffe"), # distinguish mh/oh by item type later
+		14	=> array("Waffenhand", ""), # like mining picks, blacksmithing hammers, etc.
+		15	=> array(null, "Dolch"),
+		16	=> array("Distanz", "Wurfwaffe"),
+		17	=> array("Zweih&auml;ndig", "Stangenwaffe"),
+		18	=> array("Distanz", "Armbrust"),
+		19	=> array("Distanz", "Zauberstab"),
+		20	=> array("Zweih&auml;ndig", "Angelrute"),
+	),
+	4 => array(
+		1	=> array(null, "Stoff"),
+		2	=> array(null, "Leder"),
+		3	=> array(null, "Kette"),
+		4	=> array(null, "Platte"),
+		6	=> array("Schildhand", "Schild"),
+		7	=> array("Relikt", "Buchband"),
+		8	=> array("Relikt", "G&ouml;tze"),
+		9	=> array("Relikt", "Totems"),
+		10	=> array("Relikt", "Siegel"),
+	)
+	
+
+);
 ?>
