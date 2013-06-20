@@ -201,6 +201,7 @@ $_item_class = array(
 		20	=> array("Zweih&auml;ndig", "Angelrute"),
 	),
 	4 => array(
+		0	=> array(null, ""),
 		1	=> array(null, "Stoff"),
 		2	=> array(null, "Leder"),
 		3	=> array(null, "Kette"),
