@@ -15,7 +15,7 @@
     <link href="{$BOOTSRAPPATH}css/bootstrap.css" rel="stylesheet">
     <link href="{$BOOTSRAPPATH}css/bootstrap-responsive.css" rel="stylesheet">
     <link href="{$BOOTSRAPPATH}css/docs.css" rel="stylesheet">
-    <link href="css/base.css" rel="stylesheet">	
+    <link href="css/base.css" rel="stylesheet">
 	<style>
       body {
         padding-top: 40px; /* 60px to make the container go all the way to the bottom of the topbar */
@@ -94,6 +94,6 @@
     <script src="{$BOOTSRAPPATH}js/bootstrap.js"></script>
     <script type="text/javascript" src="http://cdn.openwow.com/api/tooltip.js"></script>
     {$JS_FILES}
-    {$ENDSCRIPT}
+    {$SCRIPT}
   </body>
 </html>

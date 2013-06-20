@@ -121,7 +121,7 @@ class tpl
 		$this->smarty->assign("TEMPLATEFILE", $this->tpl_file);
 		$this->smarty->assign("CSS_FILES", $this->css_files);
 		$this->smarty->assign("CSS_CODE", ""); //todo
-		$this->smarty->assign("ENDSCRIPT", $this->script);
+		$this->smarty->assign("SCRIPT", $this->script);
 		$this->smarty->display( $this->base_template );
 	}
 }
