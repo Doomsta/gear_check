@@ -1,7 +1,7 @@
 <?php
 function get_item_stats($id)
 {
-	include('defines.php'); // >.<
+	require_once('defines.php'); // >.<
 	$query = 'SELECT `stat_type1`, `stat_value1`, `stat_type2`, `stat_value2`, `stat_type3`, `stat_value3`,  
 				`stat_type4`, `stat_value4`, `stat_type5`, `stat_value5`,  
 				`stat_type6`, `stat_value6`, `stat_type7`, `stat_value7`,  
@@ -15,7 +15,7 @@ function get_item_stats($id)
 	{
 		if($tmp['stat_value'.$i] == 0)
 			break;
-		$data[$_stat_typ[$tmp['stat_type'.$i]]] = $tmp['stat_value'.$i];
+		$data[$tmp['stat_type'.$i]] = $tmp['stat_value'.$i];
 	}
 	return($data);
 }
