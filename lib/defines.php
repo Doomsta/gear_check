@@ -211,7 +211,37 @@ $_item_class = array(
 		9	=> array("Relikt", "Totems"),
 		10	=> array("Relikt", "Siegel"),
 	)
-	
-
 );
+
+$_inventory_type = array(
+	1	=> "Kopf",
+	2	=> "Hals",
+	3	=> "Schulter",
+	4	=> "Hemd",
+	5	=> "Brust (Chest)", // Chest
+	6	=> "Taille",
+	7	=> "Beine",
+	8	=> "F&uuml;&szlig;e",
+	9	=> "Handgelenke",
+	10	=> "H&auml;nde",
+	11	=> "Finger",
+	12	=> "Schmuck",
+	13	=> "Waffe",
+	14	=> "Schild",
+	15	=> "Distanz",
+	16	=> "R&uml;cken",
+	17	=> "Zweih&auml;dnig",
+	18	=> "Tasche",
+	19	=> "Wappenrock",
+	20	=> "Brust (Robe)", // Robe
+	21	=> "Waffenhand",
+	22	=> "Schildhand",
+	23	=> "In der Schildhand getragen", // Holdable (Tome)
+	24	=> "Munition",
+	25	=> "Wurfwaffe",
+	26	=> "Distanz",
+	27	=> "K&ouml;cher",
+	28	=> "Relikt",
+);
+
 ?>
