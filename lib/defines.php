@@ -298,7 +298,7 @@ $_spell_desc = array(
     71578 => 'Bei einem erlittenen Treffer im Nahkampf besteht eine Chance von 60%, dass Ihr 10 Sek. lang 27 Ausdauer hinzugewinnt. Bis zu 10-mal stapelbar.',
     71607 => 'Heilt ein befreundetes Ziel sofort um 7400 to 8600. (2 Min Abklingzeit)',
     50354 => 'Heilt ein befreundetes Ziel sofort um 7400 to 8600. (2 Min Abklingzeit)',
-    71585 => 'Beim Wirken eines Zaubers besteht die Chance, dass Euch 15 Sek. lang 608 Willenskraft gewährt wird.',
+    71585 => 'Beim Wirken eines Zaubers besteht die Chance, dass Ihr 15 Sek lang 304 Mana alle 5 Sek. gewinnt.',
     71586 => 'Absorbiert 6400 Schaden. Hält 10 Sek. lang an. (2 Min Abklingzeit)',
     //pdk
     67752 => 'Jedes Mal, wenn Ihr einen Zauber wirkt, gewinnt Ihr 10 Sek. lang 18 Mana alle 5 Sek. Bis zu 8-mal stapelbar.',
@@ -307,7 +307,9 @@ $_spell_desc = array(
     67758 => 'Jedes Mal, wenn Ihr einen unregelmäßigen kritischen Zaubertreffer erzielt, gewinnt Ihr einen Flammensplitter. Sobald sich 3 Splitter angesammelt haben, werden sie eine Flammensäule auslösen, die 1959 to 2275 Schaden verursacht. Flammensplitter können nicht öfter als ein Mal alle 2 Sek. gewonnen werden.',
     67702 => 'Wenn Ihr Schaden verursacht, habt Ihr eine Chance zu einem Vorbild zu werden, was Eure Stärke oder Beweglichkeit 15 Sek. lang um 450 erhöht. Es wird immer Euer höherer Wert gewählt.',
     67771 => 'Wenn Ihr Schaden verursacht, habt Ihr eine Chance zu einem Vorbild zu werden, was Eure Stärke oder Beweglichkeit 15 Sek. lang um 510 erhöht. Es wird immer Euer höherer Wert gewählt.',
-    
+    //other
+    64707 => 'Erhöht 20 Sek. lang Euer Tempo um 432. (2 Min Abklingzeit)',
+    42292 => 'Entfernt alle bewegungseinschränkenden Effekte sowie alle Effekte, die den Verlust der Kontrolle über Euren Charakter verursachen. (2 Min Abklingzeit)',
     //pala
     60636 => 'Your Crusader Strike ability also grants you 204 attack power for 10 sec.',
     51472 => 'Increases spell power of Flash of Light by 510.',
@@ -318,7 +320,6 @@ $_spell_desc = array(
     67365 => 'Each time your Seal of Vengeance or Seal of Corruption ability deals periodic damage, you have a chance to gain 200 Strength for 16 sec.',
     67363 => 'Each time you cast Holy Light, you have a chance to gain 234 spell power for 15 sec.',
     60787 => 'Reduces the mana cost of Holy Light by 113.',
-    
     //dudu
     60701 => 'Your Mangle ability also grants you 204 attack power for 10 sec.',
     60726 => 'Your Moonfire spell grants 119 spell power for 10 sec.',
@@ -330,7 +331,6 @@ $_spell_desc = array(
     60740 => 'Increases the spell power of the final healing value of your Lifebloom by 376.',
     67356 => 'Each time your Rejuvenation spell deals periodic healing, you have a chance to gain 234 spell power for 9 sec.',
     67361 => 'Each time your Moonfire spell deals periodic damage, you have a chance to gain 200 critical strike rating for 12 sec.',
-    
     //schami
     60554 => 'Your Lava Lash ability also grants you 204 attack power for 10 sec.',
     60575 => 'Your Shock spells grant 119 spell power for 10 sec.',
@@ -341,7 +341,6 @@ $_spell_desc = array(
     60552 => 'Your Lava Lash ability also grants you 172 attack power for 10 sec.',
     60574 => 'Your Shock spells grant 101 spell power for 10 sec.',
     60560 => 'Increases spell power of Lesser Healing Wave by 404.',
-    
     //dk
     60690 => 'Your Plague Strike ability also grants you 204 attack power for 10 sec.',
     71228 => 'Your Rune Strike ability grants 44 dodge rating for 15 sec. Stacks up to 5 times.',
