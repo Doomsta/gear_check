@@ -300,6 +300,9 @@ $_spell_desc = array(
     50354 => 'Heilt ein befreundetes Ziel sofort um 7400 to 8600. (2 Min Abklingzeit)',
     71585 => 'Beim Wirken eines Zaubers besteht die Chance, dass Ihr 15 Sek lang 304 Mana alle 5 Sek. gewinnt.',
     71586 => 'Absorbiert 6400 Schaden. Hält 10 Sek. lang an. (2 Min Abklingzeit)',
+    72413 => 'Chance bei Treffer, Eure Angriffskraft 10 Sek. lang um 480 zu erhöhen.',
+    73961 => 'Chance bei Treffer, Eure Angriffskraft 10 Sek. lang um 480 zu erhöhen.',
+    71168 => '', //Unerfülltes Verlangen Beschreibt die Aura von Schattenschneide
     //pdk
     67752 => 'Jedes Mal, wenn Ihr einen Zauber wirkt, gewinnt Ihr 10 Sek. lang 18 Mana alle 5 Sek. Bis zu 8-mal stapelbar.',
     67698 => 'Jedes Mal, wenn Ihr einen Zauber wirkt, gewinnt Ihr 10 Sek. lang 16 Mana alle 5 Sek. Bis zu 8-mal stapelbar.',
@@ -307,7 +310,9 @@ $_spell_desc = array(
     67758 => 'Jedes Mal, wenn Ihr einen unregelmäßigen kritischen Zaubertreffer erzielt, gewinnt Ihr einen Flammensplitter. Sobald sich 3 Splitter angesammelt haben, werden sie eine Flammensäule auslösen, die 1959 to 2275 Schaden verursacht. Flammensplitter können nicht öfter als ein Mal alle 2 Sek. gewonnen werden.',
     67702 => 'Wenn Ihr Schaden verursacht, habt Ihr eine Chance zu einem Vorbild zu werden, was Eure Stärke oder Beweglichkeit 15 Sek. lang um 450 erhöht. Es wird immer Euer höherer Wert gewählt.',
     67771 => 'Wenn Ihr Schaden verursacht, habt Ihr eine Chance zu einem Vorbild zu werden, was Eure Stärke oder Beweglichkeit 15 Sek. lang um 510 erhöht. Es wird immer Euer höherer Wert gewählt.',
-    //other
+    67672 => 'Jedes Mal, wenn Ihr mit einem Nahkampf- oder Distanzangriff trefft, habt Ihr eine Chance, 10 Sek. lang 1008 Angriffskraft zu gewinnen.',
+
+   //other
     64707 => 'Erhöht 20 Sek. lang Euer Tempo um 432. (2 Min Abklingzeit)',
     42292 => 'Entfernt alle bewegungseinschränkenden Effekte sowie alle Effekte, die den Verlust der Kontrolle über Euren Charakter verursachen. (2 Min Abklingzeit)',
     //pala
