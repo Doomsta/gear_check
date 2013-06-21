@@ -14,3 +14,8 @@ img.socket1 { border: 2px solid #cccccc; }
 img.socket2 { border: 2px solid red; }
 img.socket4 { border: 2px solid yellow; }
 img.socket8 { bordeR: 2px solid blue; }
+
+div[class="tooltip-inner"] {
+    max-width: 350px;
+    background: rgba(0, 0, 0, 255);
+}
