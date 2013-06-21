@@ -13,8 +13,9 @@ class tooltips
     //TODO sets, gems
     function get_item_tooltip($item)
     {
-	global $_item_class, $_inventory_type, $_stat_name, $_spell_desc;
-
+        global $_item_class, $_inventory_type, $_stat_name, $_spell_desc;
+        if(!isset($item['id']))
+            return;
         $tpl = $this->get_item_template($item['id']);
 
         // Item Name

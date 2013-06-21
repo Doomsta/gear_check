@@ -3,7 +3,7 @@ class castleImport
 {
 	private $armoryUrl = 'http://armory.wow-castle.de/';
 	
-	public function getChar($name)
+	public function getChar($name,$_gearSlot_name)
 	{
 		$out = array();
 		$xml = $this->getXML($this->armoryUrl.'character-sheet.xml?r=WoW-Castle+PvE&cn='.$name);
@@ -48,23 +48,31 @@ class castleImport
 			}
 		}
 		//gear
+        $tmp;
 		foreach($xml->characterInfo->characterTab->items->item as $item) 
 		{
 			$sn = (int)$item['slot'] +1;
-			$out['items'][$sn]['id']  = (string) $item['id'];
-			$out['items'][$sn]['name']  = (string) $item['name'];
-			$out['items'][$sn]['level']  = (int) $item['level'];
-			$out['items'][$sn]['rarity']  = (int) $item['rarity'];
-			$out['items'][$sn]['icon']  = (int) $item['icon'];
-			$out['items'][$sn]['gems'] = array();
+			$tmp[$sn]['id']  = (string) $item['id'];
+			$tmp[$sn]['name']  = (string) $item['name'];
+			$tmp[$sn]['level']  = (int) $item['level'];
+			$tmp[$sn]['rarity']  = (int) $item['rarity'];
+			$tmp[$sn]['icon']  = (string) $item['icon'];
+			$tmp[$sn]['gems'] = array();
 			for($i=0;!empty($item['gem'.$i.'Id']);$i++)
 			{
-				$out['items'][$sn]['gems'][$i]['id'] = (int) $item['gem'.$i.'Id'];
+				$tmp[$sn]['gems'][$i]['id'] = (int) $item['gem'.$i.'Id'];
 			}
-			$out['items'][$sn]['permanentEnchantItemId']  = (int) $item['permanentEnchantItemId'];
+			$tmp[$sn]['permanentEnchantItemId']  = (int) $item['permanentEnchantItemId'];
 			if (isset($item['permanentEnchantSpellName']))
-				$out['items'][$sn]['permanentEnchantSpellName'] = (string) $item['permanentEnchantSpellName'];
+				$tmp[$sn]['permanentEnchantSpellName'] = (string) $item['permanentEnchantSpellName'];
 		}
+        foreach($_gearSlot_name as $key => $slot) 
+        {
+            if(isset($tmp[$key]))
+                $out['items'][$key] = $tmp[$key];
+            else 
+                $out['items'][$key] = null;
+        }
 		//stats
 		//base
 		$out['stats']['base']['str'] = (string) $xml->characterInfo->characterTab->baseStats->strength['effective'];  

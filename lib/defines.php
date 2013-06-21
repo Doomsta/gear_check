@@ -302,6 +302,7 @@ $_spell_desc = array(
     71586 => 'Absorbiert 6400 Schaden. Hält 10 Sek. lang an. (2 Min Abklingzeit)',
     72413 => 'Chance bei Treffer, Eure Angriffskraft 10 Sek. lang um 480 zu erhöhen.',
     73961 => 'Chance bei Treffer, Eure Angriffskraft 10 Sek. lang um 480 zu erhöhen.',
+    72968 => 'Eine Schleife der Zuneigung.',
     71168 => '', //Unerfülltes Verlangen Beschreibt die Aura von Schattenschneide
     //pdk
     67752 => 'Jedes Mal, wenn Ihr einen Zauber wirkt, gewinnt Ihr 10 Sek. lang 18 Mana alle 5 Sek. Bis zu 8-mal stapelbar.',
@@ -311,10 +312,12 @@ $_spell_desc = array(
     67702 => 'Wenn Ihr Schaden verursacht, habt Ihr eine Chance zu einem Vorbild zu werden, was Eure Stärke oder Beweglichkeit 15 Sek. lang um 450 erhöht. Es wird immer Euer höherer Wert gewählt.',
     67771 => 'Wenn Ihr Schaden verursacht, habt Ihr eine Chance zu einem Vorbild zu werden, was Eure Stärke oder Beweglichkeit 15 Sek. lang um 510 erhöht. Es wird immer Euer höherer Wert gewählt.',
     67672 => 'Jedes Mal, wenn Ihr mit einem Nahkampf- oder Distanzangriff trefft, habt Ihr eine Chance, 10 Sek. lang 1008 Angriffskraft zu gewinnen.',
+    71581 => 'Eure Offensivzauber haben eine Chance, bei einem Treffer Eure Zaubermacht 10 Sek. lang um 285 zu erhöhen.',
 
    //other
     64707 => 'Erhöht 20 Sek. lang Euer Tempo um 432. (2 Min Abklingzeit)',
     42292 => 'Entfernt alle bewegungseinschränkenden Effekte sowie alle Effekte, die den Verlust der Kontrolle über Euren Charakter verursachen. (2 Min Abklingzeit)',
+    44301 => 'Verringert die globale Abklingzeit Eures Zaubers \'Blinzeln\' um 0.5 Sek.',
     //pala
     60636 => 'Your Crusader Strike ability also grants you 204 attack power for 10 sec.',
     51472 => 'Increases spell power of Flash of Light by 510.',

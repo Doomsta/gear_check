@@ -7,10 +7,8 @@ $castle = new castleImport();
 $cn = 'Doomsta';
 if (isset($_GET['cn']))
 	$cn = $_GET['cn'];
-$chardata = $castle->getChar($cn);
+$chardata = $castle->getChar($cn, $_gearSlot_name);
 
-unset($chardata['items']['4']); //shirt
-unset($chardata['items']['19']); //tabart
 
 $tooltips = new tooltips($tpl);
 foreach($chardata['items'] as $i => $value)
