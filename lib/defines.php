@@ -94,12 +94,15 @@ $_faction_color = array(
 
 # socket->id to Color->name
 # http://archive.trinitycore.info/Item_template_tc2#socketColor
-$_socket_Color = array(
-	1 => 'Meta',
-	2 => 'Red',
- 	4 => 'Yellow',
-	8 => 'Blue'
-);
+class SocketColor {
+	const Meta = 1;
+	const Red = 2;
+	const Orange = 3;
+ 	const Yellow = 4;
+	const Green = 6;
+	const Blue = 8;
+	const Violet = 9;
+}
 
 # http://images3.wikia.nocookie.net/__cb20090410062624/wowwiki/images/a/ae/InventorySlots.jpg
 $_gearSlot_name = array(
