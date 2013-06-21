@@ -151,12 +151,12 @@ class castleImport
 		// items
 		foreach ($xml['items'] as $slot => $item)
 		{
-			if (isset($item['stats']['ITEM_MOD_ARMOR_PENETRATION_RATING']))
-				$armorpen += $item['stats']['ITEM_MOD_ARMOR_PENETRATION_RATING'];
-			if (isset($item['stats']['ITEM_MOD_EXPERTISE_RATING']))
-				$expertise += $item['stats']['ITEM_MOD_EXPERTISE_RATING'];
-			if (isset($item['stats']['ITEM_MOD_SPELL_PENETRATION']))
-				$spellpen += $item['stats']['ITEM_MOD_SPELL_PENETRATION'];
+			if (isset($item['stats'][ItemStats::ITEM_MOD_ARMOR_PENETRATION_RATING]))
+				$armorpen += $item['stats'][ItemStats::ITEM_MOD_ARMOR_PENETRATION_RATING];
+			if (isset($item['stats'][ItemStats::ITEM_MOD_EXPERTISE_RATING]))
+				$expertise += $item['stats'][ItemStats::ITEM_MOD_EXPERTISE_RATING];
+			if (isset($item['stats'][ItemStats::ITEM_MOD_SPELL_PENETRATION]))
+				$spellpen += $item['stats'][ItemStats::ITEM_MOD_SPELL_PENETRATION];
 		
 			// count gems
 			foreach ($item['gems'] as $gemslot => $gem)

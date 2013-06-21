@@ -2,7 +2,7 @@
 
 class tooltips
 {
-    private $tooltip_js = '$(\'a\').tooltip({placement: \'bottom\'}).tooltip();';
+    private $tooltip_js = '$(\'a\').tooltip({placement: \'right\'}).tooltip();';
     
     function __construct($tpl, $js=true) 
     {

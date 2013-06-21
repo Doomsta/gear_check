@@ -22,7 +22,7 @@
         <a href="http://wotlk.openwow.com/spell={$item['permanentEnchantSpellId']}"><img width="24" height="24" src="http://www.linuxlounge.net/~martin/wowimages/?spell={$item['permanentEnchantSpellId']}" /></a>
     {/if}
     {foreach from=$item.gems item=gem}
-        {if isset($gem['id'])}<a href="http://wotlk.openwow.com/item={$gem['id']}" rel="item={$gem['id']}"><img class="socket{$gem['color']}" width="24" height="24" src="http://www.linuxlounge.net/~martin/wowimages/?item={$gem['id']}" /></a>{/if}
+        {if isset($gem['id'])}<a href="http://wotlk.openwow.com/item={$gem['id']}" rel="item={$gem['id']}"><img class="socket{$gem['socketColor']}" width="24" height="24" src="http://www.linuxlounge.net/~martin/wowimages/?item={$gem['id']}" /></a>{/if}
     {/foreach}
     </div>
 </div>
