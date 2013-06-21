@@ -28,8 +28,8 @@ function add_item_gems($item)
 	$data = mysql_fetch_array($result);
 	for($i=0;$i<3;$i++)
 		if(!$data['socketColor_'.($i+1)] == 0)
-			$item['gems'][$i]['color'] = $data['socketColor_'.($i+1)];
-	$item['gems']['socketBonus'] = $data['socketBonus'];
+			$item['gems'][$i]['socketColor'] = $data['socketColor_'.($i+1)];
+	$item['socketBonus'] = $data['socketBonus'];
 	return($item); 
 }
 function get_item_gems($id)

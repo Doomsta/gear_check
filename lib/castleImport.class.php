@@ -56,6 +56,7 @@ class castleImport
 			$out['items'][$sn]['level']  = (int) $item['level'];
 			$out['items'][$sn]['rarity']  = (int) $item['rarity'];
 			$out['items'][$sn]['icon']  = (int) $item['icon'];
+			$out['items'][$sn]['gems'] = array();
 			for($i=0;!empty($item['gem'.$i.'Id']);$i++)
 			{
 				$out['items'][$sn]['gems'][$i]['id'] = (int) $item['gem'.$i.'Id'];
@@ -156,7 +157,7 @@ class castleImport
 				$expertise += $item['stats']['ITEM_MOD_EXPERTISE_RATING'];
 			if (isset($item['stats']['ITEM_MOD_SPELL_PENETRATION']))
 				$spellpen += $item['stats']['ITEM_MOD_SPELL_PENETRATION'];
-
+		
 			// count gems
 			foreach ($item['gems'] as $gemslot => $gem)
 			{
@@ -168,8 +169,8 @@ class castleImport
 					$gems[$gem['id']] = 1;
 
 				// fix missing socket color for prismatic gems
-				if (!isset($gem['color']))
-					$xml['items'][$slot]['gems'][$gemslot]['color'] = 1;
+				if (!isset($gem['socketColor']))
+					$xml['items'][$slot]['gems'][$gemslot]['socketColor'] = 1;
 			}
 
 			// socket bonus (TODO)
@@ -318,6 +319,89 @@ class castleImport
 
 		return $xml;
 
+	}
+
+	function checkGemBonus($items)
+	{
+		$gems = array();
+		foreach ($items as $item)
+			if (isset($item['gems']))
+				foreach ($item['gems'] as $gem)
+					if (isset($gem['id']))
+						$gems[$gem['id']] = true;
+
+		$query = "SELECT id, color FROM socket_stats WHERE id IN (".implode(",", array_keys($gems)).")";
+		unset($gems);
+		$result = mysql_query($query);
+
+		$color = array();
+		while ($row = mysql_fetch_assoc($result))
+			$color[$row['id']] = $row['color'];
+
+		foreach ($items as $slot => $item)
+		{
+			if (!isset($item['gems']))
+				continue;
+			foreach ($item['gems'] as $gemslot => $gem)
+			{
+				if (!isset($color[$gem['id']]))
+				{
+					echo "Missing Gem Entry ".$gem['id']."<br />";
+					$items[$slot]['socketBonusActive'] = false;
+					break;
+				}
+
+				// empty socket
+				if (!isset($gem['id']))
+				{
+					$items[$slot]['socketBonusActive'] = false;
+					break; // break, because activation can't happen anymore
+				}
+
+				// evaluate gem for sockets
+				$c = $color[$gem['id']];
+				$items[$slot]['gems'][$gemslot]['gemColor'] = $c;
+
+				$result = false;
+				if ($c == SocketColor::Prismatic) // gem is prismatic, fits everywhere
+					$result = true;
+				else {
+					switch ($gem['socketColor']) {
+						case SocketColor::Red: // socket is red
+							if ($c == SocketColor::Red || $c == SocketColor::Orange || $c == SocketColor::Violet)
+								$result = true;
+							break;
+						case SocketColor::Yellow: // socket is yellow
+	                                                if ($c == SocketColor::Yellow || $c == SocketColor::Orange || $c == SocketColor::Green)
+	                                                        $result = true;
+	                                                break;
+						case SocketColor::Blue: // socket is blue
+	                                                if ($c == SocketColor::Blue || $c == SocketColor::Green || $c == SocketColor::Violet)
+	                                                        $result = true;
+	                                                break;
+						case SocketColor::Meta: // no need to recheck here, because we established earlier, that there is a socket in here
+						case SocketColor::Prismatic:
+							$result = true;
+							break;
+					}
+				}
+
+				if (!isset($items[$slot]['gems']['socketBonusActive']))
+				{
+					$items[$slot]['socketBonusActive'] = $result;
+					$items[$slot]['gems'][$gemslot]['matching'] = $result;
+				}
+				else
+					$items[$slot]['socketBonusActive'] &= $result;
+
+				if (!$result)
+					break;
+
+				
+			}
+		}
+
+		return $items;
 	}
 
 

@@ -15,8 +15,14 @@ unset($chardata['items']['19']); //tabart
 $tooltips = new tooltips($tpl);
 foreach($chardata['items'] as $i => $value)
 {
-	$chardata['items'][$i]['stats'] = get_item_stats($chardata['items'][$i]['id']);
-	$chardata['items'][$i] = add_item_gems($chardata['items'][$i]);
+    $chardata['items'][$i]['stats'] = get_item_stats($chardata['items'][$i]['id']);
+    $chardata['items'][$i] = add_item_gems($chardata['items'][$i]);
+}
+
+$chardata['items'] = $castle->CheckGemBonus($chardata['items']); // gem bonuses check before tooltips!
+
+foreach($chardata['items'] as $i => $value)
+{
     $chardata['items'][$i]['tooltip'] = $tooltips->get_item_tooltip($chardata['items'][$i]);
 }
 $chardata = $castle->HandleArmoryQuirks($chardata);

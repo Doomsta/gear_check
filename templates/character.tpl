@@ -13,7 +13,7 @@
         </a>
     </div>
     <div style="padding-left: 55px;">
-        <strong>{$item['level']}</strong> <span style="font-weight:bold;" class="q{$item['rarity']}">[
+        <strong>{$item['level']}</strong> <span style="font-weight:bold;" class="q{$item['rarity']}">
         <a href="#" rel="tooltip" data-html='true' data-original-title="{$item['tooltip']}">[{$item['name']}]</a></span><br />
     {if $item['permanentEnchantItemId'] != 0}
         <a href="http://wotlk.openwow.com/item={$item['permanentEnchantItemId']}"><img width="24" height="24" src="http://www.linuxlounge.net/~martin/wowimages/?item={$item['permanentEnchantItemId']}" /></a>
