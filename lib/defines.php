@@ -95,6 +95,7 @@ $_faction_color = array(
 # socket->id to Color->name
 # http://archive.trinitycore.info/Item_template_tc2#socketColor
 class SocketColor {
+    const Prismatic = 0;
 	const Meta = 1;
 	const Red = 2;
 	const Orange = 3;
