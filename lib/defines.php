@@ -276,6 +276,7 @@ $_stat_name = array(
 );
 
 $_spell_name = array(
+    //icc
     71397 => 'Immer, wenn Ihr einem Gegner Nahkampf- oder Distanzschaden zufügt, erhaltet Ihr 10 Sek. lang 17 Angriffskraft. Dieser Effekt ist bis zu 20-mal stapelbar.',
     71406 => 'Eure Nahkampfangriffe haben eine Chance, Euch Partikel des Zorns zu gewähren. Habt Ihr 8 Partikel des Zorns, werden sie wirksam und veranlassen Euch zu einem sofortigen Angriff mit einer Eurer Nahkampfwaffen für 50% Waffenschaden.',
     71545 => 'Eure Nahkampfangriffe haben eine Chance, Euch Partikel des Zorns zu gewähren. Habt Ihr 8 Partikel des Zorns, werden sie wirksam und veranlassen Euch zu einem sofortigen Angriff mit einer Eurer Nahkampfwaffen für 50% Waffenschaden.',
@@ -292,6 +293,62 @@ $_spell_name = array(
     71611 => 'Jedes Mal, wenn Eure Zauber ein Ziel heilen, besteht eine Chance, ein weiteres in der Nähe befindliches Ziel sofort um 5550 to 6450 zu heilen.',
     71642 => 'Jedes Mal, wenn Eure Zauber ein Ziel heilen, besteht eine Chance, ein weiteres in der Nähe befindliches Ziel sofort um 6280 to 7298 zu heilen.',
     71519 => 'Eure Angriffe haben eine Chance, die Macht der Völker von Nordend zu erwecken, wodurch Ihr vorübergehend transformiert werdet und Eure Kampfkapazitäten 30 Sek. lang erhöht werden.',
-    71562 => 'Eure Angriffe haben eine Chance, die Macht der Völker von Nordend zu erwecken, wodurch Ihr vorübergehend transformiert werdet und Eure Kampfkapazitäten 30 Sek. lang erhöht werden.'
-);
+    71562 => 'Eure Angriffe haben eine Chance, die Macht der Völker von Nordend zu erwecken, wodurch Ihr vorübergehend transformiert werdet und Eure Kampfkapazitäten 30 Sek. lang erhöht werden.',
+    71576 => 'Bei einem erlittenen Treffer im Nahkampf besteht eine Chance von 60%, dass Ihr 10 Sek. lang 24 Ausdauer hinzugewinnt. Bis zu 10-mal stapelbar.',
+    71578 => 'Bei einem erlittenen Treffer im Nahkampf besteht eine Chance von 60%, dass Ihr 10 Sek. lang 27 Ausdauer hinzugewinnt. Bis zu 10-mal stapelbar.',
+    71607 => 'Heilt ein befreundetes Ziel sofort um 7400 to 8600. (2 Min Abklingzeit)',
+    50354 => 'Heilt ein befreundetes Ziel sofort um 7400 to 8600. (2 Min Abklingzeit)',
+    71585 => 'Beim Wirken eines Zaubers besteht die Chance, dass Euch 15 Sek. lang 608 Willenskraft gewährt wird.',
+    71586 => 'Absorbiert 6400 Schaden. Hält 10 Sek. lang an. (2 Min Abklingzeit)',
+    //pdk
+    67752 => 'Jedes Mal, wenn Ihr einen Zauber wirkt, gewinnt Ihr 10 Sek. lang 18 Mana alle 5 Sek. Bis zu 8-mal stapelbar.',
+    67698 => 'Jedes Mal, wenn Ihr einen Zauber wirkt, gewinnt Ihr 10 Sek. lang 16 Mana alle 5 Sek. Bis zu 8-mal stapelbar.',
+    67712 => 'Jedes Mal, wenn Ihr einen unregelmäßigen kritischen Zaubertreffer erzielt, gewinnt Ihr einen Flammenpartikel. Sobald sich 3 Partikel angesammelt haben, werden sie eine Flammensäule auslösen, die 1741 to 2023 Schaden verursacht. Flammenpartikel können nicht öfter als ein Mal alle 2 Sek. gewonnen werden.',
+    67758 => 'Jedes Mal, wenn Ihr einen unregelmäßigen kritischen Zaubertreffer erzielt, gewinnt Ihr einen Flammensplitter. Sobald sich 3 Splitter angesammelt haben, werden sie eine Flammensäule auslösen, die 1959 to 2275 Schaden verursacht. Flammensplitter können nicht öfter als ein Mal alle 2 Sek. gewonnen werden.',
+    67702 => 'Wenn Ihr Schaden verursacht, habt Ihr eine Chance zu einem Vorbild zu werden, was Eure Stärke oder Beweglichkeit 15 Sek. lang um 450 erhöht. Es wird immer Euer höherer Wert gewählt.',
+    67771 => 'Wenn Ihr Schaden verursacht, habt Ihr eine Chance zu einem Vorbild zu werden, was Eure Stärke oder Beweglichkeit 15 Sek. lang um 510 erhöht. Es wird immer Euer höherer Wert gewählt.',
+    
+    //pala
+    60636 => 'Your Crusader Strike ability also grants you 204 attack power for 10 sec.',
+    51472 => 'Increases spell power of Flash of Light by 510.',
+    71191 => 'Your Holy Shock heals grant 85 spell power for 15 sec. Stacks up to 3 times.',
+    71194 => 'Your Shield of Righteousness ability grants 73 dodge rating for 15 sec. Stacks up to 3 times.',
+    60635 => 'Your Crusader Strike ability also grants you 172 attack power for 10 sec.',
+    60662 => 'Increases spell power of Flash of Light by 436.',
+    67365 => 'Each time your Seal of Vengeance or Seal of Corruption ability deals periodic damage, you have a chance to gain 200 Strength for 16 sec.',
+    67363 => 'Each time you cast Holy Light, you have a chance to gain 234 spell power for 15 sec.',
+    60787 => 'Reduces the mana cost of Holy Light by 113.',
+    
+    //dudu
+    60701 => 'Your Mangle ability also grants you 204 attack power for 10 sec.',
+    60726 => 'Your Moonfire spell grants 119 spell power for 10 sec.',
+    60741 => 'Increases the spell power of the final healing value of your Lifebloom by 448.',
+    71178 => 'The periodic healing from your Rejuvenation spell grants 32 spell power for 15 sec. Stacks up to 8 times.',
+    71176 => 'The periodic damage from your Insect Swarm and Moonfire spells grants 44 critical strike rating for 15 sec. Stacks up to 5 times.',
+    60700 => 'Your Mangle ability also grants you 172 attack power for 10 sec.',
+    60724 => 'Your Moonfire spell grants 101 spell power for 10 sec.',
+    60740 => 'Increases the spell power of the final healing value of your Lifebloom by 376.',
+    67356 => 'Each time your Rejuvenation spell deals periodic healing, you have a chance to gain 234 spell power for 9 sec.',
+    67361 => 'Each time your Moonfire spell deals periodic damage, you have a chance to gain 200 critical strike rating for 12 sec.',
+    
+    //schami
+    60554 => 'Your Lava Lash ability also grants you 204 attack power for 10 sec.',
+    60575 => 'Your Shock spells grant 119 spell power for 10 sec.',
+    51501 => 'Equip: Increases spell power of Lesser Healing Wave by 459.',
+    71198 => 'The periodic damage from your Flame Shock spell grants 44 haste rating for 30 sec. Stacks up to 5 times.',
+    71214 => 'Your Stormstrike ability grants 146 attack power for 15 sec. Stacks up to 3 times.',
+    71217 => 'Your Riptide spell grants 85 spell power for 15 sec. Stacks up to 3 times.',
+    60552 => 'Your Lava Lash ability also grants you 172 attack power for 10 sec.',
+    60574 => 'Your Shock spells grant 101 spell power for 10 sec.',
+    60560 => 'Increases spell power of Lesser Healing Wave by 404.',
+    
+    //dk
+    60690 => 'Your Plague Strike ability also grants you 204 attack power for 10 sec.',
+    71228 => 'Your Rune Strike ability grants 44 dodge rating for 15 sec. Stacks up to 5 times.',
+    71226 => 'Your Obliterate, Scourge Strike, and Death Strike abilities grants 73 Strength for 15 sec. Stacks up to 3 times.',
+    60688 => 'Your Plague Strike ability also grants you 172 attack power for 10 sec.',
+    67381 => 'Each time you use your Rune Strike ability, you have a chance to gain 200 dodge rating for 20 sec.',
+    67384 => 'Each time you use your Death Strike, Obliterate, or Scourge Strike ability, you have a chance to gain 200 Strength for 20 sec.',
+    64962 => 'Increases the damage done by your Death Coil ability by 380 and by your Frost Strike ability by 113.'
+    );
 ?>
