@@ -17,8 +17,10 @@ function get_item_stats($id)
 			break;
 		$data[$tmp['stat_type'.$i]] = $tmp['stat_value'.$i];
 	}
-	return($data);
+    ksort($data);
+	return $data;
 }
+
 function add_item_gems($item)
 {
 	$query = 'SELECT `socketColor_1`, `socketColor_2`, `socketColor_3`, `socketBonus`
@@ -26,12 +28,13 @@ function add_item_gems($item)
 				WHERE `entry` = \''.$item['id'].'\'';
 	$result = mysql_query($query);
 	$data = mysql_fetch_array($result);
-	for($i=0;$i<3;$i++)
+	for($i=0; $i<3; $i++)
 		if(!$data['socketColor_'.($i+1)] == 0)
 			$item['gems'][$i]['socketColor'] = $data['socketColor_'.($i+1)];
 	$item['socketBonus'] = $data['socketBonus'];
 	return($item); 
 }
+
 function get_item_gems($id)
 {
 	$query = 'SELECT `socketColor_1`, `socketColor_2`, `socketColor_3`, `socketBonus`

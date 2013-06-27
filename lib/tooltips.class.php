@@ -1,5 +1,4 @@
 <?php
-
 class tooltips
 {
     private $tooltip_js = '$(\'a\').tooltip({placement: \'right\'}).tooltip();';
@@ -72,7 +71,7 @@ class tooltips
 		}
 		if($item['socketBonus'] != 0)
 		{
-			if ($item['socketBonusActive'])
+			if (isset($item['socketBonusActive']) AND $item['socketBonusActive'])
                 $tmp .= '<span class=\'q2\'>Socket Bonus: +'.$item['socketBonus'].'</span><br />';
 			else
 	            $tmp .= '<span class=\'q0\'>Socket Bonus: +'.$item['socketBonus'].'</span><br />';

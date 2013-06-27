@@ -1,12 +1,12 @@
 <?php
 class castleImport
 {
-	private $armoryUrl = 'http://armory.wow-castle.de/';
+	private static $armoryUrl = 'http://armory.wow-castle.de/';
 	
-	public function getChar($name,$_gearSlot_name)
+	public static function getChar($name)
 	{
 		$out = array();
-		$xml = $this->getXML($this->armoryUrl.'character-sheet.xml?r=WoW-Castle+PvE&cn='.$name);
+		$xml = castleImport::getXML(castleImport::$armoryUrl.'character-sheet.xml?r=WoW-Castle+PvE&cn='.$name);
 		if($xml->characterInfo->character['name'] == false)
 			return false;
 
@@ -52,27 +52,18 @@ class castleImport
 		foreach($xml->characterInfo->characterTab->items->item as $item) 
 		{
 			$sn = (int)$item['slot'] +1;
-			$tmp[$sn]['id']  = (string) $item['id'];
-			$tmp[$sn]['name']  = (string) $item['name'];
-			$tmp[$sn]['level']  = (int) $item['level'];
-			$tmp[$sn]['rarity']  = (int) $item['rarity'];
-			$tmp[$sn]['icon']  = (string) $item['icon'];
-			$tmp[$sn]['gems'] = array();
+			$out['items'][$sn]['id']  = (string) $item['id'];
+			$out['items'][$sn]['name']  = (string) $item['name'];
+			$out['items'][$sn]['level']  = (int) $item['level'];
+			$out['items'][$sn]['rarity']  = (int) $item['rarity'];
+			$out['items'][$sn]['icon']  = (string) $item['icon'];
+			$out['items'][$sn]['gems'] = array();
 			for($i=0;!empty($item['gem'.$i.'Id']);$i++)
-			{
-				$tmp[$sn]['gems'][$i]['id'] = (int) $item['gem'.$i.'Id'];
-			}
-			$tmp[$sn]['permanentEnchantItemId']  = (int) $item['permanentEnchantItemId'];
+                $out['items'][$sn]['gems'][$i]['id'] = (int) $item['gem'.$i.'Id'];
+			$out['items'][$sn]['permanentEnchantItemId']  = (int) $item['permanentEnchantItemId'];
 			if (isset($item['permanentEnchantSpellName']))
-				$tmp[$sn]['permanentEnchantSpellName'] = (string) $item['permanentEnchantSpellName'];
+				$out['items'][$sn]['permanentEnchantSpellName'] = (string) $item['permanentEnchantSpellName'];
 		}
-        foreach($_gearSlot_name as $key => $slot) 
-        {
-            if(isset($tmp[$key]))
-                $out['items'][$key] = $tmp[$key];
-            else 
-                $out['items'][$key] = null;
-        }
 		//stats
 		//base
 		$out['stats']['base']['str'] = (string) $xml->characterInfo->characterTab->baseStats->strength['effective'];  
@@ -135,10 +126,10 @@ class castleImport
 		$out['stats']['def']['resilienceRating'] = (string) $xml->characterInfo->characterTab->defenses->resilience['value'];
 		$out['stats']['def']['resilienceHitPercent'] = (string) $xml->characterInfo->characterTab->defenses->resilience['hitPercent'];
 		$out['stats']['def']['resilienceDamagePercent'] = (string) $xml->characterInfo->characterTab->defenses->resilience['damagePercent'];
-		return $out;
+        return $out;
 	}
 
-	function HandleArmoryQuirks($xml) {
+	static function HandleArmoryQuirks($xml) {
 		// Armory has several issues currently:
 		// - Armor Penetration is missing (WIP)
 		// - Expertise is missing (WIP)
@@ -292,7 +283,6 @@ class castleImport
 
 		foreach ($xml['items'] as $slot => $item)
 		{
-
 			if (!isset($item['permanentEnchantItemId']))
 				continue;
 			if ($item['permanentEnchantItemId'] != 0 || !isset($item['permanentEnchantSpellName']))
@@ -329,7 +319,7 @@ class castleImport
 
 	}
 
-	function checkGemBonus($items)
+	static function checkGemBonus($items)
 	{
 		$gems = array();
 		foreach ($items as $item)
@@ -338,7 +328,7 @@ class castleImport
 					if (isset($gem['id']))
 						$gems[$gem['id']] = true;
 
-		$query = "SELECT id, color FROM socket_stats WHERE id IN (".implode(",", array_keys($gems)).")";
+		$query = "SELECT id, color FROM test.socket_stats2 WHERE id IN (".implode(",", array_keys($gems)).")";
 		unset($gems);
 		$result = mysql_query($query);
 
@@ -374,6 +364,7 @@ class castleImport
 				if ($c == SocketColor::Prismatic) // gem is prismatic, fits everywhere
 					$result = true;
 				else {
+                    if(isset($gem['socketColor'])) break; 
 					switch ($gem['socketColor']) {
 						case SocketColor::Red: // socket is red
 							if ($c == SocketColor::Red || $c == SocketColor::Orange || $c == SocketColor::Violet)
@@ -403,9 +394,7 @@ class castleImport
 					$items[$slot]['socketBonusActive'] &= $result;
 
 				if (!$result)
-					break;
-
-				
+					break;			
 			}
 		}
 
@@ -417,14 +406,14 @@ class castleImport
 	public function getArenaTeams($teamSize = 2, $limit = 20)
 	{
 		$out = array();
-		$xml = $this->getXML($this->armoryUrl.'arena-ladder.xml?ts='.$teamSize.'&b=WoW-Castle&sf=rating&sd=d');
+		$xml = $castleImport::getXML($castleImport::armoryUrl.'arena-ladder.xml?ts='.$teamSize.'&b=WoW-Castle&sf=rating&sd=d');
 		if($xml === false)
 			return false;
 		$maxPage = (int) $xml->arenaLadderPagedResult['maxPage'];
 		for($i=0; $i<=$maxPage; $i++)
 		{
 			if($i != 0) //0 is already loaded
-				$xml =  $this->getXML($this->armoryUrl.'arena-ladder.xml?p='.($i+1).'&ts='.$teamSize.'&b=WoW-Castle&sf=rating&sd=d');
+				$xml =  $this->getXML($castleImport::armoryUrl.'arena-ladder.xml?p='.($i+1).'&ts='.$teamSize.'&b=WoW-Castle&sf=rating&sd=d');
 			
 			//work with the data
 			foreach($xml->arenaLadderPagedResult->arenaTeams->arenaTeam as $row)
@@ -449,7 +438,7 @@ class castleImport
 	{
 		$out = array();
 		$name = str_replace(" ", "+", $name); 
-		$xml = $this->getXML($this->armoryUrl.'team-info.xml?b=WoW-Castle&r=WoW-Castle+PvE&select='.$name);
+		$xml = $castleImport::getXML($castleImport::armoryUrl.'team-info.xml?b=WoW-Castle&r=WoW-Castle+PvE&select='.$name);
 		if($xml === false)
 			return false;
 		foreach($xml->teamInfo->arenaTeam->members->character as $row)
@@ -464,7 +453,7 @@ class castleImport
 		return $out;
 	}
 	
-	private function getXML($url)
+	private static function getXML($url)
 	{
 		$ch = curl_init();
 		curl_setopt($ch, CURLOPT_URL, $url);
