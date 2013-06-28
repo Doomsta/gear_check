@@ -19,23 +19,27 @@ class char
                                                         'name' => null, 
                                                         'level' => null, 
                                                         'rarity' => null, 
-                                                        'icon' => null, 
-                                                        'gems' => null, 
+                                                        'icon' => 'inv_empty', 
+                                                        'gems' => array(), 
                                                         'permanentEnchantItemId' => null, 
                                                         'permanentEnchantSpellName' => null, 
                                                         'permanentEnchantSpellId'  => null,
                                                         'tooltip' => null
                                                    );
+        global $_stat_name;
+        foreach($_stat_name as $key => $value)
+            $this->stats[$value] = 0;
         if($loadFromCastle == TRUE)
-        {
-            $this->loadFromCastle();
-        }
+           $this->loadFromCastle(TRUE);
             
     }
-    public function loadFromCastle()
+    public function loadFromCastle($HandleArmoryQuirks = FALSE)
     {
         $tmp = castleImport::getChar($this->name);
-        $tmp = castleImport::HandleArmoryQuirks($tmp);
+        if($tmp === false)
+            return false;
+        if($HandleArmoryQuirks == TRUE)
+            $tmp = castleImport::HandleArmoryQuirks($tmp);
         
         $this->name = $tmp['name'];
         $this->prefix= $tmp['prefix'];
@@ -45,13 +49,14 @@ class char
         $this->guild = $tmp['guildName'];
         $this->level = $tmp['level'];
         $this->achievement_points = $tmp['points'];
-        $this->arena = $tmp['arena'];
+        //$this->arena = $tmp['arena'];
         $this->stats = $tmp['stats'];
         foreach($tmp['items'] as $key => $value)
             if(isset($this->equipment[$key]))
                 $this->equipment[$key] = $tmp['items'][$key];
     }
-    public function loadItems($slotNR = False)
+    
+    public function loadItems()
     {
         foreach($this->slotOrder as $i)
         {
@@ -66,23 +71,71 @@ class char
          foreach($this->slotOrder as $i)
             $this->equipment[$i]['tooltip'] = $tooltip->get_item_tooltip($this->equipment[$i]);
     }
-    public function getStats()
+    
+    public function getEquipmentStats()
     {
+        global $_stat_name;
+        foreach($_stat_name as $key => $value)
+            $tmp[$key] = 0;
+        foreach($this->equipment as $item)
+            foreach($item['stats'] as $key => $value)
+            {
+                if(!isset($tmp[$key]))
+                    $tmp[$key] = 0;
+                $tmp[$key] += $value;
+            }
+        ksort($tmp);
+        return $tmp;
+    
     }
+    
     public function getSockts()
     {
+        $tmp = array();
+        foreach($this->equipment as $item)
+            foreach($item['gems'] as $gem)
+            {
+                if(isset($tmp[$gem['id']]))
+                    $tmp[$gem['id']]++;
+                else
+                    $tmp[$gem['id']] = 1;
+            }
+        ksort($tmp);    
+        return $tmp;
     }
+    
     public function getSocketStats()
     {
     }
+    
     public function getGetGearStats()
     {
+    
+    }
+    
+    public function getCharArray()
+    {
+        $tmp['name'] = $this->name;
+        $tmp['suffix'] = $this->suffix;
+        $tmp['prefix'] = $this->prefix;
+        $tmp['raceId'] = $this->race;
+        $tmp['classId'] = $this->class;
+        $tmp['level'] = $this->level;
+        $tmp['guild'] = $this->guild;
+        return $tmp;
     }
     
     //debug
     public function getItems()
     {
-        return $this->equipment;
+        //re order
+        $tmp; 
+        foreach($this->equipment as $i => $gear)
+        {
+            $tmp[] = $gear;
+        }
+        return $tmp;
+
     }
 }
 ?>

@@ -1,7 +1,7 @@
 <?php
 class tooltips
 {
-    private $tooltip_js = '$(\'a\').tooltip({placement: \'right\'}).tooltip();';
+    private $tooltip_js = '$(\'a\').tooltip().tooltip();';
     
     function __construct($tpl, $js=true) 
     {
