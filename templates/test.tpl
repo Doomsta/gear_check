@@ -88,10 +88,9 @@ gem count<br />
 {$gemArray['count']}x <a href="http://wotlk.openwow.com/item={$gemid}">{$gemArray['name']}</a><br />
 {/foreach}
 <h3>Stats</h3>
-eqstats<br />
-{foreach from=$eqstats key=key item=stats}
+{foreach from=$stats key=key item=stat}
 {if $stats != 0}
-{$_stat_name[$key]} => {$stats} <br />
+{$_stat_name[$key]} => {$stat} <br />
 {/if}
 {/foreach}
 <h3>PvP</h3>

@@ -104,12 +104,37 @@ class char
             $tmp[$i] = get_gems_stats($i);
             $tmp[$i]['count'] = $c; 
         }
-        ksort($tmp);      
+        ksort($tmp);  
         return $tmp;
     }
     
-    public function getSocketStats()
-    {
+    public function getStats($base = TRUE, $items = TRUE, $gems = TRUE)
+    { 
+    //TODO base stats
+        $stats;
+        global $_stat_name;
+        //init whole array
+        foreach($_stat_name as $key => $value)
+            $stats[$key] = 0;
+        //add gear stats
+        $eqstats = $this->getEquipmentStats();
+        foreach($eqstats  as $key => $eqstat)
+            $stats[$key] += $eqstat;
+            
+        //add gems
+        $gems = $this->getSockts();
+        foreach($gems as $gem)
+        {
+                $stats[$gem['stat_type1']] += ($gem['stat_value1']*$gem['count']);  
+                $stats[$gem['stat_type2']] += ($gem['stat_value2']*$gem['count']);
+        }
+        //clean up array 
+        foreach($stats  as $key => $value)
+        {
+            if($value == 0)
+                unset($stats[$key]);
+        }
+       return $stats;
     }
     
     public function getAvgItemLevel()
