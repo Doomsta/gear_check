@@ -94,13 +94,18 @@ class char
         $tmp = array();
         foreach($this->equipment as $item)
             foreach($item['gems'] as $gem)
-            {
                 if(isset($tmp[$gem['id']]))
-                    $tmp[$gem['id']]++;
+                    $tmp[$gem['id']]['count'] += 1;
                 else
-                    $tmp[$gem['id']] = 1;
-            }
-        ksort($tmp);    
+                    $tmp[$gem['id']] = array('count' => 1);
+        foreach($tmp as $i => $gems)
+        {
+            $c = $tmp[$i]['count']; 
+            $tmp[$i] = get_gems_stats($i);
+            $tmp[$i]['count'] = $c; 
+        }
+        ksort($tmp);  
+        print_r($tmp);        
         return $tmp;
     }
     
@@ -108,6 +113,14 @@ class char
     {
     }
     
+    public function getAvgItemLevel()
+    {
+        $tmp = 0;
+        foreach($this->equipment as $item )
+            $tmp += $item['level'];
+        $tmp = round($tmp/17,1); //TODO 1h/off /17 2h /16
+        return $tmp;
+    }    
     public function getGetGearStats()
     {
     

@@ -13,6 +13,7 @@ $char->loadItems();
 $tooltips = new tooltips($tpl);
 $char->addItemTooltips($tooltips);
 
+$tpl->assign_vars('avg', $char->getAvgItemLevel());
 $tpl->assign_vars('eqstats', $char->getEquipmentStats());
 $tpl->assign_vars('items', $char->getItems());
 $tpl->assign_vars('char', $char->getCharArray());

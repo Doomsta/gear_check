@@ -1,7 +1,6 @@
 <?php
 function get_item_stats($id)
 {
-	require_once('defines.php'); // >.<
 	$query = 'SELECT `stat_type1`, `stat_value1`, `stat_type2`, `stat_value2`, `stat_type3`, `stat_value3`,  
 				`stat_type4`, `stat_value4`, `stat_type5`, `stat_value5`,  
 				`stat_type6`, `stat_value6`, `stat_type7`, `stat_value7`,  
@@ -35,6 +34,15 @@ function add_item_gems($item)
 	return($item); 
 }
 
+function get_gems_stats($id)
+{
+    echo $query = "SELECT `name`, `stat_type1`, `stat_value1`, `stat_type2`, `stat_value2` FROM test.socket_stats2 WHERE id = \"$id\"";
+    $result = mysql_query($query);
+	$data = mysql_fetch_array($result);
+    for($i=0;$i<5;$i++)
+        unset($data[$i]);
+    return $data;
+}
 function get_item_gems($id)
 {
 	$query = 'SELECT `socketColor_1`, `socketColor_2`, `socketColor_3`, `socketBonus`

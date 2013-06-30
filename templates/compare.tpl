@@ -12,23 +12,24 @@
   <tr>  
     <td colspan="3">Gems</td>
   </tr>
-{foreach from=$char1['gems'] key=gemid item=count}
+{foreach from=$char1['gems'] key=gemid item=gemArray}
   <tr>
     <td>
-    {$gemid}
+ <a href="http://wotlk.openwow.com/item={$gemid}">{$gemArray['name']}</a><br />
+
     </td>
     <td>
 {if !isset($char1['gems'][$gemid])}
 0
 {else}
-{$char1['gems'][$gemid]}
+{$char1['gems'][$gemid]['count']}
 {/if}  
     </td>
     <td>
 {if !isset($char2['gems'][$gemid])}
 0
 {else}
-{$char2['gems'][$gemid]}
+{$char2['gems'][$gemid]['count']}
 {/if}  
     </td>
   </tr>

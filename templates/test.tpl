@@ -11,19 +11,23 @@
 <span class="level">Level {$char['level']}</span><br /> 
 <span class="race">Race:{$char['raceId']}</span> <br />
 <span class="class">Class:{$char['classId']}</span><br />
+<span class="avg">Avg:{$avg}</span><br />
 
 
                       <h3>Equipment</h3>
 <table border="1">
 {for $i=0 to 7}
-  <tr>
+  <tr valign="top">
     <td>
         <a href="http://wotlk.openwow.com/item={$items[$i]['id']}" target="_blank">
             <img width="45" height="45" src="http://www.linuxlounge.net/~martin/wowimages/?item={$items[$i]['id']}" class="q{$item['rarity']}" />
         </a>
     </td>
     <td>
-    <div>[{$items[$i]['level']}]<a href="#" rel="tooltip" data-placement='right' data-html='true' data-original-title="{$items[$i]['tooltip']}">[{$items[$i]['name']}]</a></div>
+    <div>
+    {if isset($items[$i]['level'])}
+    [{$items[$i]['level']}]<a href="#" rel="tooltip" data-placement='right' data-html='true' data-original-title="{$items[$i]['tooltip']}">[{$items[$i]['name']}]</a></div>
+    {/if}
     {if $items[$i]['permanentEnchantItemId'] != 0}
         <a href="http://wotlk.openwow.com/item={$items[$i]['permanentEnchantItemId']}"><img width="24" height="24" src="http://www.linuxlounge.net/~martin/wowimages/?item={$items[$i]['permanentEnchantItemId']}" /></a>
     {/if}
@@ -35,7 +39,8 @@
     {/foreach}
     </td>
     <td align="right">
-    <div><a href="#" rel="tooltip" data-placement='left' data-html='true' data-original-title="{$items[$i]['tooltip']}">[{$items[$i]['name']}]</a>[{$items[$i]['level']}]</div>
+    <div>
+    <a href="#" rel="tooltip" data-placement='left' data-html='true' data-original-title="{$items[$i]['tooltip']}">[{$items[$i+8]['name']}]</a>[{$items[$i+8]['level']}]</div>
     {if $items[$i+8]['permanentEnchantItemId'] != 0}
         <a href="http://wotlk.openwow.com/item={$items[$i+8]['permanentEnchantItemId']}"><img width="24" height="24" src="http://www.linuxlounge.net/~martin/wowimages/?item={$items[$i+8]['permanentEnchantItemId']}" /></a>
     {/if}
@@ -79,13 +84,15 @@
 
 <h3>Gems</h3>
 gem count<br />
-{foreach from=$gems key=gemid item=count}
-{$count}x {$gemid}<br />
+{foreach from=$gems key=gemid item=gemArray}
+{$gemArray['count']}x <a href="http://wotlk.openwow.com/item={$gemid}">{$gemArray['name']}</a><br />
 {/foreach}
 <h3>Stats</h3>
 eqstats<br />
 {foreach from=$eqstats key=key item=stats}
+{if $stats != 0}
 {$key} => {$stats} <br />
+{/if}
 {/foreach}
 <h3>PvP</h3>
 
