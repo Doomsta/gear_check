@@ -270,6 +270,7 @@ $_stat_name = array(
       36 => 'Tempowertung',
       37 => 'Waffenkunde',
       38 => 'Angriffskraft',
+      42 => '',
       43 => 'Mana alle 5 Sek.',
       45 => 'Zaubermacht',
       44 => 'Rüstungsdurchschlagwertung',

@@ -12,10 +12,19 @@ foreach($cn as $i => $char)
     $test[$i]->loadItems();
     
     $tmp[$i]['char'] = $test[$i]->getCharArray();
-    $tmp[$i]['eqstats'] = $test[$i]->getEquipmentStats();
+    $tmp[$i]['stats'] = $test[$i]->getStats();
     $tmp[$i]['gems'] = $test[$i]->getSockts();
     $tmp[$i]['items'] = $test[$i]->getItems();
 }    
+//sync gems
+foreach($tmp[2]['gems'] as $key => $value)
+{
+    if(!isset($tmp[1]['gems'][$key]))
+        $tmp[1]['gems'][$key]['count'] = 0;
+        $tmp[1]['gems'][$key]['name'] = $tmp[2]['gems'][$key]['name'];
+}
+
+
 $tpl->assign_vars('_stat_name', $_stat_name);
 $tpl->assign_vars('char1', $tmp[1]);
 $tpl->assign_vars('char2', $tmp[2]);

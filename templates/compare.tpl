@@ -37,17 +37,17 @@
   <tr>
   <td colspan="3">Gear Stats</td>
   </tr>
-{foreach from=$char1['eqstats'] key=statid item=value}
-{if ($char1['eqstats'][$statid] == 0 AND $char2['eqstats'][$statid] == 0)} 
+{foreach from=$char1['stats'] key=statid item=value}
+{if ($char1['stats'][$statid] == 0 AND $char2['stats'][$statid] == 0)} 
 {continue}
 {/if}
   <tr>
   <td>{$_stat_name[$statid]}</td>
     <td>
-    {$char1['eqstats'][$statid]}
+    {$char1['stats'][$statid]}
     </td>
     <td>  
-    {$char2['eqstats'][$statid]}
+    {$char2['stats'][$statid]}
     </td>
   </tr>
 {/foreach}        
