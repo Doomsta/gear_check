@@ -3,7 +3,7 @@ $rootpath = './';
 include ($rootpath.'common.php');
 require_once($rootpath.'lib/castleImport.class.php');
 require_once($rootpath.'lib/char.class.php');
-$cn[1] = (isset($_GET['cn1']))? $_GET['cn1'] :  'Doomsta';
+$cn[1] = (isset($_GET['cn1']))? $_GET['cn1'] : 'Doomsta';
 $cn[2] = (isset($_GET['cn2']))? $_GET['cn2'] : 'Jay';
 
 foreach($cn as $i => $char)

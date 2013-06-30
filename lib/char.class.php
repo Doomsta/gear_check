@@ -104,8 +104,7 @@ class char
             $tmp[$i] = get_gems_stats($i);
             $tmp[$i]['count'] = $c; 
         }
-        ksort($tmp);  
-        print_r($tmp);        
+        ksort($tmp);      
         return $tmp;
     }
     

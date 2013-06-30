@@ -91,7 +91,7 @@ gem count<br />
 eqstats<br />
 {foreach from=$eqstats key=key item=stats}
 {if $stats != 0}
-{$key} => {$stats} <br />
+{$_stat_name[$key]} => {$stats} <br />
 {/if}
 {/foreach}
 <h3>PvP</h3>

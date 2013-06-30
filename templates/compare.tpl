@@ -26,7 +26,7 @@
 {/if}  
     </td>
     <td>
-{if !isset($char2['gems'][$gemid])}
+{if !isset($char2['gems'][$gemid]['count'])}
 0
 {else}
 {$char2['gems'][$gemid]['count']}

@@ -9,7 +9,6 @@ if (isset($_GET['cn']))
     
 $char = new char($cn, true);
 $char->loadItems();
-
 $tooltips = new tooltips($tpl);
 $char->addItemTooltips($tooltips);
 
@@ -18,6 +17,7 @@ $tpl->assign_vars('eqstats', $char->getEquipmentStats());
 $tpl->assign_vars('items', $char->getItems());
 $tpl->assign_vars('char', $char->getCharArray());
 $tpl->assign_vars('gems', $char->getSockts());
+$tpl->assign_vars('_stat_name', $_stat_name);
 
 $tpl->set_vars(array(
 			'page_title'		=> 'Envy Gear-Check',
