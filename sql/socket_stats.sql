@@ -1,31 +1,3 @@
--- phpMyAdmin SQL Dump
--- version 3.5.2.2
--- http://www.phpmyadmin.net
---
--- Host: 127.0.0.1
--- Erstellungszeit: 20. Jun 2013 um 03:54
--- Server Version: 5.5.27
--- PHP-Version: 5.4.7
-
-SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
-SET time_zone = "+00:00";
-
-
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8 */;
-
---
--- Datenbank: `test`
---
-
--- --------------------------------------------------------
-
---
--- Tabellenstruktur für Tabelle `socket_stats`
---
-
 DROP TABLE IF EXISTS `socket_stats`;
 CREATE TABLE IF NOT EXISTS `socket_stats` (
   `id` int(5) NOT NULL,
@@ -37,18 +9,14 @@ CREATE TABLE IF NOT EXISTS `socket_stats` (
   `stat_value2` int(2) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Daten für Tabelle `socket_stats`
---
-
-INSERT INTO `socket_stats` (`id`, `name`, `color`, `stat_type1`, `stat_value1`, `stat_type2`, `stat_value2`) VALUES
+INSERT INTO `socket_stats2` (`id`, `name`, `color`, `stat_type1`, `stat_value1`, `stat_type2`, `stat_value2`) VALUES
 (40111, 'Bold Cardinal Ruby', 2, 4, 20, 0, 0),
 (40114, 'Bright Cardinal Ruby', 2, 38, 20, 0, 0),
 (40112, 'Delicate Cardinal Ruby', 2, 3, 20, 0, 0),
 (40116, 'Flashing Cardinal Ruby', 2, 14, 20, 0, 0),
 (40117, 'Fractured Cardinal Ruby', 2, 44, 20, 0, 0),
 (40118, 'Precise Cardinal Ruby', 2, 37, 20, 0, 0),
-(40113, 'Runed Cardinal Ruby', 2, 42, 23, 0, 0),
+(40113, 'Runed Cardinal Ruby', 2, 45, 23, 0, 0),
 (40115, 'Subtle Cardinal Ruby', 2, 13, 20, 0, 0),
 (40119, 'Solid Majestic Zircon', 8, 7, 30, 0, 0),
 (40121, 'Lustrous Majestic Zircon', 8, 43, 10, 0, 0),
@@ -85,7 +53,6 @@ INSERT INTO `socket_stats` (`id`, `name`, `color`, `stat_type1`, `stat_value1`, 
 (42142, 'Bold Dragon''s Eye', 2, 4, 34, 0, 0),
 (36766, 'Bright Dragon''s Eye', 4, 5, 34, 0, 0),
 (42143, 'Delicate Dragon''s Eye', 2, 3, 34, 0, 0),
-(42148, 'Brilliant Dragon''s Eye', 4, 5, 34, 0 , 0), 
 (42152, 'Flashing Dragon''s Eye', 2, 14, 34, 0, 0),
 (42153, 'Fractured Dragon''s Eye', 2, 44, 34, 0, 0),
 (42146, 'Lustrous Dragon''s Eye', 8, 43, 17, 0, 0),
@@ -111,7 +78,7 @@ INSERT INTO `socket_stats` (`id`, `name`, `color`, `stat_type1`, `stat_value1`, 
 (40178, 'Opaque Eye of Zul', 6, 35, 10, 43, 5),
 (40180, 'Radiant Eye of Zul', 6, 32, 10, 47, 13),
 (40170, 'Seer''s Eye of Zul', 6, 5, 10, 6, 10),
-(40183, 'Shattered Eye of Zul', 6, 36, 10, 47, 13),
+(40182, 'Shattered Eye of Zul', 6, 36, 10, 47, 13),
 (40172, 'Shining Eye of Zul', 6, 31, 10, 6, 10),
 (40168, 'Steady Eye of Zul', 6, 35, 10, 7, 15),
 (40176, 'Sundered Eye of Zul', 6, 32, 10, 43, 5),
@@ -132,8 +99,16 @@ INSERT INTO `socket_stats` (`id`, `name`, `color`, `stat_type1`, `stat_value1`, 
 (40130, 'Shifting Dreadstone', 9, 3, 10, 7, 15),
 (40129, 'Sovereign Dreadstone', 9, 4, 10, 7, 15),
 (40131, 'Tenuous Dreadstone', 9, 3, 10, 43, 5),
-(49110, 'Nightmare Tear', 0, 0, 0, 0, 0);
-
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+(49110, 'Nightmare Tear', 0, 0, 0, 0, 0),
+(41285, 'chaotic skyflare diamond', 1, 32, 21, 0, 0),
+(44066, 'Kharmaa''s Grace', 4, 35, 20, 0, 0),
+(41401, 'Insightful Earthsiege Dia', 1, 5, 21, 0, 0),
+(42148, 'Brilliant Dragon''s Eye', 4, 5, 34, 0, 0),
+(41398, 'Relentless Earthsiege Dia', 1, 3, 21, 0, 0),
+(41378, 'Forlorn Skyflare Diamond', 1, 45, 25, 0, 0),
+(44084, 'Forlorn Starflare Diamond', 1, 45, 20, 0, 0),
+(39900, 'Bold Bloodstone', 2, 4, 12, 0, 0),
+(41380, 'Austere Earthsiege Diamon', 1, 7, 32, 0, 0),
+(41339, 'Swift Skyflare Diamond', 1, 38, 42, 0, 0),
+(41381, 'Persistent Earthsiege Dia', 1, 38, 42, 0, 0),
+(40015, 'Thick Autumn''s Glow', 4, 12, 16, 0, 0);
