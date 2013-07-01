@@ -3,31 +3,61 @@ $rootpath = './';
 include ($rootpath.'common.php');
 require_once($rootpath.'lib/castleImport.class.php');
 require_once($rootpath.'lib/char.class.php');
-$cn[1] = (isset($_GET['cn1']))? $_GET['cn1'] : 'Doomsta';
-$cn[2] = (isset($_GET['cn2']))? $_GET['cn2'] : 'Jay';
 
-foreach($cn as $i => $char)
+define('MAX_CHARS', '16');
+
+for($i=0;$i<MAX_CHARS;$i++)
 {
-    $test[$i] = new char($char, true);
-    $test[$i]->loadItems();
+    if(!isset($_GET['cn'.$i]))
+        continue;
+    $cn[$i] = $_GET['cn'.$i];
+    $chars[$i] = new char($cn[$i], true);
     
-    $tmp[$i]['char'] = $test[$i]->getCharArray();
-    $tmp[$i]['stats'] = $test[$i]->getStats();
-    $tmp[$i]['gems'] = $test[$i]->getSockts();
-    $tmp[$i]['items'] = $test[$i]->getItems();
-}    
-//sync gems
-foreach($tmp[2]['gems'] as $key => $value)
+    $tmp[$i]['char'] = $chars[$i]->getCharArray();
+    $data['name'][$i] = $tmp[$i]['char']['name']; 
+    
+    $tmp[$i]['stats'] = $chars[$i]->getStats();
+    foreach($tmp[$i]['stats']  as $j => $value)
+        $data['stats'][$j][$i] = $value;
+        
+    $tmp[$i]['gems'] = $chars[$i]->getSockts();
+    foreach($tmp[$i]['gems']  as $j => $gem)
+    {
+        if(!isset($data['gem'][$j]))
+        {
+            $data['gem'][$j]['name'] = $gem['name'];
+            $data['gem'][$j]['color'] = $gem['color'];
+        }
+        $data['gem'][$j]['count'][$i] = $gem['count'];
+    }
+    
+    $tmp[$i]['items'] = $chars[$i]->getItems();
+    foreach($tmp[$i]['stats']  as $statid => $statvalue)
+        $data['stat'][$statid][$i] = $statvalue;
+    $data['trinkets'][$i] = $chars[$i]->getItems(array(1 => 13, 2 => 14));   
+}
+//fill array with zeros
+//stats
+foreach($data['stats'] as $statid => $stat)
 {
-    if(!isset($tmp[1]['gems'][$key]))
-        $tmp[1]['gems'][$key]['count'] = 0;
-        $tmp[1]['gems'][$key]['name'] = $tmp[2]['gems'][$key]['name'];
+    for($char=0;$char<count($cn);$char++)
+        if(!isset($data['stats'][$statid][$char]))
+            $data['stats'][$statid][$char] = 0;
+    ksort($data['stats'][$statid]);
+}
+ksort($data['stats']);
+//gems
+foreach($data['gem'] as $gemid => $gem)
+{
+    for($char=0;$char<count($cn);$char++)
+        if(!isset($gem['count'][$char]))
+            $data['gem'][$gemid]['count'][$char] = 0;
+    ksort($data['gem'][$gemid]['count']);
 }
 
-
 $tpl->assign_vars('_stat_name', $_stat_name);
-$tpl->assign_vars('char1', $tmp[1]);
-$tpl->assign_vars('char2', $tmp[2]);
+$tpl->assign_vars('count', count($cn));
+$tpl->assign_vars('data', $data);
 
 
 $tpl->set_vars(array(

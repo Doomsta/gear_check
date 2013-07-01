@@ -1,62 +1,60 @@
-<table border="1">
+<table class="table table-hover">
+  <thead>
   <tr>
     <th></th>
-    <th>Char1</th>
-    <th>Char2</th>
+{foreach from=$data['name'] key=i item=name}
+    <th>Char{$i}</th>
+{/foreach}
+  </tr>
+  </thead>
+  <tbody>
+  <tr>
+    <td>Name</td>
+{foreach from=$data['name'] item=name}
+    <td>{$name}</td>
+{/foreach}
   </tr>
   <tr>
-  <th>Name</th>
-    <td>{$char1['char']['name']}</td>
-    <td>{$char2['char']['name']}</td>
+    <td colspan="{$count+1}">Gems</td>
   </tr>
-  <tr>  
-    <td colspan="3">Gems</td>
-  </tr>
-{foreach from=$char1['gems'] key=gemid item=gemArray}
-  <tr>
-    <td>
- <a href="http://wotlk.openwow.com/item={$gemid}">{$gemArray['name']}</a><br />
 
-    </td>
+{foreach from=$data['gem'] key=id item=gem}
+  <tr>
     <td>
-{if !isset($char1['gems'][$gemid])}
-0
-{else}
-{$char1['gems'][$gemid]['count']}
-{/if}  
+        <a href="http://wotlk.openwow.com/item={$id}">
+            <img width="20" height="20" src="http://www.linuxlounge.net/~martin/wowimages/?item={$id}" />
+            {$gem['name']}
+        </a>
     </td>
-    <td>
-{if !isset($char2['gems'][$gemid]['count'])}
-0
-{else}
-{$char2['gems'][$gemid]['count']}
-{/if}  
-    </td>
+{foreach from=$gem['count'] item=value}
+    <td>{$value}</td>
+{/foreach}
   </tr>
 {/foreach}
   <tr>
-  <td colspan="3">Gear Stats</td>
-  </tr>
-{foreach from=$char1['stats'] key=statid item=value}
-{if ($char1['stats'][$statid] == 0 AND $char2['stats'][$statid] == 0)} 
-{continue}
-{/if}
+    <td colspan="{$count+1}">Stats</td> {* TODO *}
+  </tr> 
+{foreach from=$data['stats'] key=id item=stat}
   <tr>
-  <td>{$_stat_name[$statid]}</td>
-    <td>
-    {if isset($char1['stats'][$statid])}
-    {$char1['stats'][$statid]}
-    {else}
-    0
-    {/if}
-    </td>
-    <td>  
-    {if isset($char2['stats'][$statid])}
-    {$char2['stats'][$statid]}
-    {else}
-    0
-    {/if}
-    </td>
+    <td>{$_stat_name[$id]}</td>
+{foreach from=$stat item=value}
+    <td>{$value}</td>
+{/foreach}
   </tr>
-{/foreach}        
-</table>
+{/foreach}
+  <tr>
+    <td>Schmuck</td>
+{foreach from=$data['trinkets'] key=i item=char}
+    <td>
+        <a href="http://wotlk.openwow.com/item={$char['13']['id']}">
+            <img width="30" height="30" src="http://www.linuxlounge.net/~martin/wowimages/?item={$char['13']['id']}" />
+        </a>
+        <a href="http://wotlk.openwow.com/item={$char['14']['id']}">
+            <img width="30" height="30" src="http://www.linuxlounge.net/~martin/wowimages/?item={$char['14']['id']}" />
+        </a>
+    </td>
+{/foreach}
+  </tr> 
+  <tbody>
+</table>  
+  
