@@ -44,10 +44,18 @@
   <tr>
   <td>{$_stat_name[$statid]}</td>
     <td>
+    {if isset($char1['stats'][$statid])}
     {$char1['stats'][$statid]}
+    {else}
+    0
+    {/if}
     </td>
     <td>  
+    {if isset($char2['stats'][$statid])}
     {$char2['stats'][$statid]}
+    {else}
+    0
+    {/if}
     </td>
   </tr>
 {/foreach}        
