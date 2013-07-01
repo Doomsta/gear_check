@@ -306,7 +306,11 @@ $_spell_desc = array(
     71565 => 'Restores 1625 mana.',
     71574 => 'Restores 1830 mana.',
     72770 => 'Summons a Cadaver that will protect you for 1 min.',
+    48645 => 'Increases the block value of your shield by 147',
+    67742 => 'Each time you are struck by an attack, you gain 1422 armor. Stacks up to 5 times. Entire effect lasts 20 sec.',
+    71634 => 'Melee attacks which reduce you below 35% health cause you to gain 5712 armor for 10 sec. Cannot occur more than once every 30 sec.',
     //icc ringe
+    71653 => 'When struck in combat has a chance of increasing your armor by 2400 for 10 sec.',
     71655 => 'Your helpful spells have a chance to increase your spell power by 285 for 10 sec.',
     72413 => 'Chance bei Treffer, Eure Angriffskraft 10 Sek. lang um 480 zu erhöhen.',
     73961 => 'Chance bei Treffer, Eure Angriffskraft 10 Sek. lang um 480 zu erhöhen.',
@@ -328,8 +332,10 @@ $_spell_desc = array(
     67771 => 'Wenn Ihr Schaden verursacht, habt Ihr eine Chance zu einem Vorbild zu werden, was Eure Stärke oder Beweglichkeit 15 Sek. lang um 510 erhöht. Es wird immer Euer höherer Wert gewählt.',
     67672 => 'Jedes Mal, wenn Ihr mit einem Nahkampf- oder Distanzangriff trefft, habt Ihr eine Chance, 10 Sek. lang 1008 Angriffskraft zu gewinnen.',
     71581 => 'Eure Offensivzauber haben eine Chance, bei einem Treffer Eure Zaubermacht 10 Sek. lang um 285 zu erhöhen.',
-
+    67744 => 'Each time you cast a harmful spell, you gain 64 haste rating. Stacks up to 8 times. Entire effect lasts 20 sec.',
+    67694 => 'Increases dodge rating by 512 for 20 sec.',
    //other
+    60180 => 'Increases maximum health by 3025 for 15 sec.',
     71404 => 'Chance on melee or ranged critical strike to increase your armor penetration rating by 678 for 10 sec.',
     57818 => '', //Has Tabard
     71563 => 'Increases your critical strike rating by 184 for 20 sec. Every time one of your non-periodic spells deals a critical strike, the bonus is reduced by 184 critical strike rating.',
