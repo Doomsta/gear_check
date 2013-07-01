@@ -35,6 +35,7 @@ class char
         $this->equipment = castleImport::checkGemBonus($this->equipment);
         $this->equipment = castleImport::lookup_SockelBonus($this->equipment);
     }
+
     public function loadFromCastle($HandleArmoryQuirks = FALSE)
     {
         $tmp = castleImport::getChar($this->name);
@@ -107,8 +108,9 @@ class char
             $tmp[$i] = get_gems_stats($i);
             $tmp[$i]['count'] = $c; 
         }
-        ksort($tmp);  
+        uasort($tmp, "cmp");        
         return $tmp;
+        
     }
     
     public function getStats($base = TRUE, $items = TRUE, $gems = TRUE)
@@ -170,14 +172,14 @@ class char
     }
     
     //debug
-    public function getItems()
+    public function getItems($slots = false)
     {
-        //re order
-        $tmp; 
-        foreach($this->equipment as $i => $gear)
-        {
-            $tmp[] = $gear;
-        }
+        if($slots === false)
+            foreach($this->equipment as $i => $gear)
+                $tmp[] = $gear;
+        else
+             foreach($slots as $i => $item)
+                $tmp[$item] = $this->equipment[$item];
         return $tmp;
 
     }

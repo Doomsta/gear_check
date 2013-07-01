@@ -36,10 +36,10 @@ function add_item_gems($item)
 
 function get_gems_stats($id)
 {
-    $query = "SELECT `name`, `stat_type1`, `stat_value1`, `stat_type2`, `stat_value2` FROM test.socket_stats2 WHERE id = \"$id\"";
+    $query = "SELECT `name`, `color`, `stat_type1`, `stat_value1`, `stat_type2`, `stat_value2` FROM test.socket_stats2 WHERE id = \"$id\"";
     $result = mysql_query($query);
 	$data = mysql_fetch_array($result);
-    for($i=0;$i<5;$i++)
+    for($i=0;$i<6;$i++)
         unset($data[$i]);
     return $data;
 }
@@ -57,4 +57,10 @@ function get_item_gems($id)
 			unset($data['socketColor_'.$i]);
 	return $data;
 }
+
+function cmp($a, $b)
+{
+    return strcmp($a["color"], $b["color"]);
+}
+
 ?>
