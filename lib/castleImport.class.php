@@ -340,7 +340,7 @@ class castleImport
 				continue;
 			foreach ($item['gems'] as $gemslot => $gem)
 			{
-				if (!isset($color[$gem['id']]))
+				if (isset($gem['id']) AND !isset($color[$gem['id']]))
 				{
 					echo "Missing Gem Entry ".$gem['id']."<br />";
 					$items[$slot]['socketBonusActive'] = false;

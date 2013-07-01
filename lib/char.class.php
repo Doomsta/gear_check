@@ -96,10 +96,11 @@ class char
         $tmp = array();
         foreach($this->equipment as $item)
             foreach($item['gems'] as $gem)
-                if(isset($tmp[$gem['id']]))
-                    $tmp[$gem['id']]['count'] += 1;
-                else
-                    $tmp[$gem['id']] = array('count' => 1);
+                if(isset($gem['id'])) //TODO handle empty slots better
+                    if(isset($tmp[$gem['id']]))
+                        $tmp[$gem['id']]['count'] += 1;
+                    else
+                        $tmp[$gem['id']] = array('count' => 1);
         foreach($tmp as $i => $gems)
         {
             $c = $tmp[$i]['count']; 
