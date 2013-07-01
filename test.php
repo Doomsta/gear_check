@@ -8,7 +8,6 @@ if (isset($_GET['cn']))
 	$cn = $_GET['cn'];
     
 $char = new char($cn, true);
-$char->loadItems();
 $tooltips = new tooltips($tpl);
 $char->addItemTooltips($tooltips);
 

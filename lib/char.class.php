@@ -31,7 +31,9 @@ class char
             $this->stats[$value] = 0;
         if($loadFromCastle == TRUE)
            $this->loadFromCastle(TRUE);
-            
+        $this->loadItems();
+        $this->equipment = castleImport::checkGemBonus($this->equipment);
+        $this->equipment = castleImport::lookup_SockelBonus($this->equipment);
     }
     public function loadFromCastle($HandleArmoryQuirks = FALSE)
     {
@@ -128,6 +130,10 @@ class char
                 $stats[$gem['stat_type1']] += ($gem['stat_value1']*$gem['count']);  
                 $stats[$gem['stat_type2']] += ($gem['stat_value2']*$gem['count']);
         }
+        //add socket boni
+        foreach($this->equipment as $item)
+            if(isset($item['socketBonusActive']) AND $item['socketBonusActive'] === 1)
+                $stats[$item['socketBonus']['stat_type1']]  += $item['socketBonus']['stat_value1'];
         //clean up array 
         foreach($stats  as $key => $value)
         {

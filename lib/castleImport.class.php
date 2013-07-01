@@ -318,7 +318,6 @@ class castleImport
 		return $xml;
 
 	}
-
 	static function checkGemBonus($items)
 	{
 		$gems = array();
@@ -335,7 +334,6 @@ class castleImport
 		$color = array();
 		while ($row = mysql_fetch_assoc($result))
 			$color[$row['id']] = $row['color'];
-
 		foreach ($items as $slot => $item)
 		{
 			if (!isset($item['gems']))
@@ -348,13 +346,13 @@ class castleImport
 					$items[$slot]['socketBonusActive'] = false;
 					break;
 				}
-
 				// empty socket
 				if (!isset($gem['id']))
 				{
 					$items[$slot]['socketBonusActive'] = false;
 					break; // break, because activation can't happen anymore
 				}
+
 
 				// evaluate gem for sockets
 				$c = $color[$gem['id']];
@@ -364,7 +362,7 @@ class castleImport
 				if ($c == SocketColor::Prismatic) // gem is prismatic, fits everywhere
 					$result = true;
 				else {
-                    if(isset($gem['socketColor'])) break; 
+                    if(!isset($gem['socketColor'])) break; 
 					switch ($gem['socketColor']) {
 						case SocketColor::Red: // socket is red
 							if ($c == SocketColor::Red || $c == SocketColor::Orange || $c == SocketColor::Violet)
@@ -381,7 +379,7 @@ class castleImport
 						case SocketColor::Meta: // no need to recheck here, because we established earlier, that there is a socket in here
 						case SocketColor::Prismatic:
 							$result = true;
-							break;
+                            break;
 					}
 				}
 
@@ -389,6 +387,7 @@ class castleImport
 				{
 					$items[$slot]['socketBonusActive'] = $result;
 					$items[$slot]['gems'][$gemslot]['matching'] = $result;
+                    
 				}
 				else
 					$items[$slot]['socketBonusActive'] &= $result;
@@ -397,10 +396,33 @@ class castleImport
 					break;			
 			}
 		}
-
 		return $items;
 	}
-
+    
+    static function lookup_SockelBonus($items)
+    { 
+    	$boni = array();
+		foreach ($items as $item)
+			if (isset($item['socketBonus']))
+						$boni[$item['socketBonus']] = true;
+        $query = "SELECT  `id`, `stat_type1`, `stat_value1` FROM `test`.`socket_bonus` WHERE id IN (".implode(",", array_keys($boni)).")";
+		$result = mysql_query($query);
+        $boni = array();
+		while ($row = mysql_fetch_assoc($result))
+			$boni[$row['id']] = array('stat_type1' => $row['stat_type1'], 'stat_value1' => $row['stat_value1']);
+        foreach ($items as $i => $item)
+        {
+            if($items[$i]['socketBonus'] == 0)
+                continue;
+            if(isset($items[$i]['socketBonus']))
+                $items[$i]['socketBonus'] = array(
+                                                  'stat_type1' => $boni[$item['socketBonus']]['stat_type1'],
+                                                  'stat_value1' => $boni[$item['socketBonus']]['stat_value1']
+                                                  );
+        }
+    return($items);
+        
+    }
 
 	//############## ARENA/PvP #######################
 	public function getArenaTeams($teamSize = 2, $limit = 20)
@@ -453,6 +475,7 @@ class castleImport
 		return $out;
 	}
 	
+
 	private static function getXML($url)
 	{
 		$ch = curl_init();

@@ -70,12 +70,10 @@ class tooltips
 	        $tmp .= '<br />';
 		}
 		if($item['socketBonus'] != 0)
-		{
 			if (isset($item['socketBonusActive']) AND $item['socketBonusActive'])
-                $tmp .= '<span class=\'q2\'>Socket Bonus: +'.$item['socketBonus'].'</span><br />';
+                $tmp .= '<span class=\'q2\'>Socket Bonus: +'.$item['socketBonus']['stat_value1'].' '.$_stat_name[$item['socketBonus']['stat_type1']].'</span><br />';
 			else
-	            $tmp .= '<span class=\'q0\'>Socket Bonus: +'.$item['socketBonus'].'</span><br />';
-		}
+	            $tmp .= '<span class=\'q0\'>Socket Bonus: +'.$item['socketBonus']['stat_value1'].' '.$_stat_name[$item['socketBonus']['stat_type1']].'</span><br />';
 
 	// Durability (TODO)
 

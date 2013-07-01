@@ -20,7 +20,7 @@
   <tr valign="top">
     <td>
         <a href="http://wotlk.openwow.com/item={$items[$i]['id']}" target="_blank">
-            <img width="45" height="45" src="http://www.linuxlounge.net/~martin/wowimages/?item={$items[$i]['id']}" class="q{$item['rarity']}" />
+            <img width="45" height="45" src="http://www.linuxlounge.net/~martin/wowimages/?item={$items[$i]['id']}" class="q{$items[$i]['rarity']}" />
         </a>
     </td>
     <td>
@@ -40,7 +40,8 @@
     </td>
     <td align="right">
     <div>
-    <a href="#" rel="tooltip" data-placement='left' data-html='true' data-original-title="{$items[$i]['tooltip']}">[{$items[$i+8]['name']}]</a>[{$items[$i+8]['level']}]</div>
+    <a href="#" rel="tooltip" data-placement='left' data-html='true' data-original-title="{$items[$i+8]['tooltip']}">[{$items[$i+8]['name']}]</a>[{$items[$i+8]['level']}]
+    </div>
     {if $items[$i+8]['permanentEnchantItemId'] != 0}
         <a href="http://wotlk.openwow.com/item={$items[$i+8]['permanentEnchantItemId']}"><img width="24" height="24" src="http://www.linuxlounge.net/~martin/wowimages/?item={$items[$i+8]['permanentEnchantItemId']}" /></a>
     {/if}
@@ -54,7 +55,7 @@
     </td>
     <td>
         <a href="http://wotlk.openwow.com/item={$items[$i+8]['id']}" target="_blank">
-            <img width="45" height="45" src="http://www.linuxlounge.net/~martin/wowimages/?item={$items[$i+8]['id']}" class="q{$item['rarity']}" />
+            <img width="45" height="45" src="http://www.linuxlounge.net/~martin/wowimages/?item={$items[$i+8]['id']}" class="q{$items[$i+8]['rarity']}" />
         </a>
     </td>
   </tr>
@@ -63,11 +64,12 @@
     <tr>
         <td>
         <a href="http://wotlk.openwow.com/item={$items[$i]['id']}" target="_blank">
-            <img width="45" height="45" src="http://www.linuxlounge.net/~martin/wowimages/?item={$items[$i]['id']}" class="q{$item['rarity']}" />
+            <img width="45" height="45" src="http://www.linuxlounge.net/~martin/wowimages/?item={$items[$i]['id']}" class="q{$items[$i]['rarity']}" />
         </a>
     </td>
     <td  colspan="3">
-    <div>[{$items[$i]['level']}]<a href="#" rel="tooltip" data-placement='right' data-html='true' data-original-title="{$items[$i]['tooltip']}">[{$items[$i]['name']}]</a></div>
+    <div>[{$items[$i]['level']}]<a href="#" rel="tooltip" data-placement='right' data-html='true' data-original-title="{$items[$i]['tooltip']}">[{$items[$i]['name']}]</a>
+    </div>
     {if $items[$i]['permanentEnchantItemId'] != 0}
         <a href="http://wotlk.openwow.com/item={$items[$i]['permanentEnchantItemId']}"><img width="24" height="24" src="http://www.linuxlounge.net/~martin/wowimages/?item={$items[$i]['permanentEnchantItemId']}" /></a>
     {/if}
@@ -94,6 +96,6 @@ gem count<br />
 {/if}
 {/foreach}
 <h3>PvP</h3>
-
+</div>
 
 
