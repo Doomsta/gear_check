@@ -303,6 +303,11 @@ $_spell_desc = array(
     50354 => 'Heilt ein befreundetes Ziel sofort um 7400 to 8600. (2 Min Abklingzeit)',
     71585 => 'Beim Wirken eines Zaubers besteht die Chance, dass Ihr 15 Sek lang 304 Mana alle 5 Sek. gewinnt.',
     71586 => 'Absorbiert 6400 Schaden. Hält 10 Sek. lang an. (2 Min Abklingzeit)',
+    71565 => 'Restores 1625 mana.',
+    71574 => 'Restores 1830 mana.',
+    72770 => 'Summons a Cadaver that will protect you for 1 min.',
+    //icc ringe
+    71655 => 'Your helpful spells have a chance to increase your spell power by 285 for 10 sec.',
     72413 => 'Chance bei Treffer, Eure Angriffskraft 10 Sek. lang um 480 zu erhöhen.',
     73961 => 'Chance bei Treffer, Eure Angriffskraft 10 Sek. lang um 480 zu erhöhen.',
     71650 => 'Chance bei Treffer, Eure Angriffskraft 10 Sek. lang um 480 zu erhöhen.',
@@ -310,6 +315,10 @@ $_spell_desc = array(
     71168 => '', //Unerfülltes Verlangen Beschreibt die Aura von Schattenschneide
     //PvP sets
     22778 => 'Reduces the rage cost of your Hamstring ability by 3.',
+    32973 => 'Improves the range of your Shock and Wind Shear spells by 5 yards.',
+    44297 => 'Reduces the cooldown of your Psychic Scream ability by 3000 sec.',
+    33063 => 'Reduces the pushback suffered from damaging attacks while casting Fear by 50%.',
+    62459 => 'Your Chains of Ice ability now generates an additional 50 runic power.',
     //pdk
     67752 => 'Jedes Mal, wenn Ihr einen Zauber wirkt, gewinnt Ihr 10 Sek. lang 18 Mana alle 5 Sek. Bis zu 8-mal stapelbar.',
     67698 => 'Jedes Mal, wenn Ihr einen Zauber wirkt, gewinnt Ihr 10 Sek. lang 16 Mana alle 5 Sek. Bis zu 8-mal stapelbar.',
@@ -321,10 +330,15 @@ $_spell_desc = array(
     71581 => 'Eure Offensivzauber haben eine Chance, bei einem Treffer Eure Zaubermacht 10 Sek. lang um 285 zu erhöhen.',
 
    //other
+    71404 => 'Chance on melee or ranged critical strike to increase your armor penetration rating by 678 for 10 sec.',
+    57818 => '', //Has Tabard
+    71563 => 'Increases your critical strike rating by 184 for 20 sec. Every time one of your non-periodic spells deals a critical strike, the bonus is reduced by 184 critical strike rating.',
     64707 => 'Erhöht 20 Sek. lang Euer Tempo um 432. (2 Min Abklingzeit)',
     42292 => 'Entfernt alle bewegungseinschränkenden Effekte sowie alle Effekte, die den Verlust der Kontrolle über Euren Charakter verursachen. (2 Min Abklingzeit)',
     44301 => 'Verringert die globale Abklingzeit Eures Zaubers \'Blinzeln\' um 0.5 Sek.',
+    67684 => 'Increases spell power by 599 for 20 sec.',
     //pala
+    71186 => 'Your Crusader Strike ability grants 44 Strength for 15 sec. Stacks up to 5 times.',
     60636 => 'Your Crusader Strike ability also grants you 204 attack power for 10 sec.',
     51472 => 'Increases spell power of Flash of Light by 510.',
     71191 => 'Your Holy Shock heals grant 85 spell power for 15 sec. Stacks up to 3 times.',
