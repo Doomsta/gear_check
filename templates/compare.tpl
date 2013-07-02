@@ -26,8 +26,8 @@
             {$gem['name']}
         </a>
     </td>
-{foreach from=$gem['count'] item=value}
-    <td>{$value}</td>
+{foreach from=$gem['count']  item=value}
+    <td>{$value['absolute']}</td>
 {/foreach}
   </tr>
 {/foreach}
@@ -38,7 +38,17 @@
   <tr>
     <td>{$_stat_name[$id]}</td>
 {foreach from=$stat item=value}
-    <td>{$value}</td>
+{if $value['relativ'] == 100}    
+<td style="background-color:#F78181">
+{/if}
+{if $value['relativ'] >= 80 AND $value['relativ'] < 100}    
+<td style="background-color:#2EFE9A">
+{/if}
+{if $value['relativ'] >= 0 AND $value['relativ'] < 80}    
+<td style="background-color:">
+{/if}
+        {$value['absolute']}
+    </td>
 {/foreach}
   </tr>
 {/foreach}
