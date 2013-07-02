@@ -415,10 +415,18 @@ class castleImport
             if($items[$i]['socketBonus'] == 0)
                 continue;
             if(isset($items[$i]['socketBonus']))
+            {
+                if(!isset($boni[$item['socketBonus']]))
+                {
+                    global $tpl;
+                    $tpl->print_error('Undefined SockelBonus ID: '.$item['socketBonus'].' ItemID: '.$items[$i]['id']);
+                    continue;
+                }                
                 $items[$i]['socketBonus'] = array(
                                                   'stat_type1' => $boni[$item['socketBonus']]['stat_type1'],
                                                   'stat_value1' => $boni[$item['socketBonus']]['stat_value1']
                                                   );
+            }
         }
     return($items);
         

@@ -60,13 +60,21 @@
 <div class="container">
     <div class="row">
         <div class="span12">
-	
-
+        
+           <!-- alert print
+           =========================================-->	
+           {if isset($ERROR_MSG)}
+           {foreach from=$ERROR_MSG item=error}
+                <div class="alert alert-block alert-error fade in">
+                <button type="button" class="close" data-dismiss="alert">×</button>
+                <h4 class="alert-heading">{$error['head']}</h4>
+                <p>{$error['text']}</p>
+                </div>
+              {/foreach}  
+             {/if}
             <!-- Overview
             ================================================== -->
             {include file="{$TEMPLATEFILE}"}
-
-            {include file="debug.tpl"}
         </div>
     </div>
 </div>
