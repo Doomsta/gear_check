@@ -10,6 +10,7 @@ class tpl
 	private $css_code;
 	private $script = "";
 	private $icon;
+	private $errors;
 	private $base_template = 'page.tpl';
 	
 	function __construct() 
@@ -27,7 +28,12 @@ class tpl
 	{
 		$this->css_files .= '<link href="'.$path.'" rel="stylesheet">'."\n";
 	}
-	
+    
+	function print_error($msg,$head = 'Oh snap! There is an error!')
+    {
+        $this->errors[] = array('head' => $head, 'text' => $msg);
+    }
+    
 	function add_nav_links($array)
 	{
 		// get current active page to determine whether to show submenu
@@ -117,6 +123,7 @@ class tpl
 	
 	function display()
 	{
+        $this->smarty->assign("ERROR_MSG", $this->errors);
 		$this->smarty->assign("JS_FILES", $this->js_files); 
 		$this->smarty->assign("TEMPLATEFILE", $this->tpl_file);
 		$this->smarty->assign("CSS_FILES", $this->css_files);
