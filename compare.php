@@ -6,12 +6,18 @@ require_once($rootpath.'lib/char.class.php');
 
 define('MAX_CHARS', '16');
 
-for($i=0;$i<MAX_CHARS;$i++)
+if(isset($_GET['cns']))
+        $cn = explode(",",$_GET['cns']);
+for($i=0;$i<count($cn);$i++)
 {
-    if(!isset($_GET['cn'.$i]))
-        continue;
-    $cn[$i] = $_GET['cn'.$i];
-    $chars[$i] = new char($cn[$i], true);
+    if( $cache->getCachedTime($cn[$i]) < 60 AND $cache->getCachedTime($cn[$i]) != false)
+        $chars[$i] = $cache->load($cn[$i]);
+    else
+    {
+        $chars[$i] = new char($cn[$i], true);
+        $cache->store($cn[$i],$chars[$i]); 
+    }
+
     
     $tmp[$i]['char'] = $chars[$i]->getCharArray();
     $data['name'][$i] = $tmp[$i]['char']['name']; 
