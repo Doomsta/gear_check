@@ -56,7 +56,7 @@ class tooltips
             if(isset($gem['id']))
             {
                  $query  = "SELECT `stat_type1`, `stat_value1`, `stat_type2`, `stat_value2` 
-                    FROM `".MYSQL_DATABASE_TDB."`.`socket_stats` 
+                    FROM `".MYSQL_DATABASE."`.`socket_stats` 
                     WHERE `id` = ".$gem['id'];
                  $result = mysql_query($query);
                 $row = mysql_fetch_assoc($result);
@@ -130,7 +130,7 @@ class tooltips
         if ($tpl['itemset'] > 0)
         {
             // set info
-            $query = "SELECT `name` FROM `item_set_names` WHERE `entry` = ".$tpl['entry']."";
+            $query = "SELECT `name` FROM `".MYSQL_DATABASE_TDB."`.`item_set_names` WHERE `entry` = ".$tpl['entry']."";
             $result = mysql_query($query);
            $row = mysql_fetch_assoc($result);
 
@@ -143,7 +143,7 @@ class tooltips
 
     function get_item_template($item_id)
     {
-        $query = "SELECT * FROM ".MYSQL_DATABASE_TDB.".item_template  WHERE entry = ".$item_id;
+        $query = "SELECT * FROM `".MYSQL_DATABASE_TDB."`.`item_template`  WHERE `entry` = '".$item_id."'";
 
         $result = mysql_query($query) or die(mysql_error());
         if (mysql_num_rows($result) == 0)
