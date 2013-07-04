@@ -20,6 +20,7 @@ for($i=0;$i<count($cn);$i++)
     }
     
     $data['avgItemLevel'][$i] = $chars[$i]->getAvgItemLevel();
+    $data['talent'][$i] = $chars[$i]->getActiveTalent();
     
     $tmp[$i]['char'] = $chars[$i]->getCharArray();
     $data['name'][$i] = $tmp[$i]['char']['name']; 

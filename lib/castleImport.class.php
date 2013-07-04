@@ -18,6 +18,24 @@ class castleImport
 		$out['guildName'] = (string) $xml->characterInfo->character['guildName'];
 		$out['level'] = (int) $xml->characterInfo->character['level'];
 		$out['points'] = (int) $xml->characterInfo->character['points'];
+        $out['talents'] = array();
+        foreach($xml->characterInfo->characterTab->talentSpecs->talentSpec as $spec)
+            if($spec['active'] == 1)
+                $out['talents']['active'] = array(
+                                                        'icon' => (string) $spec['icon'],
+                                                        'name' => (string) $spec['prim'],
+                                                        '1' => (int) $spec['treeOne'],
+                                                        '2' => (int) $spec['treeTwo'],
+                                                        '3' => (int) $spec['treeThree'],
+                                                        );
+            else
+                $out['talents']['inaktive'] = array(
+                                                        'icon' => (string) $spec['icon'],
+                                                        'name' => (string) $spec['prim'],
+                                                        '1' => (int) $spec['treeOne'],
+                                                        '2' => (int) $spec['treeTwo'],
+                                                        '3' =>(int)  $spec['treeThree'],
+                                                        );
 		if(isset($xml->characterInfo->character->arenaTeams->arenaTeam))
 		{
 			foreach($xml->characterInfo->character->arenaTeams->arenaTeam as $arenaTeam)
