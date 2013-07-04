@@ -3,13 +3,14 @@ $rootpath = './';
 include ($rootpath.'common.php');
 require_once($rootpath.'lib/castleImport.class.php');
 require_once($rootpath.'lib/char.class.php');
-
+$tmp2 = 0;
 define('MAX_CHARS', '16');
 
 if(isset($_GET['cns']))
         $cn = explode(",",$_GET['cns']);
 for($i=0;$i<count($cn);$i++)
 {
+    //handle cache
     if( $cache->getCachedTime($cn[$i]) < 60 AND $cache->getCachedTime($cn[$i]) != false)
         $chars[$i] = $cache->load($cn[$i]);
     else
@@ -17,7 +18,8 @@ for($i=0;$i<count($cn);$i++)
         $chars[$i] = new char($cn[$i], true);
         $cache->store($cn[$i],$chars[$i]); 
     }
-
+    
+    $data['avgItemLevel'][$i] = $chars[$i]->getAvgItemLevel();
     
     $tmp[$i]['char'] = $chars[$i]->getCharArray();
     $data['name'][$i] = $tmp[$i]['char']['name']; 
