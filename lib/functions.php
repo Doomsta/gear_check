@@ -39,7 +39,7 @@ function add_item_gems($item)
 
 function get_gems_stats($id)
 {
-    $query = "SELECT `name`, `color`, `stat_type1`, `stat_value1`, `stat_type2`, `stat_value2` FROM test.socket_stats2 WHERE id = \"$id\"";
+    $query = "SELECT `name`, `color`, `stat_type1`, `stat_value1`, `stat_type2`, `stat_value2` FROM `". MYSQL_DATABASE ."`.`socket_stats` WHERE id = \"$id\"";
     $result = mysql_query($query);
 	$data = mysql_fetch_array($result);
     for($i=0;$i<6;$i++)

@@ -345,7 +345,7 @@ class castleImport
 					if (isset($gem['id']))
 						$gems[$gem['id']] = true;
 
-		$query = "SELECT id, name, color FROM test.socket_stats2 WHERE id IN (".implode(",", array_keys($gems)).")";
+		echo $query = "SELECT `id`, `name`, `color` FROM `".MYSQL_DATABASE."`.`socket_stats` WHERE id IN (".implode(",", array_keys($gems)).")";
 		unset($gems);
 		$result = mysql_query($query);
 
@@ -426,7 +426,7 @@ class castleImport
 		foreach ($items as $item)
 			if (isset($item['socketBonus']))
 						$boni[$item['socketBonus']] = true;
-        $query = "SELECT  `id`, `stat_type1`, `stat_value1` FROM `'. MYSQL_DATABASE_TDB .'`.`socket_bonus` WHERE id IN (".implode(",", array_keys($boni)).")";
+        $query = "SELECT  `id`, `stat_type1`, `stat_value1` FROM `". MYSQL_DATABASE ."`.`socket_bonus` WHERE id IN (".implode(",", array_keys($boni)).")";
 		$result = mysql_query($query);
         $boni = array();
 		while ($row = mysql_fetch_assoc($result))
