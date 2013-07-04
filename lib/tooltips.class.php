@@ -115,7 +115,7 @@ class tooltips
 
     function get_item_template($item_id)
     {
-        $query = "SELECT * FROM item_template WHERE entry = ".$item_id;
+        $query = "SELECT * FROM ".MYSQL_DATABASE_TDB.".item_template  WHERE entry = ".$item_id;
 
         $result = mysql_query($query) or die(mysql_error());
         if (mysql_num_rows($result) == 0)
