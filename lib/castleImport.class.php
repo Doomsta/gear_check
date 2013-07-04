@@ -345,7 +345,7 @@ class castleImport
 					if (isset($gem['id']))
 						$gems[$gem['id']] = true;
 
-		echo $query = "SELECT `id`, `name`, `color` FROM `".MYSQL_DATABASE."`.`socket_stats` WHERE id IN (".implode(",", array_keys($gems)).")";
+		$query = "SELECT `id`, `name`, `color` FROM `".MYSQL_DATABASE."`.`socket_stats` WHERE id IN (".implode(",", array_keys($gems)).")";
 		unset($gems);
 		$result = mysql_query($query);
 

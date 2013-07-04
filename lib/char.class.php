@@ -142,7 +142,7 @@ class char
         }
         //add socket boni
         foreach($this->equipment as $item)
-            if(isset($item['socketBonusActive']) AND $item['socketBonusActive'] ==1)
+            if(isset($item['socketBonus']['stat_value1']) AND isset($item['socketBonusActive']) AND $item['socketBonusActive'] == 1)
                 $stats[$item['socketBonus']['stat_type1']]  += $item['socketBonus']['stat_value1'];
         //clean up array 
         foreach($stats  as $key => $value)
