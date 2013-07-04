@@ -15,9 +15,14 @@
 {/foreach}
   </tr>
   <tr>
-    <td>Spec</td>
-{foreach from=$data['talent'] item=spec}
-    <td>{$spec['name']}</td>
+    <td>Klasse/Skillung</td>
+{foreach from=$data['talent'] key=id item=spec}
+    <td>
+        <div style="min-width:80px;">
+            <img src="./img/classes/{$data['classId'][$id]}_b.png" height="35" width="35" />
+            <img src="http://armory.wow-castle.de/wow-icons/_images/43x43/{$spec['icon']}.png" height="35" width="35" />
+        </div>
+    </td>
 {/foreach}
   </tr>
   <tr>
@@ -25,7 +30,7 @@
 {foreach from=$data['avgItemLevel'] item=avg}
     <td>{$avg}</td>
 {/foreach}
-  </tr>
+  </tr> 
   <tr>
     <td colspan="{$count+1}">Gems</td>
   </tr>

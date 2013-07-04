@@ -24,6 +24,7 @@ for($i=0;$i<count($cn);$i++)
     
     $tmp[$i]['char'] = $chars[$i]->getCharArray();
     $data['name'][$i] = $tmp[$i]['char']['name']; 
+    $data['classId'][$i] = $tmp[$i]['char']['classId']; 
     
     $tmp[$i]['stats'] = $chars[$i]->getStats();
     foreach($tmp[$i]['stats']  as $j => $value)
