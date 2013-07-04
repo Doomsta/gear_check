@@ -307,6 +307,7 @@ $_spell_desc = array(
     71574 => 'Restores 1830 mana.',
     72770 => 'Summons a Cadaver that will protect you for 1 min.',
     48645 => 'Increases the block value of your shield by 147',
+    67515 => 'Erhöht den Blockwert Eures Schildes um 189',
     67742 => 'Each time you are struck by an attack, you gain 1422 armor. Stacks up to 5 times. Entire effect lasts 20 sec.',
     71634 => 'Melee attacks which reduce you below 35% health cause you to gain 5712 armor for 10 sec. Cannot occur more than once every 30 sec.',
     //icc ringe
@@ -324,6 +325,7 @@ $_spell_desc = array(
     33063 => 'Reduces the pushback suffered from damaging attacks while casting Fear by 50%.',
     62459 => 'Your Chains of Ice ability now generates an additional 50 runic power.',
     //pdk
+    66238 => 'Teleports the caster to the Argent Tournament Grounds.',
     67752 => 'Jedes Mal, wenn Ihr einen Zauber wirkt, gewinnt Ihr 10 Sek. lang 18 Mana alle 5 Sek. Bis zu 8-mal stapelbar.',
     67698 => 'Jedes Mal, wenn Ihr einen Zauber wirkt, gewinnt Ihr 10 Sek. lang 16 Mana alle 5 Sek. Bis zu 8-mal stapelbar.',
     67712 => 'Jedes Mal, wenn Ihr einen unregelmäßigen kritischen Zaubertreffer erzielt, gewinnt Ihr einen Flammenpartikel. Sobald sich 3 Partikel angesammelt haben, werden sie eine Flammensäule auslösen, die 1741 to 2023 Schaden verursacht. Flammenpartikel können nicht öfter als ein Mal alle 2 Sek. gewonnen werden.',
@@ -335,6 +337,8 @@ $_spell_desc = array(
     67744 => 'Each time you cast a harmful spell, you gain 64 haste rating. Stacks up to 8 times. Entire effect lasts 20 sec.',
     67694 => 'Increases dodge rating by 512 for 20 sec.',
    //other
+    65012 => 'Erhöht das Parieren 20 Sek. lang um 380.',
+    57345 => 'When you heal or deal damage you have a chance to gain Greatness, increasing your Strength, Agility, Intellect, or Spirit by 300 for 15 sec. Your highest stat is always chosen.',
     60180 => 'Increases maximum health by 3025 for 15 sec.',
     71404 => 'Chance on melee or ranged critical strike to increase your armor penetration rating by 678 for 10 sec.',
     57818 => '', //Has Tabard
@@ -344,6 +348,7 @@ $_spell_desc = array(
     44301 => 'Verringert die globale Abklingzeit Eures Zaubers \'Blinzeln\' um 0.5 Sek.',
     67684 => 'Increases spell power by 599 for 20 sec.',
     //pala
+    67379 => 'Each time you use your Hammer of The Righteous ability, you have a chance to gain 200 dodge rating for 18 sec.',
     71186 => 'Your Crusader Strike ability grants 44 Strength for 15 sec. Stacks up to 5 times.',
     60636 => 'Your Crusader Strike ability also grants you 204 attack power for 10 sec.',
     51472 => 'Increases spell power of Flash of Light by 510.',
