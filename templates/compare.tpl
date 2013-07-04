@@ -15,6 +15,12 @@
 {/foreach}
   </tr>
   <tr>
+    <td>Spec</td>
+{foreach from=$data['talent'] item=spec}
+    <td>{$spec['name']}</td>
+{/foreach}
+  </tr>
+  <tr>
     <td>Avg</td>
 {foreach from=$data['avgItemLevel'] item=avg}
     <td>{$avg}</td>

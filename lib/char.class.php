@@ -4,6 +4,7 @@ class char
     private $name, $prefix, $suffix, $race, $class, $guild, $level, $achievement_points;
     private $equipment = array();
     private $stats = array();
+    private $talents = array();
     private $arena = array();
     
     private $slotOrder = array(1, 2, 3, 15, 5, 4, 19, 9, 10, 6, 7, 8, 11, 12, 13, 14, 16, 17, 18);
@@ -47,6 +48,7 @@ class char
         $this->name = $tmp['name'];
         $this->prefix= $tmp['prefix'];
         $this->suffix = $tmp['suffix'];
+        $this->talents = $tmp['talents'];
         $this->race= $tmp['raceId'];
         $this->class = $tmp['classId'];
         $this->guild = $tmp['guildName'];
@@ -73,6 +75,11 @@ class char
     {
          foreach($this->slotOrder as $i)
             $this->equipment[$i]['tooltip'] = $tooltip->get_item_tooltip($this->equipment[$i]);
+    }
+    
+    public function getActiveTalent()
+    {
+        return $this->talents['active'];
     }
     
     public function getEquipmentStats()
@@ -136,10 +143,8 @@ class char
         //add socket boni
         foreach($this->equipment as $item)
             if(isset($item['socketBonusActive']) AND $item['socketBonusActive'] ==1)
-            {
                 $stats[$item['socketBonus']['stat_type1']]  += $item['socketBonus']['stat_value1'];
-        }
-            //clean up array 
+        //clean up array 
         foreach($stats  as $key => $value)
         {
             if($value == 0)
