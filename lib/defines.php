@@ -58,6 +58,7 @@ class SocketColor {
 # stat->type to stat->id
 # http://collab.kpsn.org/display/tc/Item+template+tc2#Itemtemplatetc2-stat_type
 class ItemStats {
+    const ITEM_MOD_ARMOR = -1; // quirks
     const ITEM_MOD_MANA = 0;
     const ITEM_MOD_HEALTH = 1;
     const ITEM_MOD_AGILITY = 3;
@@ -225,7 +226,7 @@ $_inventory_type = array(
 	2	=> "Hals",
 	3	=> "Schulter",
 	4	=> "Hemd",
-	5	=> "Brust (Chest)", // Chest
+	5  => "Brust (Chest)", // Chest
 	6	=> "Taille",
 	7	=> "Beine",
 	8	=> "F&uuml;&szlig;e",
@@ -253,8 +254,10 @@ $_inventory_type = array(
 
 #stat->id to name 
 $_stat_name = array(
+     -1 => 'R&uuml;stung',
       0 => 'Mana',
       1 => 'Leben',
+      // 2 => probably faulty/missing socket bonus (like 2952, +4 crit)
       3 => 'Beweglichkeit',
       4 => 'St&auml;rke',
       5 => 'Intelligenz',
@@ -274,6 +277,7 @@ $_stat_name = array(
       43 => 'Mana alle 5 Sek.',
       45 => 'Zaubermacht',
       44 => 'Rüstungsdurchschlagwertung',
+      46 => 'Leben alle 5 Sek.',
       47 => 'Zauberdurchschlag',
       48 => 'Blockwert eures Schildes'
 );
