@@ -11,7 +11,13 @@
   <tr>
     <td>Name</td>
 {foreach from=$data['name'] item=name}
-    <td>{$name}</td>
+    <td><a href="test.php?cn={$name}">{$name}</a></td>
+{/foreach}
+  </tr>
+  <tr>
+    <td>Avg</td>
+{foreach from=$data['avgItemLevel'] item=avg}
+    <td>{$avg}</td>
 {/foreach}
   </tr>
   <tr>
