@@ -53,9 +53,12 @@ class tooltips
 		{
 			if(!isset($gem['socketColor']))
 	            break;
-	        switch ($gem['socketColor']) {
+           if(isset($gem['id']))
+                        $tmp .='<a><img src=\'http://www.linuxlounge.net/~martin/wowimages/?item='.$gem['id'].'\' height=\'16\' width=\'16\'>'.$gem['id'].'</a>';
+          else
+            switch ($gem['socketColor']) {
 	            case 1: //meta
-	                $tmp .='<a class=\'socket-meta q0\'>Meta Socket</a>';
+                        $tmp .='<a class=\'socket-meta q0\'>Meta Socket</a>';
 	                break;
 	            case 2: //red
 	                $tmp .='<a class=\'socket-red q0\'>Red Socket</a>';
@@ -100,7 +103,8 @@ class tooltips
 	{
 		if (!isset($_spell_desc[$tpl['spellid_1']]))
 			echo "Missing Spell Description ".$tpl['spellid_1']."<br />";
-		$tmp .= '<span class=\'q2\'>Anlegen: '.$_spell_desc[$tpl['spellid_1']].'</span><br />';
+        else
+            $tmp .= '<span class=\'q2\'>Anlegen: '.$_spell_desc[$tpl['spellid_1']].'</span><br />';
 	}
 
         $tmp .='       </td>
