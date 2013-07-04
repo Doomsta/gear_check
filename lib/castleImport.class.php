@@ -231,7 +231,7 @@ class castleImport
 			if (!isset($xml['items'][$i]))
 				continue;
 	
-			$query = "SELECT subclass FROM item_template WHERE entry = ".$xml['items'][$i]['id']."";
+			$query = 'SELECT `subclass` FROM `'. MYSQL_DATABASE_TDB .'`.`item_template` WHERE `entry` = "'.$xml['items'][$i]['id'].'"';
 			$result = mysql_query($query);
 			$row = mysql_fetch_assoc($result);
 
