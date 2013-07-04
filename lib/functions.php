@@ -1,14 +1,14 @@
 <?php
 function get_item_stats($id)
 {
-	$query = 'SELECT `stat_type1`, `stat_value1`, `stat_type2`, `stat_value2`, `stat_type3`, `stat_value3`,  
-				`stat_type4`, `stat_value4`, `stat_type5`, `stat_value5`,  
-				`stat_type6`, `stat_value6`, `stat_type7`, `stat_value7`,  
-				`stat_type8`, `stat_value8` 
-			FROM `'. MYSQL_DATABASE_TDB .'`.`item_template` 
-			WHERE `entry` = \''.$id.'\'';
+     $query = 'SELECT `armor`, `stat_type1`, `stat_value1`, `stat_type2`, `stat_value2`, `stat_type3`, `stat_value3`,  
+                                `stat_type4`, `stat_value4`, `stat_type5`, `stat_value5`,  
+                                `stat_type6`, `stat_value6`, `stat_type7`, `stat_value7`,  
+                                `stat_type8`, `stat_value8` 
+                        FROM `'. MYSQL_DATABASE_TDB .'`.`item_template` 
+                        WHERE `entry` = \''.$id.'\'';
 	$result = mysql_query($query);
-	$tmp = mysql_fetch_array($result);
+	$tmp = mysql_fetch_assoc($result);
 	$data = array();
 	for($i=1;$i<9;$i++)
 	{
@@ -16,6 +16,9 @@ function get_item_stats($id)
 			break;
 		$data[$tmp['stat_type'.$i]] = $tmp['stat_value'.$i];
 	}
+    // armor value
+    $data[ItemStats::ITEM_MOD_ARMOR] = $tmp['armor'];
+    // sort & return
     ksort($data);
 	return $data;
 }

@@ -46,17 +46,32 @@ class tooltips
 			if ($key < ItemStats::ITEM_MOD_AGILITY OR $key > ItemStats::ITEM_MOD_STAMINA)
 				continue;
 			$tmp .= '<span class=\'q1\'>+'.$value.' '.$_stat_name[$key].'</span><br />';
-		}
+        }
 
         // Gems
-		foreach($item['gems'] as $gem)
-		{
-			if(!isset($gem['socketColor']))
-	            break;
-           if(isset($gem['id']))
-                        $tmp .='<a><img src=\'http://www.linuxlounge.net/~martin/wowimages/?item='.$gem['id'].'\' height=\'16\' width=\'16\'>'.$gem['id'].'</a>';
-          else
-            switch ($gem['socketColor']) {
+        foreach($item['gems'] as $gem)
+        {
+            if(!isset($gem['socketColor']))
+                 break;
+            if(isset($gem['id']))
+            {
+                 $query  = "SELECT `stat_type1`, `stat_value1`, `stat_type2`, `stat_value2` 
+                    FROM `".MYSQL_DATABASE_TDB."`.`socket_stats` 
+                    WHERE `id` = ".$gem['id'];
+                 $result = mysql_query($query);
+                $row = mysql_fetch_assoc($result);
+
+                 // first property
+                 $str = " +".$row['stat_value1']." ".$_stat_name[$row['stat_type1']];
+
+                 // second property
+                 if ($row['stat_type2'] != 0)
+                     $str .= " und +".$row['stat_value2']." ".$_stat_name[$row['stat_type2']]."";
+
+                $tmp .='<img src=\'http://www.linuxlounge.net/~martin/wowimages/?item='.$gem['id'].'\' height=\'16\' width=\'16\'>'.$str.'';
+           }
+            else
+                switch ($gem['socketColor']) {
 	            case 1: //meta
                         $tmp .='<a class=\'socket-meta q0\'>Meta Socket</a>';
 	                break;
@@ -110,6 +125,19 @@ class tooltips
         $tmp .='       </td>
             </tr>
         </table></div>';
+
+        // Item Set
+        if ($tpl['itemset'] > 0)
+        {
+            // set info
+            $query = "SELECT `name` FROM `item_set_names` WHERE `entry` = ".$tpl['entry']."";
+            $result = mysql_query($query);
+           $row = mysql_fetch_assoc($result);
+
+            $tmp .= "Set: ".$row['name']." (".$tpl['itemset'].")";
+
+        }
+
         return($tmp);
     }
 
