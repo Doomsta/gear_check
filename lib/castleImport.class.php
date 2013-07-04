@@ -342,7 +342,10 @@ class castleImport
 			{
 				if (isset($gem['id']) AND !isset($color[$gem['id']]))
 				{
-					echo "Missing Gem Entry ".$gem['id']."<br />";
+                    global $tpl;
+                    $tpl->print_error('Missing Spell Description: '.$gem['id']);
+                    continue;
+
 					$items[$slot]['socketBonusActive'] = false;
 					break;
 				}
