@@ -122,12 +122,19 @@ class char
     
     public function getStats($base = TRUE, $items = TRUE, $gems = TRUE)
     { 
-    //TODO base stats
-        $stats;
+        $stats = array();
         global $_stat_name;
         //init whole array
         foreach($_stat_name as $key => $value)
             $stats[$key] = 0;
+        //add base stats
+        $baseStats = $this->getRaceBaseStats();
+        foreach($baseStats as $statId => $statValue)
+            $stats[$statId] += $statValue;
+        //add class stats
+        $classStats = $this->getClassStats();
+        foreach($classStats as $statId => $statValue)
+            $stats[$statId] += $statValue;
         //add gear stats
         $eqstats = $this->getEquipmentStats();
         foreach($eqstats  as $key => $eqstat)
@@ -185,6 +192,34 @@ class char
         return $tmp;
     }
     
+    public function getClassStats()
+    {
+        if(!isset($this->level) OR !isset($this->class))
+            return false;
+        if($this->level == 0)
+            return array();
+
+       $query = 'SELECT `stat_value`, `stat_type` 
+                        FROM `'. MYSQL_DATABASE .'`.`class_attribute_effects` 
+                        WHERE `class` = "'.$this->class. '"';
+        $result = mysql_query($query);
+        while($row = mysql_fetch_assoc($result))
+            $tmp[$row['stat_type']] = $row['stat_value']*$this->level;
+        return $tmp;    
+    }
+    
+    public function getRaceBaseStats()
+    {
+        if(!isset($this->race))
+            return false;
+        $query = 'SELECT `stat_value`, `stat_type` 
+                        FROM `'. MYSQL_DATABASE .'`.`race_base_stats` 
+                        WHERE `race` = "'.$this->race. '"';
+        $result = mysql_query($query);
+        while($row = mysql_fetch_assoc($result))
+            $tmp[$row['stat_type']] = $row['stat_value'];
+        return $tmp;
+    }
     //debug
     public function getItems($slots = false)
     {
