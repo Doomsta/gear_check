@@ -135,9 +135,11 @@ class char
         }
         //add socket boni
         foreach($this->equipment as $item)
-            if(isset($item['socketBonusActive']) AND $item['socketBonusActive'] === 1)
+            if(isset($item['socketBonusActive']) AND $item['socketBonusActive'] ==1)
+            {
                 $stats[$item['socketBonus']['stat_type1']]  += $item['socketBonus']['stat_value1'];
-        //clean up array 
+        }
+            //clean up array 
         foreach($stats  as $key => $value)
         {
             if($value == 0)
@@ -149,9 +151,16 @@ class char
     public function getAvgItemLevel()
     {
         $tmp = 0;
-        foreach($this->equipment as $item )
-            $tmp += $item['level'];
-        $tmp = round($tmp/17,1); //TODO 1h/off /17 2h /16
+        foreach($this->equipment as $slot =>$item )
+        {
+            if($slot == 4 OR $slot == 19)
+                continue;
+             $tmp += $item['level'];
+        }
+        if(isset($this->equipment[16]['name']) AND isset($this->equipment[17]['name']))
+            $tmp = round(($tmp/17),1); 
+        else
+            $tmp = round(($tmp/16),1); 
         return $tmp;
     }    
     public function getGetGearStats()
