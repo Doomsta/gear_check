@@ -9,7 +9,7 @@ class castleImport
 		$xml = castleImport::getXML(castleImport::$armoryUrl.'character-sheet.xml?r=WoW-Castle+PvE&cn='.$name);
 		if($xml->characterInfo->character['name'] == false)
 			return false;
-
+		
 		$out['name'] = (string) $xml->characterInfo->character['name'];
 		$out['prefix'] = (string) $xml->characterInfo->character['prefix'];
 		$out['suffix'] = (string) $xml->characterInfo->character['suffix'];
@@ -18,24 +18,24 @@ class castleImport
 		$out['guildName'] = (string) $xml->characterInfo->character['guildName'];
 		$out['level'] = (int) $xml->characterInfo->character['level'];
 		$out['points'] = (int) $xml->characterInfo->character['points'];
-        $out['talents'] = array();
-        foreach($xml->characterInfo->characterTab->talentSpecs->talentSpec as $spec)
-            if($spec['active'] == 1)
-                $out['talents']['active'] = array(
-                                                        'icon' => (string) $spec['icon'],
-                                                        'name' => (string) $spec['prim'],
-                                                        '1' => (int) $spec['treeOne'],
-                                                        '2' => (int) $spec['treeTwo'],
-                                                        '3' => (int) $spec['treeThree'],
-                                                        );
-            else
-                $out['talents']['inaktive'] = array(
-                                                        'icon' => (string) $spec['icon'],
-                                                        'name' => (string) $spec['prim'],
-                                                        '1' => (int) $spec['treeOne'],
-                                                        '2' => (int) $spec['treeTwo'],
-                                                        '3' =>(int)  $spec['treeThree'],
-                                                        );
+		$out['talents'] = array();
+		foreach($xml->characterInfo->characterTab->talentSpecs->talentSpec as $spec)
+		if($spec['active'] == 1)
+			$out['talents']['active'] = array(
+				'icon' => (string) $spec['icon'],
+				'name' => (string) $spec['prim'],
+				'1' => (int) $spec['treeOne'],
+				'2' => (int) $spec['treeTwo'],
+				'3' => (int) $spec['treeThree'],
+			);
+		else
+			$out['talents']['inaktive'] = array(
+				'icon' => (string) $spec['icon'],
+				'name' => (string) $spec['prim'],
+				'1' => (int) $spec['treeOne'],
+				'2' => (int) $spec['treeTwo'],
+				'3' =>(int)  $spec['treeThree'],
+			);
 		if(isset($xml->characterInfo->character->arenaTeams->arenaTeam))
 		{
 			foreach($xml->characterInfo->character->arenaTeams->arenaTeam as $arenaTeam)
@@ -66,7 +66,6 @@ class castleImport
 			}
 		}
 		//gear
-        $tmp;
 		foreach($xml->characterInfo->characterTab->items->item as $item) 
 		{
 			$sn = (int)$item['slot'] +1;
@@ -77,7 +76,7 @@ class castleImport
 			$out['items'][$sn]['icon']  = (string) $item['icon'];
 			$out['items'][$sn]['gems'] = array();
 			for($i=0;!empty($item['gem'.$i.'Id']);$i++)
-                $out['items'][$sn]['gems'][$i]['id'] = (int) $item['gem'.$i.'Id'];
+				$out['items'][$sn]['gems'][$i]['id'] = (int) $item['gem'.$i.'Id'];
 			$out['items'][$sn]['permanentEnchantItemId']  = (int) $item['permanentEnchantItemId'];
 			if (isset($item['permanentEnchantSpellName']))
 				$out['items'][$sn]['permanentEnchantSpellName'] = (string) $item['permanentEnchantSpellName'];
@@ -144,10 +143,11 @@ class castleImport
 		$out['stats']['def']['resilienceRating'] = (string) $xml->characterInfo->characterTab->defenses->resilience['value'];
 		$out['stats']['def']['resilienceHitPercent'] = (string) $xml->characterInfo->characterTab->defenses->resilience['hitPercent'];
 		$out['stats']['def']['resilienceDamagePercent'] = (string) $xml->characterInfo->characterTab->defenses->resilience['damagePercent'];
-        return $out;
+		return $out;
 	}
 
-	static function HandleArmoryQuirks($xml) {
+	static function HandleArmoryQuirks($xml)
+    {
 		// Armory has several issues currently:
 		// - Armor Penetration is missing (WIP)
 		// - Expertise is missing (WIP)
@@ -159,12 +159,12 @@ class castleImport
 		// - Some Titles are shown as prefix instead of suffix... (FIXED)
 		// - Offhand Damage Min/Max/Dps/Speed is missing (TODO)
 		// Let's calculate them here!
-
+		
 		$expertise = 0;
 		$armorpen = 0;
 		$spellpen = 0;
 		$gems = array();
-
+		
 		// items
 		foreach ($xml['items'] as $slot => $item)
 		{
@@ -174,25 +174,25 @@ class castleImport
 				$expertise += $item['stats'][ItemStats::ITEM_MOD_EXPERTISE_RATING];
 			if (isset($item['stats'][ItemStats::ITEM_MOD_SPELL_PENETRATION]))
 				$spellpen += $item['stats'][ItemStats::ITEM_MOD_SPELL_PENETRATION];
-		
+			
 			// count gems
 			foreach ($item['gems'] as $gemslot => $gem)
 			{
 				if (!isset($gem['id']))
 					continue;
 				elseif (isset($gems[$gem['id']]))
-					$gems[$gem['id']]++;
+				$gems[$gem['id']]++;
 				else
 					$gems[$gem['id']] = 1;
-
+				
 				// fix missing socket color for prismatic gems
 				if (!isset($gem['socketColor']))
 					$xml['items'][$slot]['gems'][$gemslot]['socketColor'] = 1;
 			}
-
+			
 			// socket bonus (TODO)
 		}
-
+		
 		// gems
 		foreach ($gems as $id => $count)
 		{
@@ -214,49 +214,49 @@ class castleImport
 				case 40135:
 					$spellpen += $count * 13;
 					break;
-				// TODO: add more gems (temporary)
+					// TODO: add more gems (temporary)
 				default: // all other gems, non relevant...
 					break;
 			}
 		}
-
+		
 		// talents (TODO)
-
+		
 		// racial bonuses
 		$expertiseBonus = array();
-
+		
 		// determine weapon types
 		for ($i = 16; $i <= 17; $i++)
 		{
 			if (!isset($xml['items'][$i]))
 				continue;
-	
+			
 			$query = 'SELECT `subclass` FROM `'. MYSQL_DATABASE_TDB .'`.`item_template` WHERE `entry` = "'.$xml['items'][$i]['id'].'"';
 			$result = mysql_query($query);
 			$row = mysql_fetch_assoc($result);
-
+			
 			$subclass = intval($row['subclass']);
-
+			
 			switch ($xml['raceId'])
 			{
 				case 1:
-				# - Humans get +3 expertise with One or Two-Handed Swords and Maces.
+					# - Humans get +3 expertise with One or Two-Handed Swords and Maces.
 					if (in_array($subclass, array(7, 8, 4, 5)))
 						$expertiseBonus[$i] = 3;
 					break;
 				case 2:
-				# - Orcs get +5 expertise with One and Two-Handed Axes, and Fist Weapons.
+					# - Orcs get +5 expertise with One and Two-Handed Axes, and Fist Weapons.
 					if (in_array($subclass, array(0, 1, 13)))
 						$expertiseBonus[$i] = 5;
 					break; 
 				case 3:
-				# - Dwarves get +5 expertise with One and Two-Handed Maces.
+					# - Dwarves get +5 expertise with One and Two-Handed Maces.
 					if (in_array($subclass, array(4, 5)))
 						$expertiseBonus[$i] = 5;
 					break;
 			}
 		}
-
+		
 		// some enchants come without an item like every crafting bonus, so translate to spellid
 		$_enchant_name_to_spell = array();
 		// Tailoring
@@ -298,7 +298,7 @@ class castleImport
 		$_enchant_name_to_spell["Rune of Cinderglacier"] = 53341;
 		$_enchant_name_to_spell["Rune of the Fallen Crusader"] = 53344;
 		$_enchant_name_to_spell["Rune of the Stoneskin Gargoyle"] = 62158;
-
+		
 		foreach ($xml['items'] as $slot => $item)
 		{
 			if (!isset($item['permanentEnchantItemId']))
@@ -307,14 +307,14 @@ class castleImport
 				continue;
 			$xml['items'][$slot]['permanentEnchantSpellId'] = $_enchant_name_to_spell[$item['permanentEnchantSpellName']];
 		}
-
+		
 		// wrong title position
 		if ($xml['prefix'] == "der Unsterbliche")
 		{
 			$xml['suffix'] = $xml['prefix'];
 			$xml['prefix'] = "";
 		}
-
+		
 		// export back to xml
 		$xml['stats']['melee']['expertiseRating'] = $expertise;
 		$xml['stats']['melee']['expertise'] = $expertise / 8.230769231;
@@ -324,31 +324,31 @@ class castleImport
 		$xml['stats']['melee']['expertiseOffHand'] = $xml['stats']['melee']['expertise'];
 		if (isset($expertiseBonus[17])) // oh bonus
 			$xml['stats']['melee']['expertiseOffHand'] += $expertiseBonus[17];
-
+		
 		$xml['stats']['melee']['arpRating'] = $armorpen;
 		$xml['stats']['melee']['arpPercent'] = $armorpen / 13.99;
-
+		
 		$xml['stats']['caster']['spellPen'] = $spellpen;
-
+		
 		$xml['stats']['melee']['hitPercent'] = $xml['stats']['melee']['hitRating'] /  32.775;
 		$xml['stats']['caster']['spellHitPercent'] = $xml['stats']['caster']['spellHitRating'] / 26.231818182;
-
+		
 		return $xml;
-
 	}
+    
 	static function checkGemBonus($items)
 	{
 		$gems = array();
 		foreach ($items as $item)
-			if (isset($item['gems']))
-				foreach ($item['gems'] as $gem)
-					if (isset($gem['id']))
-						$gems[$gem['id']] = true;
-
+		if (isset($item['gems']))
+			foreach ($item['gems'] as $gem)
+			if (isset($gem['id']))
+				$gems[$gem['id']] = true;
+			
 		$query = "SELECT `id`, `name`, `color` FROM `".MYSQL_DATABASE."`.`socket_stats` WHERE id IN (".implode(",", array_keys($gems)).")";
 		unset($gems);
 		$result = mysql_query($query);
-
+		
 		$color = array();
 		while ($row = mysql_fetch_assoc($result))
 			$color[$row['id']] = $row['color'];
@@ -360,10 +360,10 @@ class castleImport
 			{
 				if (isset($gem['id']) AND !isset($color[$gem['id']]))
 				{
-                    global $tpl;
-                    $tpl->print_error('Missing Spell Description: '.$gem['id']);
-                    continue;
-
+					global $tpl;
+					$tpl->print_error('Missing Spell Description: '.$gem['id']);
+					continue;
+					
 					$items[$slot]['socketBonusActive'] = false;
 					break;
 				}
@@ -373,46 +373,46 @@ class castleImport
 					$items[$slot]['socketBonusActive'] = false;
 					break; // break, because activation can't happen anymore
 				}
-
-
+				
+				
 				// evaluate gem for sockets
 				$c = $color[$gem['id']];
 				$items[$slot]['gems'][$gemslot]['gemColor'] = $c;
-
+				
 				$result = false;
 				if ($c == SocketColor::Prismatic) // gem is prismatic, fits everywhere
 					$result = true;
 				else {
-                    if(!isset($gem['socketColor'])) break; 
+					if(!isset($gem['socketColor'])) break; 
 					switch ($gem['socketColor']) {
 						case SocketColor::Red: // socket is red
 							if ($c == SocketColor::Red || $c == SocketColor::Orange || $c == SocketColor::Violet)
 								$result = true;
-							break;
+						break;
 						case SocketColor::Yellow: // socket is yellow
-	                                                if ($c == SocketColor::Yellow || $c == SocketColor::Orange || $c == SocketColor::Green)
-	                                                        $result = true;
-	                                                break;
+							if ($c == SocketColor::Yellow || $c == SocketColor::Orange || $c == SocketColor::Green)
+								$result = true;
+						break;
 						case SocketColor::Blue: // socket is blue
-	                                                if ($c == SocketColor::Blue || $c == SocketColor::Green || $c == SocketColor::Violet)
-	                                                        $result = true;
-	                                                break;
+							if ($c == SocketColor::Blue || $c == SocketColor::Green || $c == SocketColor::Violet)
+								$result = true;
+						break;
 						case SocketColor::Meta: // no need to recheck here, because we established earlier, that there is a socket in here
 						case SocketColor::Prismatic:
 							$result = true;
-                            break;
+						break;
 					}
 				}
-
+				
 				if (!isset($items[$slot]['gems']['socketBonusActive']))
 				{
 					$items[$slot]['socketBonusActive'] = $result;
 					$items[$slot]['gems'][$gemslot]['matching'] = $result;
-                    
+					
 				}
 				else
 					$items[$slot]['socketBonusActive'] &= $result;
-
+				
 				if (!$result)
 					break;			
 			}
@@ -420,37 +420,36 @@ class castleImport
 		return $items;
 	}
     
-    static function lookup_SockelBonus($items)
+    static function lookupGemBonuses($items)
     { 
-    	$boni = array();
-		foreach ($items as $item)
-			if (isset($item['socketBonus']))
-						$boni[$item['socketBonus']] = true;
-        $query = "SELECT  `id`, `stat_type1`, `stat_value1` FROM `". MYSQL_DATABASE ."`.`socket_bonus` WHERE id IN (".implode(",", array_keys($boni)).")";
-		$result = mysql_query($query);
-        $boni = array();
-		while ($row = mysql_fetch_assoc($result))
-			$boni[$row['id']] = array('stat_type1' => $row['stat_type1'], 'stat_value1' => $row['stat_value1']);
-        foreach ($items as $i => $item)
-        {
-            if($items[$i]['socketBonus'] == 0)
-                continue;
-            if(isset($items[$i]['socketBonus']))
-            {
-                if(!isset($boni[$item['socketBonus']]))
-                {
-                    global $tpl;
-                    $tpl->print_error('Undefined SockelBonus ID: '.$item['socketBonus'].' ItemID: '.$items[$i]['id']);
-                    continue;
-                }                
-                $items[$i]['socketBonus'] = array(
-                                                  'stat_type1' => $boni[$item['socketBonus']]['stat_type1'],
-                                                  'stat_value1' => $boni[$item['socketBonus']]['stat_value1']
-                                                  );
-            }
-        }
-    return($items);
-        
+	    $boni = array();
+	    foreach ($items as $item)
+		if (isset($item['socketBonus']))
+			$boni[$item['socketBonus']] = true;
+	    $query = "SELECT  `id`, `stat_type1`, `stat_value1` FROM `". MYSQL_DATABASE ."`.`socket_bonus` WHERE id IN (".implode(",", array_keys($boni)).")";
+	    $result = mysql_query($query);
+	    $boni = array();
+	    while ($row = mysql_fetch_assoc($result))
+		    $boni[$row['id']] = array('stat_type1' => $row['stat_type1'], 'stat_value1' => $row['stat_value1']);
+	    foreach ($items as $i => $item)
+		{
+		    if($items[$i]['socketBonus'] == 0)
+			    continue;
+		    if(isset($items[$i]['socketBonus']))
+		    {
+			    if(!isset($boni[$item['socketBonus']]))
+			    {
+				    global $tpl;
+				    $tpl->print_error('Undefined SockelBonus ID: '.$item['socketBonus'].' ItemID: '.$items[$i]['id']);
+				    continue;
+			    }                
+			    $items[$i]['socketBonus'] = array(
+				    'stat_type1' => $boni[$item['socketBonus']]['stat_type1'],
+					'stat_value1' => $boni[$item['socketBonus']]['stat_value1']
+			    );
+		    }
+		}
+	    return $items;
     }
 
 	//############## ARENA/PvP #######################
@@ -489,7 +488,7 @@ class castleImport
 	{
 		$out = array();
 		$name = str_replace(" ", "+", $name); 
-		$xml = $castleImport::getXML($castleImport::armoryUrl.'team-info.xml?b=WoW-Castle&r=WoW-Castle+PvE&select='.$name);
+		$xml = castleImport::getXML(castleImport::armoryUrl.'team-info.xml?b=WoW-Castle&r=WoW-Castle+PvE&select='.$name);
 		if($xml === false)
 			return false;
 		foreach($xml->teamInfo->arenaTeam->members->character as $row)
@@ -507,15 +506,15 @@ class castleImport
 
 	private static function getXML($url)
 	{
-		$ch = curl_init();
-		curl_setopt($ch, CURLOPT_URL, $url);
-		curl_setopt($ch, CURLOPT_USERAGENT, "Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.8.1.12) Gecko/20080201 Firefox/2.0.0.12");
-		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-		curl_setopt($ch, CURLOPT_HTTPHEADER, array("Accept-Language: de-de, de;"));
-		curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 10 );
-		curl_setopt($ch, CURLOPT_TIMEOUT_MS, 1500);     
-		$content = curl_exec ($ch);
-		curl_close ($ch);
+		$handle = curl_init();
+		curl_setopt($handle, CURLOPT_URL, $url);
+		curl_setopt($handle, CURLOPT_USERAGENT, "Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.8.1.12) Gecko/20080201 Firefox/2.0.0.12");
+		curl_setopt($handle, CURLOPT_RETURNTRANSFER, 1);
+		curl_setopt($handle, CURLOPT_HTTPHEADER, array("Accept-Language: de-de, de;"));
+		curl_setopt($handle, CURLOPT_CONNECTTIMEOUT, 10 );
+		curl_setopt($handle, CURLOPT_TIMEOUT_MS, 1500);     
+		$content = curl_exec ($handle);
+		curl_close ($handle);
 		try{
 			$xml = new SimpleXMLElement($content);
 		} 

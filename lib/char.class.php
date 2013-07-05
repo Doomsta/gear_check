@@ -34,7 +34,7 @@ class char
            $this->loadFromCastle(TRUE);
         $this->loadItems();
         $this->equipment = castleImport::checkGemBonus($this->equipment);
-        $this->equipment = castleImport::lookup_SockelBonus($this->equipment);
+        $this->equipment = castleImport::lookupGemBonuses($this->equipment);
     }
 
     public function loadFromCastle($HandleArmoryQuirks = FALSE)

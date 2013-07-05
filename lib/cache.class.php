@@ -55,16 +55,10 @@ class cache {
 	private function checkCacheDir() 
 	{
 		if (!is_dir($this->cachepath) && !mkdir($this->cachepath, 0775, true)) 
-		{
 			throw new Exception('Unable to create cache directory'.$this->cachepath);
-		} 
 		elseif (!is_readable($this->cachepath) || !is_writable($this->cachepath)) 
-		{
 			if (!chmod($this->cachepath, 0775)) 
-			{
 				throw new Exception($this->cachepath.' must be readable and writeable');
-			}
-		}
-    return true;
-  }
+        return true;
+    }
 }
