@@ -11,30 +11,30 @@ class char
     
     public function __construct($name, $loadFromCastle = FALSE)
     {
-        $this->name = $name;
-        $this->prefix = null;
-        $this->suffix = null;
-        foreach($this->slotOrder as $value)
-            $this->equipment[$value] = array(
-                                                        'id' => null, 
-                                                        'name' => null, 
-                                                        'level' => null, 
-                                                        'rarity' => null, 
-                                                        'icon' => 'inv_empty', 
-                                                        'gems' => array(), 
-                                                        'permanentEnchantItemId' => null, 
-                                                        'permanentEnchantSpellName' => null, 
-                                                        'permanentEnchantSpellId'  => null,
-                                                        'tooltip' => null
-                                                   );
-        global $_stat_name;
-        foreach($_stat_name as $key => $value)
-            $this->stats[$value] = 0;
-        if($loadFromCastle == TRUE)
-           $this->loadFromCastle(TRUE);
-        $this->loadItems();
-        $this->equipment = castleImport::checkGemBonus($this->equipment);
-        $this->equipment = castleImport::lookupGemBonuses($this->equipment);
+	    $this->name = $name;
+	    $this->prefix = null;
+	    $this->suffix = null;
+	    foreach($this->slotOrder as $value)
+		$this->equipment[$value] = array(
+			'id' => null, 
+			'name' => null, 
+			'level' => null, 
+			'rarity' => null, 
+			'icon' => 'inv_empty', 
+			'gems' => array(), 
+			'permanentEnchantItemId' => null, 
+			'permanentEnchantSpellName' => null, 
+			'permanentEnchantSpellId'  => null,
+			'tooltip' => null
+		);
+	    global $_stat_name;
+	    foreach($_stat_name as $key => $value)
+		$this->stats[$value] = 0;
+	    if($loadFromCastle == TRUE)
+		    $this->loadFromCastle(TRUE);
+	    $this->loadItems();
+	    $this->equipment = castleImport::checkGemBonus($this->equipment);
+	    $this->equipment = castleImport::lookupGemBonuses($this->equipment);
     }
 
     public function loadFromCastle($HandleArmoryQuirks = FALSE)
@@ -174,7 +174,8 @@ class char
         else
             $tmp = round(($tmp/16),1); 
         return $tmp;
-    }    
+    }
+    
     public function getGetGearStats()
     {
     
@@ -194,31 +195,33 @@ class char
     
     public function getClassStats()
     {
-        if(!isset($this->level) OR !isset($this->class))
-            return false;
-        if($this->level == 0)
-            return array();
-
-       $query = 'SELECT `stat_value`, `stat_type` 
-                        FROM `'. MYSQL_DATABASE .'`.`class_attribute_effects` 
-                        WHERE `class` = "'.$this->class. '"';
-        $result = mysql_query($query);
-        while($row = mysql_fetch_assoc($result))
-            $tmp[$row['stat_type']] = $row['stat_value']*$this->level;
-        return $tmp;    
+	    if(!isset($this->level) OR !isset($this->class))
+		    return false;
+	    if($this->level == 0)
+		    return array();
+	    
+	    $query = 'SELECT `stat_value`, `stat_type` 
+		    FROM `'. MYSQL_DATABASE .'`.`class_attribute_effects` 
+			WHERE `class` = "'.$this->class. '"';
+	    $result = mysql_query($query);
+        $tmp = array();
+	    while($row = mysql_fetch_assoc($result))
+		    $tmp[$row['stat_type']] = $row['stat_value']*$this->level;
+	    return $tmp;    
     }
     
     public function getRaceBaseStats()
-    {
-        if(!isset($this->race))
-            return false;
-        $query = 'SELECT `stat_value`, `stat_type` 
-                        FROM `'. MYSQL_DATABASE .'`.`race_base_stats` 
-                        WHERE `race` = "'.$this->race. '"';
-        $result = mysql_query($query);
-        while($row = mysql_fetch_assoc($result))
-            $tmp[$row['stat_type']] = $row['stat_value'];
-        return $tmp;
+	{
+	    if(!isset($this->race))
+		    return false;
+	    $query = 'SELECT `stat_value`, `stat_type` 
+		    FROM `'. MYSQL_DATABASE .'`.`race_base_stats` 
+			WHERE `race` = "'.$this->race. '"';
+	    $result = mysql_query($query);
+	    $tmp = array();
+	    while($row = mysql_fetch_assoc($result))
+		    $tmp[$row['stat_type']] = $row['stat_value'];
+	    return $tmp;
     }
     //debug
     public function getItems($slots = false)
@@ -230,7 +233,6 @@ class char
              foreach($slots as $i => $item)
                 $tmp[$item] = $this->equipment[$item];
         return $tmp;
-
     }
 }
 ?>
