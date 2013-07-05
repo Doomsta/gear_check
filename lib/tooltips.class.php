@@ -121,8 +121,8 @@ class tooltips
 			    continue;
 		    if ($key == ItemStats::ITEM_MOD_MANA_REGENERATION)
 			    $tmp .= '<span class=\'q2\'>Anlege: Stellt alle 5 Sek. '.$value.' Mana wieder her</span><br />';
-            if ($key == ItemStats::ITEM_MOD_HEALTH_REGENERATION)
-                $tmp .= '<span class=\'q2\'>Anlege: Stellt alle 5 Sek. '.$value.' Gesundheit wieder her</span><br />';
+                    if ($key == ItemStats::ITEM_MOD_HEALTH_REGEN)
+                            $tmp .= '<span class=\'q2\'>Anlege: Stellt alle 5 Sek. '.$value.' Gesundheit wieder her</span><br />';
 		    else
 			    $tmp .= '<span  class=\'q2\'>Anlegen: Erh&ouml;ht '.$_stat_name[$key].' um '.$value.'</span><br />';   
 		}
