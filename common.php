@@ -19,8 +19,8 @@ $nav_links = array(
 	0 => array(
 		'name'	=> 'Home',
 		'url'	=> './index.php'
-		),
-	);
+	),
+);
 $tpl->add_nav_links($nav_links);
 
 $tpl->set_defaultIcon('./img/icon.png');

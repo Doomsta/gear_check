@@ -29,7 +29,7 @@ class tpl
 		$this->css_files .= '<link href="'.$path.'" rel="stylesheet">'."\n";
 	}
     
-	function print_error($msg,$head = 'Oh snap! There is an error!')
+	function print_error($msg, $head = 'Oh snap! There is an error!')
     {
         $this->errors[] = array('head' => $head, 'text' => $msg);
     }
@@ -38,18 +38,18 @@ class tpl
 	{
 		// get current active page to determine whether to show submenu
 		$path_parts = pathinfo($_SERVER['PHP_SELF']);
-
+		
 		foreach($array as $data)
 		{
 			$this->nav_links[] = array( 
 				'name'	=> $data['name'],
 				'url'	=> $data['url'],
 				'class'	=> "none"
-				);
-
+			);
+			
 			if (!isset($data['sub']))
 				continue;
-
+			
 			// determine if submenu is needed
 			$show_submenu = false;
 			foreach ($data['sub'] as $sdata)
@@ -60,18 +60,18 @@ class tpl
 			}
 			if (!$show_submenu)
 				continue;
-
+			
 			foreach ($data['sub'] as $subdata)
 			{
-		        	$tmp = array( 
-		                	'name'  => $subdata['name'],
-		                	'url'   => $subdata['url'],
-		               		'class' => "none"
-		                        );
-
+				$tmp = array( 
+					'name'  => $subdata['name'],
+					'url'   => $subdata['url'],
+					'class' => "none"
+				);
+				
 				if (isset($subdata['icon']))
 					$tmp['icon'] = $subdata['icon'];
-
+				
 				$this->sub_nav_links[] = $tmp;
 			}
 		}
@@ -113,7 +113,7 @@ class tpl
 			$this->smarty->assign("ICON", $this->icon);
 		else
 			$this->smarty->assign("ICON", $array['icon']);
-			
+		
 		$this->smarty->assign("SUBHEADBIG", $array['subHeadBig']);
 		$this->smarty->assign("SUBHEADSMALL", $array['subHeadSmall']);
 		$this->tpl_file = $array['template_file'];
@@ -123,7 +123,7 @@ class tpl
 	
 	function display()
 	{
-        $this->smarty->assign("ERROR_MSG", $this->errors);
+		$this->smarty->assign("ERROR_MSG", $this->errors);
 		$this->smarty->assign("JS_FILES", $this->js_files); 
 		$this->smarty->assign("TEMPLATEFILE", $this->tpl_file);
 		$this->smarty->assign("CSS_FILES", $this->css_files);
