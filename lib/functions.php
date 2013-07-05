@@ -36,7 +36,7 @@ function get_weapon_properties($itemId)
         $data = array("min" => $row['dmg_min1'],
                       "max" => $row['dmg_max1'],
                       "delay" => $row['delay'],
-                      "dps" => round(((($row['dmg_min1'] + $row['dmg_max1']) / 2) / ($row['delay'] / 1000)), 1)
+                      "dps" => number_format(round(((($row['dmg_min1'] + $row['dmg_max1']) / 2) / ($row['delay'] / 1000)), 1), 1)
                 );
         return $data;        
 }
