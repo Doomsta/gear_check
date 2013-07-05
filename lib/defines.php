@@ -355,6 +355,7 @@ $_spell_desc = array(
 	42292 => 'Entfernt alle bewegungseinschränkenden Effekte sowie alle Effekte, die den Verlust der Kontrolle über Euren Charakter verursachen. (2 Min Abklingzeit)',
 	44301 => 'Verringert die globale Abklingzeit Eures Zaubers \'Blinzeln\' um 0.5 Sek.',
 	67684 => 'Increases spell power by 599 for 20 sec.',
+        33648 => 'Chance, bei einem kritischen Nahkampf- und Distanzangriffstreffer Eure Angriffskraft 10 Sek. lang um 1000 zu erhöhen.',
 	//pala
 	67379 => 'Each time you use your Hammer of The Righteous ability, you have a chance to gain 200 dodge rating for 18 sec.',
 	71186 => 'Your Crusader Strike ability grants 44 Strength for 15 sec. Stacks up to 5 times.',

@@ -69,20 +69,27 @@ class tooltips
                 break;
             if(isset($gem['id']))
             {
-                $query  = "SELECT `stat_type1`, `stat_value1`, `stat_type2`, `stat_value2` 
-                    FROM `".MYSQL_DATABASE."`.`socket_stats` 
-                    WHERE `id` = ".$gem['id'];
-                $result = mysql_query($query);
-                $row = mysql_fetch_assoc($result);
+                if ($gem['id'] == 49110) // Nightmare Tear
+                {
+                     $tmp .= '<img src=\'http://www.linuxlounge.net/~martin/wowimages/?item='.$gem['id'].'\' height=\'16\' width=\'16\'>&nbsp;+10 alle Werte';
+                }
+                else
+                {
+                    $query  = "SELECT `stat_type1`, `stat_value1`, `stat_type2`, `stat_value2` 
+                        FROM `".MYSQL_DATABASE."`.`socket_stats` 
+                        WHERE `id` = ".$gem['id'];
+                    $result = mysql_query($query);
+                    $row = mysql_fetch_assoc($result);
 
-                // first property
-                $str = " +".$row['stat_value1']." ".$_stat_name[$row['stat_type1']];
+                    // first property
+                    $str = " +".$row['stat_value1']." ".$_stat_name[$row['stat_type1']];
 
-                // second property
-                if ($row['stat_type2'] != 0)
-                    $str .= " und +".$row['stat_value2']." ".$_stat_name[$row['stat_type2']]."";
+                    // second property
+                    if ($row['stat_type2'] != 0)
+                        $str .= " und +".$row['stat_value2']." ".$_stat_name[$row['stat_type2']]."";
 
-                $tmp .='<img src=\'http://www.linuxlounge.net/~martin/wowimages/?item='.$gem['id'].'\' height=\'16\' width=\'16\'>'.$str.'';
+                    $tmp .='<img src=\'http://www.linuxlounge.net/~martin/wowimages/?item='.$gem['id'].'\' height=\'16\' width=\'16\'>'.$str.'';
+                }
             }
             else
                 switch ($gem['socketColor']) {
