@@ -2,9 +2,8 @@
 function get_item_stats($id)
 {
 	$query = 'SELECT `armor`, `stat_type1`, `stat_value1`, `stat_type2`, `stat_value2`, `stat_type3`, `stat_value3`,  
-		`stat_type4`, `stat_value4`, `stat_type5`, `stat_value5`,  
-		`stat_type6`, `stat_value6`, `stat_type7`, `stat_value7`,  
-		`stat_type8`, `stat_value8` 
+		`stat_type4`, `stat_value4`, `stat_type5`, `stat_value5`, `stat_type6`, `stat_value6`,
+                `stat_type7`, `stat_value7`, `stat_type8`, `stat_value8` 
 		FROM `'. MYSQL_DATABASE_TDB .'`.`item_template` 
 		WHERE `entry` = \''.$id.'\'';
 	$result = mysql_query($query);
@@ -16,11 +15,30 @@ function get_item_stats($id)
 			break;
 		$data[$tmp['stat_type'.$i]] = $tmp['stat_value'.$i];
 	}
+
 	// armor value
 	$data[ItemStats::ITEM_MOD_ARMOR] = $tmp['armor'];
+
 	// sort & return
 	ksort($data);
 	return $data;
+}
+
+function get_weapon_properties($itemId)
+{
+        $query = 'SELECT `dmg_min1`, `dmg_max1`, `delay`
+                FROM `'. MYSQL_DATABASE_TDB .'`.`item_template`
+                WHERE `entry` = '.$itemId.'';
+        $result = mysql_query($query);
+        if (mysql_num_rows($result) == 0)
+            return false; // item not found
+        $row = mysql_fetch_assoc($result);
+        $data = array("min" => $row['dmg_min1'],
+                      "max" => $row['dmg_max1'],
+                      "delay" => $row['delay'],
+                      "dps" => round(((($row['dmg_min1'] + $row['dmg_max1']) / 2) / ($row['delay'] / 1000)), 1)
+                );
+        return $data;        
 }
 
 function add_item_gems($item)

@@ -15,7 +15,7 @@ class tooltips
 
         if(!isset($item['id']))
             return;
-        $tpl = $this->get_item_template($item['id']);
+        $tpl = $this->get_item_template($item['id']); // TODO: Interpret item_template and integrate it into 
 
         // Item Name
         // TODO: Quality
@@ -38,13 +38,20 @@ class tooltips
 
         $tmp .='</tr></table><table width=\'100%\'>';
 
-        // TODO: Weapon Damage
-        if(isset($item['weaponDmg']))
-            $tmp .='<tr><td><span>207 - 312 Damage</span></td><th>Speed 3.20</th></tr>(81.1 damage per second)<br />'; //TODO
+        // Weapon Damage
+        if ($tpl['class'] == 2) // melee or ranged weapon
+        {
+            $prop = get_weapon_properties($tpl['entry']); // TODO: Integrate this directly into the item
+            if ($prop)
+            {
+                $tmp .= '<tr><td>'.$prop['min'].' - '.$prop['max'].' Schaden</td><td style=\'text-align:right;\'>Tempo '.number_format($prop['delay'] / 1000, 2).'</td></tr>';
+                $tmp .= '<tr><td>('.$prop['dps'].' Schaden pro Sekunde)</td></tr>';
+            }
+        }
         $tmp .='</table>';
 
         // Armor
-        if (isset($item['stats'][ItemStats::ITEM_MOD_ARMOR]))
+        if (isset($item['stats'][ItemStats::ITEM_MOD_ARMOR]) && $item['stats'][ItemStats::ITEM_MOD_ARMOR] > 0)
             $tmp .= '<span class=\'q1\'>'.$item['stats'][ItemStats::ITEM_MOD_ARMOR].' '.$_stat_name[ItemStats::ITEM_MOD_ARMOR].'</span><br />';
 
         // White Stats (Base Stats)
