@@ -20,6 +20,7 @@ class char
 			'name' => null, 
 			'level' => null, 
 			'rarity' => null, 
+			'stats' => array(),
 			'icon' => 'inv_empty', 
 			'gems' => array(), 
 			'permanentEnchantItemId' => null, 
@@ -31,10 +32,13 @@ class char
 	    foreach($_stat_name as $key => $value)
 		$this->stats[$value] = 0;
 	    if($loadFromCastle == TRUE)
-		    $this->loadFromCastle(TRUE);
-	    $this->loadItems();
-	    $this->equipment = castleImport::checkGemBonus($this->equipment);
-	    $this->equipment = castleImport::lookupGemBonuses($this->equipment);
+        {
+		    if($this->loadFromCastle(TRUE) == false)
+                return false;
+                $this->loadItems();
+            $this->equipment = castleImport::checkGemBonus($this->equipment);
+            $this->equipment = castleImport::lookupGemBonuses($this->equipment);
+        }
     }
 
     public function loadFromCastle($HandleArmoryQuirks = FALSE)
@@ -127,14 +131,14 @@ class char
         //init whole array
         foreach($_stat_name as $key => $value)
             $stats[$key] = 0;
-        //add base stats
-        $baseStats = $this->getRaceBaseStats();
-        foreach($baseStats as $statId => $statValue)
-            $stats[$statId] += $statValue;
+        //add base stats 
+        if($baseStats = $this->getRaceBaseStats())
+            foreach($baseStats as $statId => $statValue)
+                $stats[$statId] += $statValue;
         //add class stats
-        $classStats = $this->getClassStats();
-        foreach($classStats as $statId => $statValue)
-            $stats[$statId] += $statValue;
+        if($classStats = $this->getClassStats())
+            foreach($classStats as $statId => $statValue)
+                $stats[$statId] += $statValue;
         //add gear stats
         $eqstats = $this->getEquipmentStats();
         foreach($eqstats  as $key => $eqstat)
