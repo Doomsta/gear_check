@@ -318,6 +318,7 @@ $_spell_desc = array(
 	67515 => 'Erhöht den Blockwert Eures Schildes um 189',
 	67742 => 'Each time you are struck by an attack, you gain 1422 armor. Stacks up to 5 times. Entire effect lasts 20 sec.',
 	71634 => 'Melee attacks which reduce you below 35% health cause you to gain 5712 armor for 10 sec. Cannot occur more than once every 30 sec.',
+        71865 => 'Jedes Mal, wenn Eure Zauber ein Ziel heilen, besteht eine Chance, dass sowohl das Ziel Eurer Heilung als auch Verbündete in einem Umkreis von 10 Metern 6 Sek. lang pro Sekunde um 217 geheilt werden.',
 	//icc ringe
 	71653 => 'When struck in combat has a chance of increasing your armor by 2400 for 10 sec.',
 	71655 => 'Your helpful spells have a chance to increase your spell power by 285 for 10 sec.',
@@ -326,12 +327,16 @@ $_spell_desc = array(
 	71650 => 'Chance bei Treffer, Eure Angriffskraft 10 Sek. lang um 480 zu erhöhen.',
 	72968 => 'Eine Schleife der Zuneigung.',
 	71168 => '', //Unerfülltes Verlangen Beschreibt die Aura von Schattenschneide
-	//PvP sets
+        //frost emblems
+        71579 => 'Erhöht die Zaubermacht 20 Sek. lang um 716.',
+	//pvp sets
 	22778 => 'Reduces the rage cost of your Hamstring ability by 3.',
 	32973 => 'Improves the range of your Shock and Wind Shear spells by 5 yards.',
 	44297 => 'Reduces the cooldown of your Psychic Scream ability by 3000 sec.',
 	33063 => 'Reduces the pushback suffered from damaging attacks while casting Fear by 50%.',
 	62459 => 'Your Chains of Ice ability now generates an additional 50 runic power.',
+        //pvp trinkets
+        64527 => 'Erhöht 20 Sek. lang Euer Tempo um 375',
 	//pdk
 	66238 => 'Teleports the caster to the Argent Tournament Grounds.',
 	67752 => 'Jedes Mal, wenn Ihr einen Zauber wirkt, gewinnt Ihr 10 Sek. lang 18 Mana alle 5 Sek. Bis zu 8-mal stapelbar.',
@@ -344,6 +349,14 @@ $_spell_desc = array(
 	71581 => 'Eure Offensivzauber haben eine Chance, bei einem Treffer Eure Zaubermacht 10 Sek. lang um 285 zu erhöhen.',
 	67744 => 'Each time you cast a harmful spell, you gain 64 haste rating. Stacks up to 8 times. Entire effect lasts 20 sec.',
 	67694 => 'Increases dodge rating by 512 for 20 sec.',
+        67753 => 'Erhöht die maximale Gesundheit 15 Sek. lang um 5186. Teilt eine Abklingzeit mit allen anderen Schmuckstücken des Kampfmeisters.',
+        //ulduar
+        64714 => 'Eure Schaden verursachenden Zauber haben eine Chance, Eure Zaubermacht 10 Sek. um 850 zu erhöhen.',
+        //pdc
+        67670 => 'Jedes Mal, wenn Ihr einen Schadenszauber wirkt, besteht eine Chance, dass Ihr 10 Sek. lang 590 Zaubermacht erhaltet.',
+        60063 => 'Eure Offensivzauber haben eine Chance, Eure Zaubermacht 10 Sek. lang um 590 zu erhöhen.',
+        //boe
+        49622 => 'Jedes Mal, wenn Ihr einen Zauber wirkt, besteht die Chance, dass ihr 15 Sek. lang alle 5 Sekunden bis zu 125 Mana regeneriert.',
 	//other
 	65012 => 'Erhöht das Parieren 20 Sek. lang um 380.',
 	57345 => 'When you heal or deal damage you have a chance to gain Greatness, increasing your Strength, Agility, Intellect, or Spirit by 300 for 15 sec. Your highest stat is always chosen.',
@@ -379,6 +392,7 @@ $_spell_desc = array(
 	60740 => 'Increases the spell power of the final healing value of your Lifebloom by 376.',
 	67356 => 'Each time your Rejuvenation spell deals periodic healing, you have a chance to gain 234 spell power for 9 sec.',
 	67361 => 'Each time your Moonfire spell deals periodic damage, you have a chance to gain 200 critical strike rating for 12 sec.',
+        71174 => 'Der regelmäßige Schaden Eurer Fähigkeiten \'Aufschlitzen\' und \'Krallenhieb\' gewährt Euch 15 sec lang 44 Beweglichkeit. Bis zu 44-mal stapelbar.',
 	//schami
 	60554 => 'Your Lava Lash ability also grants you 204 attack power for 10 sec.',
 	60575 => 'Your Shock spells grant 119 spell power for 10 sec.',
@@ -389,6 +403,7 @@ $_spell_desc = array(
 	60552 => 'Your Lava Lash ability also grants you 172 attack power for 10 sec.',
 	60574 => 'Your Shock spells grant 101 spell power for 10 sec.',
 	60560 => 'Increases spell power of Lesser Healing Wave by 404.',
+        72958 => '', // T10 Shoulder Visual
 	//dk
 	60690 => 'Your Plague Strike ability also grants you 204 attack power for 10 sec.',
 	71228 => 'Your Rune Strike ability grants 44 dodge rating for 15 sec. Stacks up to 5 times.',
@@ -396,6 +411,8 @@ $_spell_desc = array(
 	60688 => 'Your Plague Strike ability also grants you 172 attack power for 10 sec.',
 	67381 => 'Each time you use your Rune Strike ability, you have a chance to gain 200 dodge rating for 20 sec.',
 	67384 => 'Each time you use your Death Strike, Obliterate, or Scourge Strike ability, you have a chance to gain 200 Strength for 20 sec.',
-	64962 => 'Increases the damage done by your Death Coil ability by 380 and by your Frost Strike ability by 113.'
+	64962 => 'Increases the damage done by your Death Coil ability by 380 and by your Frost Strike ability by 113.',
+        //random stuff
+        63604 => 'Steht im Zentrum der Aufmerksamkeit.'
 );
 ?>

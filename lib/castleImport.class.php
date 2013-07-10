@@ -273,6 +273,7 @@ class castleImport
 		$_enchant_name_to_spell["Reticulated Armor Webbing"] = 63770;
 		$_enchant_name_to_spell["Flexweave Underlay"] = 55002;
 		$_enchant_name_to_spell["Springy Arachnoweave"] = 63765;
+		$_enchant_name_to_spell["Personal Electromagnetic Pulse Generator"] = 54736;
 		// Leatherworking
 		$_enchant_name_to_spell["Nerubian Leg Reinforcements"] = 60584;
 		$_enchant_name_to_spell["Jormungar Leg Reinforcements"] = 60583;
