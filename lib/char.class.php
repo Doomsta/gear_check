@@ -134,11 +134,11 @@ class char
         foreach($_stat_name as $key => $value)
             $stats[$key] = 0;
         //add base stats 
-        if($baseStats = $this->getRaceBaseStats())
+        if($baseStats = $this->getClassBaseStats())
             foreach($baseStats as $statId => $statValue)
                 $stats[$statId] += $statValue;
         //add class stats
-        if($classStats = $this->getClassStats())
+        if($classStats = $this->getClassLevelStats())
             foreach($classStats as $statId => $statValue)
                 $stats[$statId] += $statValue;
         //add gear stats
@@ -157,13 +157,17 @@ class char
         foreach($this->equipment as $item)
             if(isset($item['socketBonus']['stat_value1']) AND isset($item['socketBonusActive']) AND $item['socketBonusActive'] == 1)
                 $stats[$item['socketBonus']['stat_type1']]  += $item['socketBonus']['stat_value1'];
+
+        // final calculations
+        $stats = $this->DeriveStats($stats);
+
         //clean up array 
         foreach($stats  as $key => $value)
         {
             if($value == 0)
                 unset($stats[$key]);
         }
-       return $stats;
+        return $stats;
     }
     
     public function getAvgItemLevel()
@@ -199,36 +203,55 @@ class char
         return $tmp;
     }
     
-    public function getClassStats()
+    public function getClassLevelStats()
     {
         if(!isset($this->level) OR !isset($this->class))
             return false;
         if($this->level == 0)
             return array();
-        
-        $query = 'SELECT `stat_value`, `stat_type` 
-            FROM `'. MYSQL_DATABASE .'`.`class_attribute_effects` 
-            WHERE `class` = "'.$this->class. '"';
+        $query = 'SELECT `str`, `agi`, `sta`, `inte`, `spi` 
+            FROM `'. MYSQL_DATABASE_TDB .'`.`player_levelstats` 
+            WHERE `race` = '.$this->race.' AND `class` = '.$this->class. ' AND level = '.$this->level.'';
         $result = mysql_query($query);
         $tmp = array();
-        while($row = mysql_fetch_assoc($result))
-            $tmp[$row['stat_type']] = $row['stat_value']*$this->level;
+        $row = mysql_fetch_assoc($result);
+        $tmp[ItemStats::ITEM_MOD_STRENGTH] = $row['str'];
+        $tmp[ItemStats::ITEM_MOD_AGILITY] = $row['agi'];
+        $tmp[ItemStats::ITEM_MOD_STAMINA] = $row['sta'];
+        $tmp[ItemStats::ITEM_MOD_INTELLECT] = $row['inte'];
+        $tmp[ItemStats::ITEM_MOD_SPIRIT] = $row['spi'];
+
         return $tmp;    
     }
     
-    public function getRaceBaseStats()
+    public function getClassBaseStats()
     {
         if(!isset($this->race))
             return false;
-        $query = 'SELECT `stat_value`, `stat_type` 
-            FROM `'. MYSQL_DATABASE .'`.`race_base_stats` 
-            WHERE `race` = "'.$this->race. '"';
+        $query = 'SELECT `basehp`, `basemana`
+            FROM `'. MYSQL_DATABASE_TDB .'`.`player_classlevelstats` 
+            WHERE `class` = '.$this->class. ' AND `level` = '.$this->level.'';
         $result = mysql_query($query);
         $tmp = array();
-        while($row = mysql_fetch_assoc($result))
-            $tmp[$row['stat_type']] = $row['stat_value'];
+        $row = mysql_fetch_assoc($result);
+        $tmp[ItemStats::ITEM_MOD_MANA] = $row['basemana'];
+        $tmp[ItemStats::ITEM_MOD_HEALTH] = $row['basehp'];
         return $tmp;
     }
+
+
+    // this function needs to be called last, because all calculations scale with talents, enchants, etc.
+    public function DeriveStats($stats)
+    {
+        // Armor from Agility
+        $stats[ItemStats::ITEM_MOD_ARMOR] += $stats[ItemStats::ITEM_MOD_AGILITY] * 2;
+        // Health from Stamina
+        $stats[ItemStats::ITEM_MOD_HEALTH] += 20 + (max($stats[ItemStats::ITEM_MOD_STAMINA] - 20, 0)) * 10;
+        // Mana from Intellect
+        $stats[ItemStats::ITEM_MOD_MANA] += 20 + (max($stats[ItemStats::ITEM_MOD_INTELLECT] - 20, 0)) * 15;
+        return $stats;
+    }
+
     //debug
     public function getItems($slots = false)
     {
