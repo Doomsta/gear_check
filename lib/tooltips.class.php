@@ -64,8 +64,6 @@ class tooltips
         // Gems
         foreach($item['gems'] as $gem)
         {
-            if(!isset($gem['socketColor']))
-                break;
             if(isset($gem['id']))
             {
                 if ($gem['id'] == 49110) // Nightmare Tear
