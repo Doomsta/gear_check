@@ -18,8 +18,7 @@ class tooltips
         $tpl = $this->get_item_template($item['id']); // TODO: Interpret item_template and integrate it into 
 
         // Item Name
-        // TODO: Quality
-        $tmp = '<div><table width=\'450\'><tr><td><b class=\'q4\'>'.$item['name'].'</b><br />';
+        $tmp = '<div><table width=\'450\'><tr><td><b class=\'q'.$tpl['Quality'].'\'>'.$item['name'].'</b><br />';
 
         // Heroic?
         if ($tpl['Flags'] & 8)
@@ -134,9 +133,9 @@ class tooltips
             if ($key <= ItemStats::ITEM_MOD_STAMINA)
                 continue;
             if ($key == ItemStats::ITEM_MOD_MANA_REGENERATION)
-                $tmp .= '<span class=\'q2\'>Anlege: Stellt alle 5 Sek. '.$value.' Mana wieder her</span><br />';
+                $tmp .= '<span class=\'q2\'>Anlegen: Stellt alle 5 Sek. '.$value.' Mana wieder her</span><br />';
                 if ($key == ItemStats::ITEM_MOD_HEALTH_REGEN)
-                    $tmp .= '<span class=\'q2\'>Anlege: Stellt alle 5 Sek. '.$value.' Gesundheit wieder her</span><br />';
+                    $tmp .= '<span class=\'q2\'>Anlegen: Stellt alle 5 Sek. '.$value.' Gesundheit wieder her</span><br />';
             else
                 $tmp .= '<span  class=\'q2\'>Anlegen: Erh&ouml;ht '.$_stat_name[$key].' um '.$value.'</span><br />';   
         }
@@ -149,13 +148,21 @@ class tooltips
         {
             if (!isset($_spell_desc[$tpl['spellid_1']]))
                 echo "Missing Spell Description ".$tpl['spellid_1']."<br />";
-            else
-                $tmp .= '<span class=\'q2\'>Anlegen: '.$_spell_desc[$tpl['spellid_1']].'</span><br />';
+            elseif (strlen($_spell_desc[$tpl['spellid_1']]) > 0) // length is important because of invisible spells like visual effects
+                if ($tpl['spelltrigger_1'] == 0)
+                    $tmp .= '<span class=\'q2\'>Benutzen: '.$_spell_desc[$tpl['spellid_1']].'</span><br />';
+                else
+                    $tmp .= '<span class=\'q2\'>Anlegen: '.$_spell_desc[$tpl['spellid_1']].'</span><br />';
+
         }
 
         $tmp .='       </td>
             </tr>
             </table></div>';
+
+        // Description
+        if (strlen($tpl['description']) > 0)
+            $tmp .= '<span class=\'q\'>&quot;'.$tpl['description'].'&quot;</span>';
 
         // Item Set
         // TODO:
