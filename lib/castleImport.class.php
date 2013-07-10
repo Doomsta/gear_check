@@ -70,6 +70,7 @@ class castleImport
 		{
 			$sn = (int)$item['slot'] +1;
 			$out['items'][$sn]['id']  = (string) $item['id'];
+			$out['items'][$sn]['slotId']  = (int) $sn;
 			$out['items'][$sn]['name']  = (string) $item['name'];
 			$out['items'][$sn]['level']  = (int) $item['level'];
 			$out['items'][$sn]['rarity']  = (int) $item['rarity'];

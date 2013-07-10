@@ -24,7 +24,7 @@
             <img width="45" height="45" src="http://www.linuxlounge.net/~martin/wowimages/?item={$items[$i]['id']}" class="q{$items[$i]['rarity']}" />
         </a>
         {else}
-         <img width="45" height="45" src="img/slots/{$i}.png" />
+         <img width="45" height="45" src="img/slots/{$items[$i]['slotId']}.png" />
         {/if}
     </td>
     <td>
@@ -63,7 +63,7 @@
             <img width="45" height="45" src="http://www.linuxlounge.net/~martin/wowimages/?item={$items[$i+8]['id']}" class="q{$items[$i+8]['rarity']}" />
         </a>
         {else}
-        <img width="45" height="45" src="img/slots/{$i+6}.png" />
+        <img width="45" height="45" src="img/slots/{$items[$i+8]['slotId']}.png" />
         {/if}
     </td>
   </tr>
@@ -76,7 +76,7 @@
             <img width="45" height="45" src="http://www.linuxlounge.net/~martin/wowimages/?item={$items[$i]['id']}" class="q{$items[$i]['rarity']}" />
         </a>
         {else}
-        <img width="45" height="45" src="img/slots/{$i-1}.png" />
+        <img width="45" height="45" src="img/slots/{$items[$i]['slotId']}.png" />
         {/if}
     </td>
     <td  colspan="3">
