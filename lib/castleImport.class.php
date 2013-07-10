@@ -81,6 +81,14 @@ class castleImport
 			if (isset($item['permanentEnchantSpellName']))
 				$out['items'][$sn]['permanentEnchantSpellName'] = (string) $item['permanentEnchantSpellName'];
 		}
+                //professions
+                foreach($xml->characterInfo->characterTab->professions->skill as $skill)
+                {
+                        $out['skills'][(int) $skill['id']] = array(
+                                'val' => (int) $skill['value'],
+                                'max' => (int) $skill['max']
+                        );
+                }
 		//stats
 		//base
 		$out['stats']['base']['str'] = (string) $xml->characterInfo->characterTab->baseStats->strength['effective'];  
@@ -147,7 +155,7 @@ class castleImport
 	}
 
 	static function HandleArmoryQuirks($xml)
-    {
+        {
 		// Armory has several issues currently:
 		// - Armor Penetration is missing (WIP)
 		// - Expertise is missing (WIP)
@@ -159,68 +167,6 @@ class castleImport
 		// - Some Titles are shown as prefix instead of suffix... (FIXED)
 		// - Offhand Damage Min/Max/Dps/Speed is missing (TODO)
 		// Let's calculate them here!
-		
-		$expertise = 0;
-		$armorpen = 0;
-		$spellpen = 0;
-		$gems = array();
-		
-		// items
-		foreach ($xml['items'] as $slot => $item)
-		{
-			if (isset($item['stats'][ItemStats::ITEM_MOD_ARMOR_PENETRATION_RATING]))
-				$armorpen += $item['stats'][ItemStats::ITEM_MOD_ARMOR_PENETRATION_RATING];
-			if (isset($item['stats'][ItemStats::ITEM_MOD_EXPERTISE_RATING]))
-				$expertise += $item['stats'][ItemStats::ITEM_MOD_EXPERTISE_RATING];
-			if (isset($item['stats'][ItemStats::ITEM_MOD_SPELL_PENETRATION]))
-				$spellpen += $item['stats'][ItemStats::ITEM_MOD_SPELL_PENETRATION];
-			
-			// count gems
-			foreach ($item['gems'] as $gemslot => $gem)
-			{
-				if (!isset($gem['id']))
-					continue;
-				elseif (isset($gems[$gem['id']]))
-				$gems[$gem['id']]++;
-				else
-					$gems[$gem['id']] = 1;
-				
-				// fix missing socket color for prismatic gems
-				if (!isset($gem['socketColor']))
-					$xml['items'][$slot]['gems'][$gemslot]['socketColor'] = 1;
-			}
-			
-			// socket bonus (TODO)
-		}
-		
-		// gems
-		foreach ($gems as $id => $count)
-		{
-			// needs to be reworked to use dbc data...somehow (GemProperties.dbc)
-			switch ($id) {
-				case 40117:
-					$armorpen += $count * 20;
-					break;
-				case 42153:
-					$armorpen += $count * 34;
-					break;
-				case 40140:
-					$armorpen += $count * 10;
-					break;
-				case 40122:
-					$spellpen += $count * 25;
-					break;
-				case 40182:
-				case 40135:
-					$spellpen += $count * 13;
-					break;
-					// TODO: add more gems (temporary)
-				default: // all other gems, non relevant...
-					break;
-			}
-		}
-		
-		// talents (TODO)
 		
 		// racial bonuses
 		$expertiseBonus = array();
@@ -301,41 +247,55 @@ class castleImport
 		$_enchant_name_to_spell["Rune of the Stoneskin Gargoyle"] = 62158;
 		
 		foreach ($xml['items'] as $slot => $item)
-		{
-			if (!isset($item['permanentEnchantItemId']))
-				continue;
-			if ($item['permanentEnchantItemId'] != 0 || !isset($item['permanentEnchantSpellName']))
-				continue;
-			$xml['items'][$slot]['permanentEnchantSpellId'] = $_enchant_name_to_spell[$item['permanentEnchantSpellName']];
-		}
-		
-		// wrong title position
-		if ($xml['prefix'] == "der Unsterbliche")
-		{
-			$xml['suffix'] = $xml['prefix'];
-			$xml['prefix'] = "";
-		}
-		
-		// export back to xml
-		$xml['stats']['melee']['expertiseRating'] = $expertise;
-		$xml['stats']['melee']['expertise'] = $expertise / 8.230769231;
-		$xml['stats']['melee']['expertiseMainHand'] = $xml['stats']['melee']['expertise'];
-		if (isset($expertiseBonus[16])) // mh bonus
-			$xml['stats']['melee']['expertiseMainHand'] += $expertiseBonus[16];
-		$xml['stats']['melee']['expertiseOffHand'] = $xml['stats']['melee']['expertise'];
-		if (isset($expertiseBonus[17])) // oh bonus
-			$xml['stats']['melee']['expertiseOffHand'] += $expertiseBonus[17];
-		
-		$xml['stats']['melee']['arpRating'] = $armorpen;
-		$xml['stats']['melee']['arpPercent'] = $armorpen / 13.99;
-		
-		$xml['stats']['caster']['spellPen'] = $spellpen;
-		
-		$xml['stats']['melee']['hitPercent'] = $xml['stats']['melee']['hitRating'] /  32.775;
-		$xml['stats']['caster']['spellHitPercent'] = $xml['stats']['caster']['spellHitRating'] / 26.231818182;
-		
-		return $xml;
-	}
+                {
+                      if (!isset($item['permanentEnchantItemId']))
+                          continue;
+                      if ($item['permanentEnchantItemId'] != 0 || !isset($item['permanentEnchantSpellName']))
+                          continue;
+                      $spellId = $_enchant_name_to_spell[$item['permanentEnchantSpellName']];
+                      $xml['items'][$slot]['permanentEnchantSpellId'] = $spellId;
+                      if (in_array($spellId, array(44636, 44645, 59636))) {
+                          if (!isset($xml['skills'][333]))
+                               $xml['skills'][333] = array("val" => 400, "max" => "450", "guessed" => true);
+                      }
+                      elseif (in_array($spellId, array(61117, 611118, 61119, 61120))) {
+                          if (!isset($xml['skills'][773]))
+                              $xml['skills'][773] = array("val" => 400, "max" => "450", "guessed" => true);
+                      }
+                      elseif (in_array($spellId, array(60584, 60583, 57683, 57690, 57691, 57692, 57694, 57696, 57699, 57701))) {
+                          if (!isset($xml['skills'][165]))
+                              $xml['skills'][165] = array("val" => 400, "max" => 450, "guessed" => true);
+                      }
+                      elseif (in_array($spellId, array(56039, 56034, 55642, 55769, 55777))) {
+                          if (!isset($xml['skills'][197]))
+                              $xml['skills'][197] = array("val" => (in_array($spellId, array(55642, 55769, 55777)) ? 420 : 405), "max" => 450, "guessed" => true);
+                      }
+                      elseif (in_array($spellId, array(54999, 54998, 54793, 55016, 63770, 55002, 63765, 54736))) {
+                             if ($spellId == 54999 || $spellId == 54998 || $spellId == 63770) // 400
+                                  $val = 400;
+                             elseif ($spellId == 54793 || $spellId == 55002 || $spellId == 63765) // 380
+                                  $val = 380;
+                             elseif ($spellId == 55016) // 405
+                                  $val = 405;
+                             elseif ($spellId == 54736) // 390
+                                  $val = 390;
+                             if (!isset($xml['skills'][202]))
+                                  $xml['skills'][202] = array("val" => $val, "max" => 450, "guessed" => "true");
+                             elseif ($xml['skills']['202']['val'] < $val)
+                                  $xml['skills']['202']['val'] = $val; // update with higher value
+                     }
+             }
+ 
+             // jewelcrafting detection                
+             foreach ($xml['items'] as $slot => $item)
+                 foreach ($item['gems'] as $gem)
+                     if (in_array($gem['id'], array(42142, 36766, 42148, 42143, 42152, 42153, 42146, 42158, 42154, 42150, 42156, 42144, 42149, 36767, 42145, 42155, 42151, 42157)))
+                         if (!isset($xml['skills'][755]))
+                             $xml['skills'][755] = array("val" => 375, "max" => "450", "guessed" => true);
+
+            return $xml;
+
+        }
     
 	static function checkGemBonus($items)
 	{
@@ -345,7 +305,10 @@ class castleImport
 			foreach ($item['gems'] as $gem)
 			if (isset($gem['id']))
 				$gems[$gem['id']] = true;
-			
+
+                if (count($gems) == 0)
+                    return $items;		
+	
 		$query = "SELECT `id`, `name`, `color` FROM `".MYSQL_DATABASE."`.`socket_stats` WHERE id IN (".implode(",", array_keys($gems)).")";
 		unset($gems);
 		$result = mysql_query($query);

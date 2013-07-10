@@ -30,7 +30,7 @@ for($i=0;$i<count($cn);$i++)
 	foreach($tmp[$i]['stats']  as $j => $value)
 	$data['stats'][$j][$i]['absolute']  = $value;
 	
-	$tmp[$i]['gems'] = $chars[$i]->getSockts();
+	$tmp[$i]['gems'] = $chars[$i]->getSockets();
 	foreach($tmp[$i]['gems']  as $j => $gem)
 	{
 		if(!isset($data['gem'][$j]))
@@ -45,6 +45,15 @@ for($i=0;$i<count($cn);$i++)
 	foreach($tmp[$i]['stats']  as $statid => $statvalue)
 	$data['stat'][$statid][$i]['absolute']  = $statvalue;
 	$data['trinkets'][$i] = $chars[$i]->getItems(array(1 => 13, 2 => 14));   
+
+        foreach ($_skill_name as $id => $name)
+        {
+            $tmp = $chars[$i]->getSkills();
+            if (isset($tmp[$id]))
+                $data['skills'][$id][$i] = $tmp[$id];
+            else
+                $data['skills'][$id][$i] = false;
+        }
 }
 //fill array with zeros
 //stats
@@ -83,6 +92,7 @@ foreach($data['stats'] as $statid => $stat)
 }
 //print_R($data);
 $tpl->assign_vars('_stat_name', $_stat_name);
+$tpl->assign_vars('_skill_name', $_skill_name);
 $tpl->assign_vars('count', count($cn));
 $tpl->assign_vars('data', $data);
 

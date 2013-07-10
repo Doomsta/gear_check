@@ -58,6 +58,7 @@ class char
         $this->guild = $tmp['guildName'];
         $this->level = $tmp['level'];
         $this->achievement_points = $tmp['points'];
+        $this->skill = $tmp['skills'];
         //$this->arena = $tmp['arena'];
         $this->stats = $tmp['stats'];
         foreach($tmp['items'] as $key => $value)
@@ -104,7 +105,7 @@ class char
     
     }
     
-    public function getSockts()
+    public function getSockets()
     {
         $tmp = array();
         foreach($this->equipment as $item)
@@ -146,7 +147,7 @@ class char
             $stats[$key] += $eqstat;
             
         //add gems
-        $gems = $this->getSockts();
+        $gems = $this->getSockets();
         foreach($gems as $gem)
         {
                 $stats[$gem['stat_type1']] += ($gem['stat_value1']*$gem['count']);  
@@ -239,5 +240,11 @@ class char
                 $tmp[$item] = $this->equipment[$item];
         return $tmp;
     }
+
+    public function getSkills()
+    {
+        return $this->skills;
+    }
+
 }
 ?>
