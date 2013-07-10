@@ -283,6 +283,25 @@ $_stat_name = array(
 );
 
 ################################
+# Skills
+###############################
+
+$_skill_name = array(
+    171 => "Alchemie",
+    186 => "Bergbau",
+    202 => "Ingenieurskunst",
+    773 => "Inschriftenkunde",
+    755 => "Juwelenschleifen",
+    393 => "K&uuml;rschner",
+    182 => "Kr&auml;uterkunde",
+    165 => "Lederverarbeitung",
+    164 => "Schmiedekunst",
+    197 => "Schneiderei",
+    333 => "Verzauberkunst",
+);
+
+
+################################
 # TEMP (Move to DB)
 ################################
 
@@ -413,6 +432,7 @@ $_spell_desc = array(
 	67384 => 'Each time you use your Death Strike, Obliterate, or Scourge Strike ability, you have a chance to gain 200 Strength for 20 sec.',
 	64962 => 'Increases the damage done by your Death Coil ability by 380 and by your Frost Strike ability by 113.',
         //random stuff
-        63604 => 'Steht im Zentrum der Aufmerksamkeit.'
+        63604 => 'Steht im Zentrum der Aufmerksamkeit.',
+        17816 => 'Impress others with your fashion sense.' // smoking, yeah!
 );
 ?>
