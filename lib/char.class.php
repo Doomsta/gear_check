@@ -79,8 +79,11 @@ class char
     
     public function addItemTooltips(&$tooltip)
     {
-         foreach($this->slotOrder as $i)
-            $this->equipment[$i]['tooltip'] = $tooltip->get_item_tooltip($this->equipment[$i]);
+        $itemlist = array();
+        foreach($this->slotOrder as $i)
+            $itemlist[$i] = $this->equipment[$i]['id'];
+        foreach($this->slotOrder as $i)
+            $this->equipment[$i]['tooltip'] = $tooltip->get_item_tooltip($this->equipment[$i], $itemlist);
     }
     
     public function getActiveTalent()

@@ -9,7 +9,7 @@ class tooltips
             $tpl->add_script($this->tooltip_js);
     }
 
-    function get_item_tooltip($item)
+    function get_item_tooltip($item, $itemlist = null)
     {
         global $_item_class, $_inventory_type, $_stat_name, $_spell_desc;
 
@@ -64,6 +64,8 @@ class tooltips
         // Gems
         foreach($item['gems'] as $gem)
         {
+            if(!isset($gem['socketColor']))
+                break;
             if(isset($gem['id']))
             {
                 if ($gem['id'] == 49110) // Nightmare Tear
@@ -171,14 +173,43 @@ class tooltips
         // - Awareness of other worn items (for set bonus activation)
         if ($tpl['itemset'] > 0)
         {
-            // set info
-            $query = "SELECT `name` FROM `".MYSQL_DATABASE_TDB."`.`item_set_names` WHERE `entry` = ".$tpl['entry']."";
-            $result = mysql_query($query);
-            $row = mysql_fetch_assoc($result);
+            $set = array();
+            $settmp = null;
             
-            $tmp .= "Set: ".$row['name']." (".$tpl['itemset'].")";
-        }
-        
+            $query = "SELECT `InventoryType`, `entry`, `name` FROM `".MYSQL_DATABASE_TDB."`.`item_template`  WHERE `itemset` = ".$tpl['itemset']."";
+            $result = mysql_query($query);
+            while($row = mysql_fetch_array($result))
+            {
+                if($row['InventoryType'] == 20)
+                    $set[5][$row['entry']] = $row['name'];
+                else
+                    $set[$row['InventoryType']][$row['entry']] = $row['name'];
+            }
+            ksort($set);
+            ksort($itemlist);
+            $count = 0;
+            foreach ($itemlist as $slot => $item)
+                if (isset($set[$slot][$item]))
+                {
+                    $count++;
+                   // echo '<br>'.$set[$slot][$item];
+                   $settmp .= '<span class=\'q2\'>'.$set[$slot][$item].'</span><br />';
+                }
+                else
+                {
+                    $smallest = -1; // invalid
+                       if (!isset($set[$slot]))  
+                            continue;
+                    foreach ($set[$slot] as $itemid => $name)
+                        if ($itemid < $smallest || $smallest == -1)
+                        {
+                             $smallest = $itemid;
+                            $settmp .= '<span class=\'q1\'>'.$name.'</span><br />';
+                        }
+                }
+                $tmp .= '<span class=\'q1\'>'.$count.'/'.count($set).'</span><br />';
+                $tmp .= $settmp;
+            }
         return $tmp;
     }
 
