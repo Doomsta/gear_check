@@ -18,10 +18,14 @@
 <table border="1">
 {for $i=0 to 7}
   <tr valign="top">
-    <td>
+    <td style="text-align:center;vertical-align:middle;">
+        {if ($items[$i]['id'])}
         <a href="http://wotlk.openwow.com/item={$items[$i]['id']}" target="_blank">
             <img width="45" height="45" src="http://www.linuxlounge.net/~martin/wowimages/?item={$items[$i]['id']}" class="q{$items[$i]['rarity']}" />
         </a>
+        {else}
+         <img width="45" height="45" src="img/slots/{$i}.png" />
+        {/if}
     </td>
     <td>
     <div>
@@ -53,19 +57,27 @@
     {/foreach}
     
     </td>
-    <td>
+    <td style="text-align:center;vertical-align:middle;">
+        {if isset($items[$i+8]['id'])}
         <a href="http://wotlk.openwow.com/item={$items[$i+8]['id']}" target="_blank">
             <img width="45" height="45" src="http://www.linuxlounge.net/~martin/wowimages/?item={$items[$i+8]['id']}" class="q{$items[$i+8]['rarity']}" />
         </a>
+        {else}
+        <img width="45" height="45" src="img/slots/{$i+6}.png" />
+        {/if}
     </td>
   </tr>
 {/for}
 {for $i=16 to 18}
     <tr>
-        <td>
+        <td style="text-align:center;vertical-align:middle;">
+        {if isset($items[$i]['id'])}
         <a href="http://wotlk.openwow.com/item={$items[$i]['id']}" target="_blank">
             <img width="45" height="45" src="http://www.linuxlounge.net/~martin/wowimages/?item={$items[$i]['id']}" class="q{$items[$i]['rarity']}" />
         </a>
+        {else}
+        <img width="45" height="45" src="img/slots/{$i-1}.png" />
+        {/if}
     </td>
     <td  colspan="3">
     <div>[{$items[$i]['level']}]<a href="#" rel="tooltip" data-placement='right' data-html='true' data-original-title="{$items[$i]['tooltip']}">[{$items[$i]['name']}]</a>
