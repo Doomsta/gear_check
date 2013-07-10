@@ -93,16 +93,16 @@ class tooltips
             else
                 switch ($gem['socketColor']) {
                     case 1: //meta
-                        $tmp .='<a class=\'socket-meta q0\'>Meta Socket</a>';
+                        $tmp .='<a class=\'socket-meta q0\'>Meta Sockel</a>';
                         break;
                     case 2: //red
-                        $tmp .='<a class=\'socket-red q0\'>Red Socket</a>';
+                        $tmp .='<a class=\'socket-red q0\'>Roter Sockel</a>';
                         break;
                     case 4: //yellow
-                        $tmp .='<a class=\'socket-yellow q0\'>Yellow Socket</a>';
+                        $tmp .='<a class=\'socket-yellow q0\'>Gelber Sockel</a>';
                         break;
                     case 8: //blue
-                        $tmp .='<a class=\'socket-blue q0\'>Blue Socket</a>';
+                        $tmp .='<a class=\'socket-blue q0\'>Blauer Sockel</a>';
                         break;
                 }
             $tmp .= '<br />';
@@ -112,9 +112,9 @@ class tooltips
         if($item['socketBonus'] != 0)
         {
             if (isset($item['socketBonusActive']) AND $item['socketBonusActive'])
-                $tmp .= '<span class=\'q2\'>Socket Bonus: +'.$item['socketBonus']['stat_value1'].' '.$_stat_name[$item['socketBonus']['stat_type1']].'</span><br />';
+                $tmp .= '<span class=\'q2\'>Sockelbonus: +'.$item['socketBonus']['stat_value1'].' '.$_stat_name[$item['socketBonus']['stat_type1']].'</span><br />';
             else
-                $tmp .= '<span class=\'q0\'>Socket Bonus: +'.$item['socketBonus']['stat_value1'].' '.$_stat_name[$item['socketBonus']['stat_type1']].'</span><br />';
+                $tmp .= '<span class=\'q0\'>Sockelbonus: +'.$item['socketBonus']['stat_value1'].' '.$_stat_name[$item['socketBonus']['stat_type1']].'</span><br />';
         }
 
         // Durability (TODO)
