@@ -107,8 +107,8 @@ gem count<br />
 {$_stat_name[$key]} => {$stat} <br />
 {/if}
 {/foreach}
-+<h3>Berufe</h3>
-foreach from=$skills key=key item=skill}
+<h3>Berufe</h3>
+{foreach from=$skills key=key item=skill}
 {$_skill_name[$key]} => {if isset($skill['guessed']) && $skill['guessed']}<strong>~</strong>{/if}{$skill['val']}/{$skill['max']}<br />
 {/foreach}
 <h3>PvP</h3>
