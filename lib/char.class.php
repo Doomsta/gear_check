@@ -58,7 +58,7 @@ class char
         $this->guild = $tmp['guildName'];
         $this->level = $tmp['level'];
         $this->achievement_points = $tmp['points'];
-        $this->skill = $tmp['skills'];
+        $this->skills = $tmp['skills'];
         //$this->arena = $tmp['arena'];
         $this->stats = $tmp['stats'];
         foreach($tmp['items'] as $key => $value)
