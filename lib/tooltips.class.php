@@ -64,8 +64,6 @@ class tooltips
         // Gems
         foreach($item['gems'] as $gem)
         {
-            if(!isset($gem['socketColor']))
-                break;
             if(isset($gem['id']))
             {
                 if ($gem['id'] == 49110) // Nightmare Tear
@@ -103,6 +101,9 @@ class tooltips
                         break;
                     case 8: //blue
                         $tmp .='<a class=\'socket-blue q0\'>Blauer Sockel</a>';
+                        break;
+                    default: //prismatic
+                        $tmp .='<a class=\'socket-pristmatic q0\'>Prismatischer Sockel</a>';
                         break;
                 }
             $tmp .= '<br />';
