@@ -63,6 +63,7 @@ class char
         foreach($tmp['items'] as $key => $value)
             if(isset($this->equipment[$key]))
                 $this->equipment[$key] = $tmp['items'][$key];
+        return true;
     }
     
     public function loadItems()
