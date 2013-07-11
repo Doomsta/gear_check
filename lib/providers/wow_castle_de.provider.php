@@ -13,7 +13,7 @@ class Provider
     
     private static function build_fetch_url($path, $params = array())
     {
-        return $this->armory_base_url."$path?".http_build_query($params);
+        return Provider::armory_base_url."$path?".http_build_query($params);
     }
     
     public static function fetchCharacterData($name)
