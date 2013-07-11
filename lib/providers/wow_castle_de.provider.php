@@ -13,7 +13,7 @@ class Provider
     
     private static function build_fetch_url($path, $params = array())
     {
-        return Provider::armory_base_url."$path?".http_build_query($params);
+        return Provider::$armory_base_url."$path?".http_build_query($params);
     }
     
     public static function fetchCharacterData($name)
@@ -500,7 +500,7 @@ class Provider
         return $out;
     }
 
-    private function fetch_xml_document($url) // TODO: not provider-specific, relocate to generic place
+    private static function fetch_xml_document($url) // TODO: not provider-specific, relocate to generic place
     {
         $handle = curl_init();
         
