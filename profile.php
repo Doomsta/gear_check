@@ -28,7 +28,7 @@ $tpl->set_vars(array(
 	'subHeadBig'		=> 'TEST-TEST',
 	'subHeadSmall'	=> 'WoW-Castle PvE 3.3.5',
 	'description'		=> 'Armory-basierter Gearcheck für WoW-Castle.de (blizzlike, pve, 3.3.5)',
-	'template_file'		=> 'test.tpl',
+	'template_file'		=> 'profile.tpl',
 ));
 $tpl->display();
 ?>
