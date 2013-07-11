@@ -1,7 +1,7 @@
 <?php
 $rootpath = './';
 include ($rootpath.'common.php');
-require_once($rootpath.'lib/castleImport.class.php');
+require_once($rootpath.'lib/providers/'.PROVIDER.'.provider.php');
 require_once($rootpath.'lib/char.class.php');
 $cn = 'Doomsta';
 if (isset($_GET['cn']))

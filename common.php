@@ -10,8 +10,8 @@ require_once($rootpath.'lib/functions.php');
 require_once($rootpath.'lib/tooltips.class.php');
 require_once($rootpath.'lib/cache.class.php');
 require_once($rootpath.'config.php'); 
-$tpl = new tpl;
-$cache = new cache;
+$tpl = new tpl()
+$cache = new cache()
 $tpl->assign_vars("BOOTSRAPPATH", $rootpath.'bootstrap/');
 $tpl->assign_vars("PROJEKTNAME", PROJEKTNAME);
 $tpl->add_css_file($rootpath."css/common.css");
@@ -22,8 +22,8 @@ $nav_links = array(
 	),
 );
 $tpl->add_nav_links($nav_links);
-
 $tpl->set_defaultIcon('./img/icon.png');
+
 # MySQL Connection
 mysql_connect($mysql_host, $mysql_user, $mysql_pass);
 unset($mysql_pass); # lose the password right here, we don't need it anymore afterwards

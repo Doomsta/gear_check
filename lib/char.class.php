@@ -1,4 +1,8 @@
 <?php
+
+if (!defined('PROVIDER'))
+    die("Error: No Provider loaded".PHP_EOL);
+
 class char
 {
     private $name, $prefix, $suffix, $race, $class, $guild, $level, $achievement_points;
@@ -6,10 +10,10 @@ class char
     private $stats = array();
     private $talents = array();
     private $arena = array();
-    
+
     private $slotOrder = array(1, 2, 3, 15, 5, 4, 19, 9, 10, 6, 7, 8, 11, 12, 13, 14, 16, 17, 18);
-    
-    public function __construct($name, $loadFromCastle = FALSE)
+
+    public function __construct($name, $import = FALSE)
     {
         $this->name = $name;
         $this->prefix = null;
@@ -31,23 +35,23 @@ class char
         global $_stat_name;
         foreach($_stat_name as $key => $value)
             $this->stats[$value] = 0;
-        if($loadFromCastle == TRUE)
+        if ($import)
         {
-            if($this->loadFromCastle(TRUE) == false)
+            if(!$this->fetch(TRUE))
                 return false;
             $this->loadItems();
-            $this->equipment = castleImport::checkGemBonus($this->equipment);
-            $this->equipment = castleImport::lookupGemBonuses($this->equipment);
+            $this->equipment = Provider::checkGemBonus($this->equipment); // TODO: these should be generic and not provider dependant!
+            $this->equipment = Provider::lookupGemBonuses($this->equipment);
         }
     }
 
-    public function loadFromCastle($HandleArmoryQuirks = FALSE)
+    public function fetch($ExecuteQuirksHandler = FALSE)
     {
-        $tmp = castleImport::getChar($this->name);
-        if($tmp === false)
+        $tmp = Provider::fetchCharacterData($this->name);
+        if ($tmp === false)
             return false;
-        if($HandleArmoryQuirks == TRUE)
-            $tmp = castleImport::HandleArmoryQuirks($tmp);
+        if ($ExecuteQuirksHandler)
+            $tmp = Provider::HandleQuirks($tmp);
         
         $this->name = $tmp['name'];
         $this->prefix= $tmp['prefix'];
@@ -66,17 +70,17 @@ class char
                 $this->equipment[$key] = $tmp['items'][$key];
         return true;
     }
-    
+
     public function loadItems()
     {
         foreach($this->slotOrder as $i)
         {
-          $this->equipment[$i]['stats'] = get_item_stats($this->equipment[$i]['id']);
-          $this->equipment[$i] = add_item_gems($this->equipment[$i]);
-         }
-         return true;
+            $this->equipment[$i]['stats'] = get_item_stats($this->equipment[$i]['id']);
+            $this->equipment[$i] = add_item_gems($this->equipment[$i]);
+        }
+        return true;
     }
-    
+
     public function addItemTooltips(&$tooltip)
     {
         $itemlist = array();
@@ -85,12 +89,12 @@ class char
         foreach($this->slotOrder as $i)
             $this->equipment[$i]['tooltip'] = $tooltip->get_item_tooltip($this->equipment[$i], $itemlist);
     }
-    
+
     public function getActiveTalent()
     {
         return $this->talents['active'];
     }
-    
+
     public function getEquipmentStats()
     {
         global $_stat_name;
@@ -107,7 +111,7 @@ class char
         return $tmp;
     
     }
-    
+
     public function getSockets()
     {
         $tmp = array();
@@ -128,7 +132,7 @@ class char
         return $tmp;
         
     }
-    
+
     public function getStats($base = TRUE, $items = TRUE, $gems = TRUE)
     { 
         $stats = array();
@@ -172,7 +176,7 @@ class char
         }
         return $stats;
     }
-    
+
     public function getAvgItemLevel()
     {
         $tmp = 0;
@@ -188,12 +192,7 @@ class char
             $tmp = round(($tmp/16),1); 
         return $tmp;
     }
-    
-    public function getGetGearStats()
-    {
-    
-    }
-    
+
     public function getCharArray()
     {
         $tmp['name'] = $this->name;
@@ -205,7 +204,7 @@ class char
         $tmp['guild'] = $this->guild;
         return $tmp;
     }
-    
+
     public function getClassLevelStats()
     {
         if(!isset($this->level) OR !isset($this->class))
@@ -226,7 +225,7 @@ class char
 
         return $tmp;    
     }
-    
+
     public function getClassBaseStats()
     {
         if(!isset($this->race))
@@ -241,7 +240,6 @@ class char
         $tmp[ItemStats::ITEM_MOD_HEALTH] = $row['basehp'];
         return $tmp;
     }
-
 
     // this function needs to be called last, because all calculations scale with talents, enchants, etc.
     public function DeriveStats($stats)
@@ -271,6 +269,5 @@ class char
     {
         return $this->skills;
     }
-
 }
 ?>
