@@ -1,7 +1,7 @@
 <?php
 $rootpath = './';
 include ($rootpath.'common.php');
-require_once($rootpath.'lib/import/'.ARMORY_PROVIDER.'.provider.php');
+require_once($rootpath.'lib/providers/'.PROVIDER.'.provider.php');
 require_once($rootpath.'lib/char.class.php');
 $tmp2 = 0;
 define('MAX_CHARS', '16');

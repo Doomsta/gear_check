@@ -2,18 +2,18 @@
 
 $provider = 'wow_castle_de';
 
-if (!defined('PROVIDER'))
-    define('PROVIDER', $provider);
+if (!defined('PROVIDER_LOADED'))
+    define('PROVIDER_LOADED', $provider);
 else
-    die('Error: Duplicate provider inclusion: (1) '.PROVIDER.' (2) '.$provider.PHP_EOL);
+    die('Error: Duplicate provider inclusion: (1) '.PROVIDER_LOADED.' (2) '.$provider.PHP_EOL);
 
 class Provider
 {
-    private $armory_base_url = 'http://armory.wow-castle.de/';
+    private static $armory_base_url = 'http://armory.wow-castle.de/';
     
-    private function build_fetch_url($path, $params = array())
+    private static function build_fetch_url($path, $params = array())
     {
-        return "{$this->armory_base_url}{$path}?{http_build_query($params)}";
+        return $this->armory_base_url."$path?".http_build_query($params);
     }
     
     public static function fetchCharacterData($name)
@@ -21,8 +21,8 @@ class Provider
         $out = array();
         
         // fetch xml character document
-        $url = $this->build_fetch_url("character-sheet.xml", array("r" => "WoW-Castle+PvE", "cn" => $name));
-        $xml = $this->fetch_xml_document($url);
+        $url = Provider::build_fetch_url("character-sheet.xml", array("r" => "WoW-Castle+PvE", "cn" => $name));
+        $xml = Provider::fetch_xml_document($url);
         if($xml->characterInfo->character['name'] == false)
             return false;
         
@@ -500,7 +500,7 @@ class Provider
         return $out;
     }
 
-    private function fetchXML($url) // TODO: not provider-specific, relocate to generic place
+    private function fetch_xml_document($url) // TODO: not provider-specific, relocate to generic place
     {
         $handle = curl_init();
         
