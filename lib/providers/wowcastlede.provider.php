@@ -106,6 +106,7 @@ class Provider
         }
         
         // professions
+        $out['skills'] = array();
         foreach($xml->characterInfo->characterTab->professions->skill as $skill)
         {
             $out['skills'][(int) $skill['id']] = array(
