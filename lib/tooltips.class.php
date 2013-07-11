@@ -9,6 +9,7 @@ class tooltips
             $tpl->add_script($this->tooltip_js);
     }
 
+    // TODO: The complete structure of this method is ugly, swap out the different aspects to their own methods
     function get_item_tooltip($item, $itemlist = null)
     {
         global $_item_class, $_inventory_type, $_stat_name, $_spell_desc;
@@ -33,7 +34,7 @@ class tooltips
         $item_class = $_item_class[$tpl['class']][$tpl['subclass']];
         $inventory_type = $_inventory_type[$tpl['InventoryType']];
 
-        $tmp .='<td>'.$inventory_type.'</td><td style=\'text-align:right;\'>'.$item_class[1].'</td>'; //TODO
+        $tmp .='<td>'.$inventory_type.'</td><td style=\'text-align:right;\'>'.$item_class[1].'</td>';
 
         $tmp .='</tr></table><table width=\'100%\'>';
 
@@ -133,10 +134,10 @@ class tooltips
         {
             if ($key <= ItemStats::ITEM_MOD_STAMINA)
                 continue;
-            if ($key == ItemStats::ITEM_MOD_MANA_REGENERATION)
+            elseif ($key == ItemStats::ITEM_MOD_MANA_REGENERATION)
                 $tmp .= '<span class=\'q2\'>Anlegen: Stellt alle 5 Sek. '.$value.' Mana wieder her</span><br />';
-                if ($key == ItemStats::ITEM_MOD_HEALTH_REGEN)
-                    $tmp .= '<span class=\'q2\'>Anlegen: Stellt alle 5 Sek. '.$value.' Gesundheit wieder her</span><br />';
+            elseif ($key == ItemStats::ITEM_MOD_HEALTH_REGEN)
+                $tmp .= '<span class=\'q2\'>Anlegen: Stellt alle 5 Sek. '.$value.' Gesundheit wieder her</span><br />';
             else
                 $tmp .= '<span  class=\'q2\'>Anlegen: Erh&ouml;ht '.$_stat_name[$key].' um '.$value.'</span><br />';   
         }
@@ -148,7 +149,7 @@ class tooltips
         if ($tpl['spellid_1'] > 0)
         {
             if (!isset($_spell_desc[$tpl['spellid_1']]))
-                echo "Missing Spell Description ".$tpl['spellid_1']."<br />";
+                echo "Missing Spell Description <a href=\"http://wotlk.openwow.com/spell=".$tpl['spellid_1']."\">".$tpl['spellid_1']."</a><br />";
             elseif (strlen($_spell_desc[$tpl['spellid_1']]) > 0) // length is important because of invisible spells like visual effects
                 if ($tpl['spelltrigger_1'] == 0)
                     $tmp .= '<span class=\'q2\'>Benutzen: '.$_spell_desc[$tpl['spellid_1']].'</span><br />';
@@ -171,6 +172,8 @@ class tooltips
         // - Awareness of other worn items (for set bonus activation)
         if ($tpl['itemset'] > 0)
         {
+            echo "<br />";
+
             $set = array();
             $settmp = null;
             
@@ -191,7 +194,7 @@ class tooltips
                 {
                     $count++;
                    // echo '<br>'.$set[$slot][$item];
-                   $settmp .= '<span class=\'q2\'>'.$set[$slot][$item].'</span><br />';
+                   $settmp .= '<span class=\'q6\'>'.$set[$slot][$item].'</span><br />';
                 }
                 else
                 {
@@ -202,7 +205,7 @@ class tooltips
                         if ($itemid < $smallest || $smallest == -1)
                         {
                              $smallest = $itemid;
-                            $settmp .= '<span class=\'q1\'>'.$name.'</span><br />';
+                            $settmp .= '<span class=\'q0\'>'.$name.'</span><br />';
                         }
                 }
                 $tmp .= '<span class=\'q1\'>'.$count.'/'.count($set).'</span><br />';
@@ -211,7 +214,7 @@ class tooltips
         return $tmp;
     }
 
-    function get_item_template($item_id)
+    function get_item_template($item_id) // TODO: Move away from tooltip, should be in char class, enhancing the item data
     {
         $query = "SELECT * FROM `".MYSQL_DATABASE_TDB."`.`item_template`  WHERE `entry` = ".$item_id."";
 
