@@ -172,7 +172,7 @@ class tooltips
         // - Awareness of other worn items (for set bonus activation)
         if ($tpl['itemset'] > 0)
         {
-            echo "<br />";
+            $tmp .= "<br />";
 
             $set = array();
             $settmp = null;
