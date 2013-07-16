@@ -84,7 +84,7 @@
     <footer class="footer">
       <div class="container">
         <p>FOOTER</P>
-        <p>FOOTER</p>
+        <p>Rendering [{number_format(microtime() - $PERF_START_0,2)}ms]</p>
         <ul class="footer-links">
           <li><a href="#">LINK1</a></li>
           <li class="muted">&middot;</li>
