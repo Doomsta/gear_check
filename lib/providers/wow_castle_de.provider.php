@@ -291,7 +291,7 @@ class Provider
                 if (!isset($xml['skills'][333]))
                     $xml['skills'][333] = array("val" => 400, "max" => "450", "guessed" => true);
             }
-            elseif (in_array($spellId, array(61117, 611118, 61119, 61120))) {
+            elseif (in_array($spellId, array(61117, 61118, 61119, 61120))) {
                if (!isset($xml['skills'][773]))
                   $xml['skills'][773] = array("val" => 400, "max" => "450", "guessed" => true);
             }

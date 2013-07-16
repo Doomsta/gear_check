@@ -19,6 +19,8 @@ $tpl->assign_vars('gems', $char->getSockets());
 $tpl->assign_vars('skills', $char->getSkills());
 $tpl->assign_vars('_stat_name', $_stat_name);
 $tpl->assign_vars('_skill_name', $_skill_name);
+$tpl->assign_vars('_race_name', $_race_name);
+$tpl->assign_vars('_class_name', $_class_name);
 
 $tpl->set_vars(array(
 	'page_title'		=> 'Envy Gear-Check',
