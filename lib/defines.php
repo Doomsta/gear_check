@@ -200,8 +200,8 @@ $_faction_name = array(
 ##########################
 
 class TitleType {
-    const Prefix = 0,
-    const Suffix = 1
+    const Prefix = 0;
+    const Suffix = 1;
 }
 
 ##########################
