@@ -174,7 +174,6 @@ class tooltips
         // Item Set
         // TODO:
         // - Fetch set names, bonuses and activation data
-        // - Awareness of other worn items (for set bonus activation)
         if ($tpl['itemset'] > 0)
         {
             $tmp .= "<br />";
@@ -204,14 +203,12 @@ class tooltips
                 else
                 {
                     $smallest = -1; // invalid
-                       if (!isset($set[$slot]))  
-                            continue;
+                    if (!isset($set[$slot]))  
+                        continue;
                     foreach ($set[$slot] as $itemid => $name)
                         if ($itemid < $smallest || $smallest == -1)
-                        {
-                             $smallest = $itemid;
-                            $settmp .= '<span class=\'q0\'>'.$name.'</span><br />';
-                        }
+                            $smallest = $itemid;
+                    $settmp .= '<span class=\'q0\'>'.$set[$slot][$smallest].'</span><br />'; // This is not always accurate, the basic gladiator set for example has no adjective prefixed at all, we will print savage here though
                 }
                 $tmp .= '<span class=\'q1\'>'.$count.'/'.count($set).'</span><br />';
                 $tmp .= $settmp;
