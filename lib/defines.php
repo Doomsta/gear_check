@@ -23,7 +23,7 @@ $_class_color = array(
     4    => '#FFF468',    // rogue
     5    => '#FFFFFF',    // priest
     6    => '#C41F3B',    // DK
-    7    => '#1a3caa',    // shaman
+    7    => '#1A3CAA',    // shaman
     8    => '#68CCEF',    // mage
     9    => '#9382C9',    // warlock
     11   => '#FF7C0A'    // druid
@@ -143,6 +143,7 @@ $_item_class = array(
         11    => array(null, "Sonstige"),
     ),
 );
+
 ############################
 # Races
 ############################
@@ -395,6 +396,7 @@ $_spell_desc = array(
     64999 => 'Jeder Zauber, der innerhalb von 20 Sek. gewirkt wird, gewährt einen stapelbaren Bonus von 60 Mana alle 5 Sekunden. Endet nach 20 Sek. Fähigkeiten, die kein Mana verbrauchen, lösen dieses Schmuckstück nicht aus.',
     65007 => 'Jedes Mal, wenn Ihr einen Schadens- oder Heilzauber wirkt erhöht sich Eure Zaubermacht für die nächsten 10 Sek. um 25. Dieser Effekt ist bis zu 5-mal stapelbar.',
     64786 => 'Eure Nahkampf- und Distanzangriffe gewähren eine Chance, 10 Sek. lang Euer Tempo um 726 zu erhöhen.',
+    65020 => 'Eure Nahkampf- und Distanzangriffe gewähren eine Chance, 10 Sek. lang Eure Rüstungsdurchschlagwertung um 665 zu erhöhen.',
     //pdc
     67670 => 'Jedes Mal, wenn Ihr einen Schadenszauber wirkt, besteht eine Chance, dass Ihr 10 Sek. lang 590 Zaubermacht erhaltet.',
     60063 => 'Eure Offensivzauber haben eine Chance, Eure Zaubermacht 10 Sek. lang um 590 zu erhöhen.',
