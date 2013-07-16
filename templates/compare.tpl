@@ -11,7 +11,7 @@
   <tr>
     <td>Name</td>
 {foreach from=$data['name'] item=name}
-    <td><a href="test.php?cn={$name}">{$name}</a></td>
+    <td><a href="profile.php?cn={$name}">{$name}</a></td>
 {/foreach}
   </tr>
   <tr>
