@@ -1,4 +1,7 @@
 <?php
+
+$perf_start[0] = microtime();
+
 setlocale(LC_ALL, "de_DE.UTF-8");
 date_default_timezone_set('Europe/Berlin');
 session_start();
@@ -14,6 +17,7 @@ $tpl = new tpl();
 $cache = new cache();
 $tpl->assign_vars("BOOTSRAPPATH", $rootpath.'bootstrap/');
 $tpl->assign_vars("PROJEKTNAME", PROJEKTNAME);
+$tpl->assign_vars("PERF_START_0", $perf_start[0]);
 $tpl->add_css_file($rootpath."css/common.css");
 $nav_links = array(
 	0 => array(
