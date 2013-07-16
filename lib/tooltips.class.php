@@ -52,7 +52,12 @@ class tooltips
 
         // Armor
         if (isset($item['stats'][ItemStats::ITEM_MOD_ARMOR]) && $item['stats'][ItemStats::ITEM_MOD_ARMOR] > 0)
-            $tmp .= '<span class=\'q1\'>'.$item['stats'][ItemStats::ITEM_MOD_ARMOR].' '.$_stat_name[ItemStats::ITEM_MOD_ARMOR].'</span><br />';
+        {
+            if ($tpl['ArmorDamageModifier'] > 0) // bonus armor has a green label
+                $tmp .= '<span class=\'q2\'>'.$item['stats'][ItemStats::ITEM_MOD_ARMOR].' '.$_stat_name[ItemStats::ITEM_MOD_ARMOR].'</span><br />';
+            else
+                $tmp .= '<span class=\'q1\'>'.$item['stats'][ItemStats::ITEM_MOD_ARMOR].' '.$_stat_name[ItemStats::ITEM_MOD_ARMOR].'</span><br />';
+        }
 
         // White Stats (Base Stats)
         foreach ($item['stats'] as $key => $value)
