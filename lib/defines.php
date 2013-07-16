@@ -196,6 +196,15 @@ $_faction_name = array(
 );
 
 ##########################
+# Titles
+##########################
+
+class TitleType {
+    const Prefix = 0,
+    const Suffix = 1
+}
+
+##########################
 # Items
 ##########################
 
@@ -385,6 +394,7 @@ $_spell_desc = array(
     64742 => 'Eure Zauber haben eine Chance, Eure Zaubermacht 10 Sek. lang um 751 zu erhöhen.',
     64999 => 'Jeder Zauber, der innerhalb von 20 Sek. gewirkt wird, gewährt einen stapelbaren Bonus von 60 Mana alle 5 Sekunden. Endet nach 20 Sek. Fähigkeiten, die kein Mana verbrauchen, lösen dieses Schmuckstück nicht aus.',
     65007 => 'Jedes Mal, wenn Ihr einen Schadens- oder Heilzauber wirkt erhöht sich Eure Zaubermacht für die nächsten 10 Sek. um 25. Dieser Effekt ist bis zu 5-mal stapelbar.',
+    64786 => 'Eure Nahkampf- und Distanzangriffe gewähren eine Chance, 10 Sek. lang Euer Tempo um 726 zu erhöhen.',
     //pdc
     67670 => 'Jedes Mal, wenn Ihr einen Schadenszauber wirkt, besteht eine Chance, dass Ihr 10 Sek. lang 590 Zaubermacht erhaltet.',
     60063 => 'Eure Offensivzauber haben eine Chance, Eure Zaubermacht 10 Sek. lang um 590 zu erhöhen.',
@@ -415,6 +425,7 @@ $_spell_desc = array(
     67365 => 'Each time your Seal of Vengeance or Seal of Corruption ability deals periodic damage, you have a chance to gain 200 Strength for 16 sec.',
     67363 => 'Each time you cast Holy Light, you have a chance to gain 234 spell power for 15 sec.',
     60787 => 'Reduces the mana cost of Holy Light by 113.',
+    60797 => 'Erh&ouml;ht die Zaubermacht eurer Fähigkeit \'Weihe\' um 141.',
     //dudu
     60701 => 'Your Mangle ability also grants you 204 attack power for 10 sec.',
     60726 => 'Your Moonfire spell grants 119 spell power for 10 sec.',
