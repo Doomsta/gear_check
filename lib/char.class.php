@@ -10,6 +10,7 @@ class char
     private $stats = array();
     private $talents = array();
     private $arena = array();
+    private $professions = array();
 
     private $slotOrder = array(1, 2, 3, 15, 5, 4, 19, 9, 10, 6, 7, 8, 11, 12, 13, 14, 16, 17, 18);
 
@@ -62,7 +63,7 @@ class char
         $this->guild = $tmp['guildName'];
         $this->level = $tmp['level'];
         $this->achievement_points = $tmp['points'];
-        $this->skills = $tmp['skills'];
+        $this->professions  = $tmp['professions'];
         //$this->arena = $tmp['arena'];
         $this->stats = $tmp['stats'];
         foreach($tmp['items'] as $key => $value)
@@ -265,9 +266,9 @@ class char
         return $tmp;
     }
 
-    public function getSkills()
+    public function getProfessions()
     {
-        return $this->skills;
+        return $this->professions;
     }
 }
 ?>

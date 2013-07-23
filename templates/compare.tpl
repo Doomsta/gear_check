@@ -85,9 +85,9 @@
   <tr>
     <th colspan="{$count+1}">Berufe</th>
   </tr>
-{foreach from=$data['skills'] key=skill item=player}
+{foreach from=$data['professions'] key=profession item=player}
   <tr>
-     <td><img src="img/professions/{$skill}.jpg" width="24" height="24">&nbsp;<a href="http://de.wowhead.com/skill={$skill}">{$_skill_name[$skill]}</a></td>
+     <td><img src="img/professions/{$profession}.jpg" width="24" height="24">&nbsp;<a href="http://de.wowhead.com/skill={$profession}">{$_skill_name[$profession]}</a></td>
 {foreach from=$player item=status}
    {if is_array($status)}
      <td>{if isset($status['guessed']) && $status['guessed']}<strong>~</strong>{/if}{$status['val']} / {$status['max']}</td>

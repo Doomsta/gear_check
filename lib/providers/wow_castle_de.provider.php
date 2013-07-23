@@ -106,10 +106,10 @@ class Provider
         }
         
         // professions
-        $out['skills'] = array();
+        $out['professions'] = array();
         foreach($xml->characterInfo->characterTab->professions->skill as $skill)
         {
-            $out['skills'][(int) $skill['id']] = array(
+            $out['professions'][(int) $skill['id']] = array(
                 'val' => (int) $skill['value'],
                 'max' => (int) $skill['max']
             );
@@ -286,22 +286,22 @@ class Provider
             $spellId = $_enchant_name_to_spell[$item['permanentEnchantSpellName']];
             $xml['items'][$slot]['permanentEnchantSpellId'] = $spellId;
             
-            // wow-castle.de has 4 primary trade skills, guess those that are not shown in armory
+            // wow-castle.de has 4 primary trade professions, guess those that are not shown in armory
             if (in_array($spellId, array(44636, 44645, 59636))) {
-                if (!isset($xml['skills'][333]))
-                    $xml['skills'][333] = array("val" => 400, "max" => "450", "guessed" => true);
+                if (!isset($xml['professions'][333]))
+                    $xml['professions'][333] = array("val" => 400, "max" => "450", "guessed" => true);
             }
             elseif (in_array($spellId, array(61117, 61118, 61119, 61120))) {
-               if (!isset($xml['skills'][773]))
-                  $xml['skills'][773] = array("val" => 400, "max" => "450", "guessed" => true);
+               if (!isset($xml['professions'][773]))
+                  $xml['professions'][773] = array("val" => 400, "max" => "450", "guessed" => true);
             }
             elseif (in_array($spellId, array(60584, 60583, 57683, 57690, 57691, 57692, 57694, 57696, 57699, 57701))) {
-               if (!isset($xml['skills'][165]))
-                  $xml['skills'][165] = array("val" => 400, "max" => 450, "guessed" => true);
+               if (!isset($xml['professions'][165]))
+                  $xml['professions'][165] = array("val" => 400, "max" => 450, "guessed" => true);
             }
             elseif (in_array($spellId, array(56039, 56034, 55642, 55769, 55777))) {
-               if (!isset($xml['skills'][197]))
-                  $xml['skills'][197] = array("val" => (in_array($spellId, array(55642, 55769, 55777)) ? 420 : 405), "max" => 450, "guessed" => true);
+               if (!isset($xml['professions'][197]))
+                  $xml['professions'][197] = array("val" => (in_array($spellId, array(55642, 55769, 55777)) ? 420 : 405), "max" => 450, "guessed" => true);
             }
             elseif (in_array($spellId, array(54999, 54998, 54793, 55016, 63770, 55002, 63765, 54736))) {
                if ($spellId == 54999 || $spellId == 54998 || $spellId == 63770) // 400
@@ -313,10 +313,10 @@ class Provider
                elseif ($spellId == 54736) // 390
                   $val = 390;
 
-               if (!isset($xml['skills'][202]))
-                  $xml['skills'][202] = array("val" => $val, "max" => 450, "guessed" => "true");
-               elseif ($xml['skills']['202']['val'] < $val)
-                  $xml['skills']['202']['val'] = $val; // update with higher value
+               if (!isset($xml['professions'][202]))
+                  $xml['professions'][202] = array("val" => $val, "max" => 450, "guessed" => "true");
+               elseif ($xml['professions']['202']['val'] < $val)
+                  $xml['professions']['202']['val'] = $val; // update with higher value
                }
            }
 
@@ -324,8 +324,8 @@ class Provider
            foreach ($xml['items'] as $slot => $item)
                foreach ($item['gems'] as $gem)
                    if (in_array($gem['id'], array(42142, 36766, 42148, 42143, 42152, 42153, 42146, 42158, 42154, 42150, 42156, 42144, 42149, 36767, 42145, 42155, 42151, 42157)))
-                       if (!isset($xml['skills'][755]))
-                           $xml['skills'][755] = array("val" => 375, "max" => "450", "guessed" => true);
+                       if (!isset($xml['professions'][755]))
+                           $xml['professions'][755] = array("val" => 375, "max" => "450", "guessed" => true);
 
             // return xml with fixed quirks
             return $xml;

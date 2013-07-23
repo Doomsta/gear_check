@@ -48,11 +48,11 @@ for($i=0;$i<count($cn);$i++)
 
         foreach ($_skill_name as $id => $name)
         {
-            $tmp = $chars[$i]->getSkills();
+            $tmp = $chars[$i]->getProfessions();
             if (isset($tmp[$id]))
-                $data['skills'][$id][$i] = $tmp[$id];
+                $data['professions'][$id][$i] = $tmp[$id];
             else
-                $data['skills'][$id][$i] = false;
+                $data['professions'][$id][$i] = false;
         }
 }
 //fill array with zeros
