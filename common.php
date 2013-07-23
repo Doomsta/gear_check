@@ -20,10 +20,10 @@ $tpl->assign_vars("PROJEKTNAME", PROJEKTNAME);
 $tpl->assign_vars("PERF_START_0", $perf_start[0]);
 $tpl->add_css_file($rootpath."css/common.css");
 $nav_links = array(
-	0 => array(
-		'name'	=> 'Home',
-		'url'	=> './index.php'
-	),
+    0 => array(
+        'name'    => 'Home',
+        'url'    => './index.php'
+    ),
 );
 $tpl->add_nav_links($nav_links);
 $tpl->set_defaultIcon('./img/icon.png');
