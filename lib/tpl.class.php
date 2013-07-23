@@ -11,14 +11,19 @@ class tpl
 	private $script = "";
 	private $icon;
 	private $errors;
-	private $base_template = 'page.tpl';
+	private $base_template;
 	
-	function __construct() 
+	function __construct($base_template) 
 	{
 		require('smarty/Smarty.class.php');
 		$this->smarty = new Smarty;
+        
+        $this->base_template = $base_template;
 	}
-
+    function setBaseTemplate($template)
+    {
+        $this->base_template =  $template;
+    }
 	function add_js_file($path)
 	{
 		$this->js_files .= '<script src="'.$path.'"></script>'."\n";

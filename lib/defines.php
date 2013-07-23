@@ -55,7 +55,24 @@ class SocketColor {
 # stat->type to stat->id
 # http://collab.kpsn.org/display/tc/Item+template+tc2#Itemtemplatetc2-stat_type
 class ItemStats {
-    const ITEM_MOD_ARMOR = -1; // quirks
+    // quirks
+    const ITEM_MOD_ARMOR = -1; 
+    const ITEM_MOD_BASE_STATS = -2; 
+    const ITEM_MOD_BASE_STATS_RELATIV = -3; 
+    const ITEM_MOD_AGILITY_RELATIV = -4;
+    const ITEM_MOD_STRENGTH_RELATIV = -5;
+    const ITEM_MOD_INTELLECT_RELATIV = -6;
+    const ITEM_MOD_SPIRIT_RELATIV = -7;
+    const ITEM_MOD_STAMINA_RELATIV = -8;
+    const ITEM_MOD_ARMOR_RELATIV = -9; 
+    const ITEM_MOD_MEELE_CRIT_PERCENT = -10; 
+    const ITEM_MOD_CASTER_CRIT_PERCENT = -11; 
+    const ITEM_MOD_HEAL_CRIT_PERCENT = -12; 
+    const ITEM_MOD_CRIT_MOD = -13;
+    #const ITEM_MOD_STUN_DURATION = -14;
+    #const ITEM_MOD_SILENCE_DURATION = -15;
+    
+    //trinity stats
     const ITEM_MOD_MANA = 0;
     const ITEM_MOD_HEALTH = 1;
     const ITEM_MOD_AGILITY = 3;

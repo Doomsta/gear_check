@@ -13,7 +13,7 @@ require_once($rootpath.'lib/functions.php');
 require_once($rootpath.'lib/tooltips.class.php');
 require_once($rootpath.'lib/cache.class.php');
 require_once($rootpath.'config.php'); 
-$tpl = new tpl();
+$tpl = new tpl('base_page.tpl');
 $cache = new cache();
 $tpl->assign_vars("BOOTSRAPPATH", $rootpath.'bootstrap/');
 $tpl->assign_vars("PROJEKTNAME", PROJEKTNAME);
