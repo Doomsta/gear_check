@@ -70,6 +70,12 @@ span.ilvl {
 	font-size: 8pt;
 	text-shadow: 1px 1px #000000;
 }
+span.hc-label {
+	color: #26c426;
+	font-size: 8pt;
+	text-shadow: 1px 1px #000000;
+font-weight: bold;
+}
 
 .class1 { color: #C69B6D; }
 .class2 { color: #F48CBA; }
@@ -91,9 +97,24 @@ img.q4 { border: 3px solid #8c02cd; }
 img.q5 { border: 3px solid #f0940a; }
 img.q7 { border: 3px solid #ccb896; }
 
-div.socket { width: 16px; height: 16px; display: inline-table;}
-img.gem { width: 16px; height: 16px; }
-img.enchant { width: 16px; height: 16px; }
+div.socket {
+	width: 16px;
+	height: 16px;
+	display: inline-table;
+}
+
+img.gem { 
+	width: 16px;
+	height: 16px;
+        -webkit-border-radius: 2px;
+        -moz-border-radius: 2px;
+        border-radius: 2px;
+
+}
+img.enchant {
+	width: 16px;
+	height: 16px;
+}
 
 div.socket1 {
 	border: 1px solid #cccccc;

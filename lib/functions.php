@@ -57,7 +57,7 @@ function add_item_gems($item)
 
 function get_gems_stats($id)
 {
-    $query = 'SELECT `name`, `color`, `stat_type1`, `stat_value1`, `stat_type2`, `stat_value2`
+    $query = 'SELECT `name`, `color`, `stat_type1`, `stat_value1`, `stat_type2`, `stat_value2`, `rarity`
         FROM `'.MYSQL_DATABASE .'`.`socket_stats`
         WHERE id = '.$id.'';
     $result = mysql_query($query);
@@ -78,6 +78,20 @@ function get_item_gems($id)
     for($i=1;$i<4;$i++)
         if($data['socketColor_'.$i] == 0)
             unset($data['socketColor_'.$i]);
+    return $data;
+}
+
+function get_enchant_stats($id, $type)
+{
+    $query = 'SELECT `stat1_type`, `stat1_value`, `stat2_type`, `stat2_value`,
+        `stat3_type`, `stat3_value`, `stat4_type`, `stat4_value`,
+        `stat5_type`, `stat5_value`
+        FROM `'.MYSQL_DATABASE.'`.`enchant`
+        WHERE `'.$type.'` = '.$id.'';
+    $result = mysql_query($query) or die(mysql_error());
+    if (mysql_num_rows($result) == 0)
+        return false;
+    $data = mysql_fetch_assoc($result);
     return $data;
 }
 

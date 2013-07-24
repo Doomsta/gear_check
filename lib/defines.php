@@ -297,6 +297,7 @@ $_stat_name = array(
     13 => 'Ausweichwertung',
     14 => 'Parierwertung',
     15 => 'Blockwertung',
+    20 => 'Kritische Distanztrefferwertung',
     31 => 'Trefferwertung',
     32 => 'kritische Trefferwertung',
     35 => 'Abh&auml;rtungswertung',
@@ -368,6 +369,7 @@ $_spell_desc = array(
     67742 => 'Each time you are struck by an attack, you gain 1422 armor. Stacks up to 5 times. Entire effect lasts 20 sec.',
     71634 => 'Melee attacks which reduce you below 35% health cause you to gain 5712 armor for 10 sec. Cannot occur more than once every 30 sec.',
     71865 => 'Jedes Mal, wenn Eure Zauber ein Ziel heilen, besteht eine Chance, dass sowohl das Ziel Eurer Heilung als auch Verbündete in einem Umkreis von 10 Metern 6 Sek. lang pro Sekunde um 217 geheilt werden.',
+    71838 => 'Stiehlt dem gegnerischen Ziel 2138 to 2362 Leben.',
     //icc ringe
     71653 => 'When struck in combat has a chance of increasing your armor by 2400 for 10 sec.',
     71655 => 'Your helpful spells have a chance to increase your spell power by 285 for 10 sec.',
@@ -404,6 +406,9 @@ $_spell_desc = array(
     67694 => 'Increases dodge rating by 512 for 20 sec.',
     67753 => 'Erhöht die maximale Gesundheit 15 Sek. lang um 5186. Teilt eine Abklingzeit mit allen anderen Schmuckstücken des Kampfmeisters.',
     67738 => 'Jedes Mal, wenn Ihr einen Feind mit einem Nahkampfangriff trefft, erhaltet Ihr 215 Angriffskraft. Bis zu 5-mal stapelbar. Der ganze Effekt dauert 20 Sek. lang an.',
+    64948 => 'Erh&ouml;ht den Blockwert eures Schildes um 126',
+    67740 => 'Jedes Mal, wenn Ihr einen hilfreichen Zauber wirkt, erhaltet Ihr 74 Zaubermacht. Bis zu 8-mal stapelbar. Der ganze Effekt dauert 20 Sek. lang an.',
+    67699 => 'Erhöht die maximale Gesundheit 15 Sek. lang um 4610. Teilt eine Abklingzeit mit allen anderen Schmuckstücken des Kampfmeisters.',
     //triumph emblems
     67695 => 'Erhöht die Angriffskraft 20 Sek. lang um 1024.',
     //ulduar
@@ -414,12 +419,14 @@ $_spell_desc = array(
     65007 => 'Jedes Mal, wenn Ihr einen Schadens- oder Heilzauber wirkt erhöht sich Eure Zaubermacht für die nächsten 10 Sek. um 25. Dieser Effekt ist bis zu 5-mal stapelbar.',
     64786 => 'Eure Nahkampf- und Distanzangriffe gewähren eine Chance, 10 Sek. lang Euer Tempo um 726 zu erhöhen.',
     65020 => 'Eure Nahkampf- und Distanzangriffe gewähren eine Chance, 10 Sek. lang Eure Rüstungsdurchschlagwertung um 665 zu erhöhen.',
+    64763 => 'Erh&ouml;ht Ausweichwertung um 432 f&uuml;r 10 Sek.',
     //pdc
     67670 => 'Jedes Mal, wenn Ihr einen Schadenszauber wirkt, besteht eine Chance, dass Ihr 10 Sek. lang 590 Zaubermacht erhaltet.',
     60063 => 'Eure Offensivzauber haben eine Chance, Eure Zaubermacht 10 Sek. lang um 590 zu erhöhen.',
     //boe
     49622 => 'Jedes Mal, wenn Ihr einen Zauber wirkt, besteht die Chance, dass ihr 15 Sek. lang alle 5 Sekunden bis zu 125 Mana regeneriert.',
     33953 => 'Eure direkten Heilzauber und Heilungen über Zeit haben eine Chance, Euer Tempo 10 Sek. lang um 505 zu erhöhen.',
+    60317 => 'Eure Nahkampf- und Distanzangriffe gewähren eine Chance, 10 Sek. lang Euer Tempo um 125 zu erhöhen.',
     //other
     65012 => 'Erhöht das Parieren 20 Sek. lang um 380.',
     57345 => 'When you heal or deal damage you have a chance to gain Greatness, increasing your Strength, Agility, Intellect, or Spirit by 300 for 15 sec. Your highest stat is always chosen.',
@@ -488,10 +495,18 @@ $_spell_desc = array(
     26155 => 'Erh&ouml;ht Zaubermacht um 59',
     //darkmoon cards
     57351 => 'Ihr habt eine Chance, zum Berserker zu werden, wenn Ihr im Kampf Schaden verursacht oder erleidet. Euer kritischer Trefferwert erhöht sich 12 Sek. lang um 35. Der Effekt ist bis zu 3-mal stapelbar.',
+    //dungeon rewards
+    60521 => 'Erh&ouml;ht Zaubermacht um 346 f&uuml;r 20 Sek.',
+    60301 => 'Eure Nahkampf- und Distanzangriffe gewähren eine Chance, 10 Sek. lang Euer Tempo um 444 zu erhöhen.',
+    48273 => 'Erh&ouml;ht Angriffskraft um 132',
     //quest rewards
     59657 => 'Erh&ouml;ht Zaubermacht um 281 f&uuml;r 20 Sek.',
+    15827 => 'Erh&ouml;ht Angriffskraft um 82',
+    51987 => 'Erh&ouml;ht Angriffskraft um 280 f&uuml;r 20 Sek.',
     //random stuff
     63604 => 'Steht im Zentrum der Aufmerksamkeit.',
-    17816 => 'Impress others with your fashion sense.' // smoking, yeah!
+    17816 => 'Impress others with your fashion sense.', // smoking, yeah!
+    //bc quest rewards
+    33667 => 'Erh&ouml;ht eure Angriffskraft um 200 f&uuml;r 15 Sek.'
 );
 ?>

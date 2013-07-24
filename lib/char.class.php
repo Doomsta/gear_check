@@ -22,6 +22,7 @@ class char
         foreach($this->slotOrder as $value)
         $this->equipment[$value] = array(
             'id' => null, 
+            'flags' => 0,
             'name' => null, 
             'level' => null, 
             'rarity' => null, 
@@ -60,6 +61,7 @@ class char
         $this->talents = $tmp['talents'];
         $this->race= $tmp['raceId'];
         $this->class = $tmp['classId'];
+        $this->gender = $tmp['genderId'];
         $this->guild = $tmp['guildName'];
         $this->level = $tmp['level'];
         $this->achievement_points = $tmp['points'];
@@ -68,7 +70,15 @@ class char
         $this->stats = $tmp['stats'];
         foreach($tmp['items'] as $key => $value)
             if(isset($this->equipment[$key]))
+            {
+                $result = mysql_query("SELECT flags FROM ".MYSQL_DATABASE.".item_template WHERE entry = ".$tmp['items'][$key]['id']."") or die(mysql_error());
+                $row = mysql_fetch_assoc($result);
+
+
                 $this->equipment[$key] = $tmp['items'][$key];
+                $this->equipment[$key]['flags'] = $row['flags'];
+
+            }
         return true;
     }
 
@@ -134,6 +144,23 @@ class char
         
     }
 
+    public function getEnchants()
+    {
+        $tmp = array();
+        foreach($this->equipment as $item)
+        {
+            if (isset($item['permanentEnchantItemId']) && $item['permanentEnchantItemId'] > 0)
+                $stats = get_enchant_stats($item['permanentEnchantItemId'], 'item');
+            elseif (isset($item['permanentEnchantSpellId']) && $item['permanentEnchantSpellId'] > 0)
+                $stats = get_enchant_stats($item['permanentEnchantSpellId'], 'spell');
+            else $stats = false;
+
+            if ($stats)
+                $tmp[] = $stats;
+        }
+        return $tmp;
+    }
+
     public function getStats($base = TRUE, $items = TRUE, $gems = TRUE)
     { 
         $stats = array();
@@ -165,6 +192,12 @@ class char
         foreach($this->equipment as $item)
             if(isset($item['socketBonus']['stat_value1']) AND isset($item['socketBonusActive']) AND $item['socketBonusActive'] == 1)
                 $stats[$item['socketBonus']['stat_type1']]  += $item['socketBonus']['stat_value1'];
+
+        //add enchants
+        $enchants = $this->getEnchants();
+        foreach ($enchants as $enchant)
+            for ($i = 1; $i <= 5; $i++)
+                $stats[$enchant['stat'.$i.'_type']] += $enchant['stat'.$i.'_value'];
 
         // final calculations
         $stats = $this->DeriveStats($stats);
@@ -201,6 +234,7 @@ class char
         $tmp['prefix'] = $this->prefix;
         $tmp['raceId'] = $this->race;
         $tmp['classId'] = $this->class;
+        $tmp['genderId'] = $this->gender;
         $tmp['level'] = $this->level;
         $tmp['guild'] = $this->guild;
         return $tmp;

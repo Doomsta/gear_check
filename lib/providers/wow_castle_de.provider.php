@@ -32,6 +32,7 @@ class Provider
         $out['suffix'] = (string) $xml->characterInfo->character['suffix'];
         $out['classId'] = (int) $xml->characterInfo->character['classId'];
         $out['raceId'] = (int) $xml->characterInfo->character['raceId'];
+        $out['genderId'] = (int) $xml->characterInfo->character['genderId'];
         $out['guildName'] = (string) $xml->characterInfo->character['guildName'];
         $out['level'] = (int) $xml->characterInfo->character['level'];
         $out['points'] = (int) $xml->characterInfo->character['points'];

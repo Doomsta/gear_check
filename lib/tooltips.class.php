@@ -67,15 +67,34 @@ class tooltips
             $tmp .= '<span class=\'q1\'>+'.$value.' '.$_stat_name[$key].'</span><br />';
         }
 
+        // Enchants
+        if ((isset($item['permanentEnchantSpellId']) && $item['permanentEnchantSpellId'] > 0) || 
+            (isset($item['permanentEnchantItemId']) && $item['permanentEnchantItemId'] > 0))
+        {
+            if (isset($item['permanentEnchantSpellId']) && $item['permanentEnchantSpellId'] > 0)
+                $query = "SELECT `label` FROM `".MYSQL_DATABASE."`.`enchant` WHERE `spell` = ".$item['permanentEnchantSpellId']."";
+            elseif (isset($item['permanentEnchantItemId']) && $item['permanentEnchantItemId'] > 0)
+                $query = "SELECT `label` FROM `".MYSQL_DATABASE."`.`enchant` WHERE `item` = ".$item['permanentEnchantItemId']."";
+            else break;
+            $result = mysql_query($query);
+            if (mysql_num_rows($result) == 0)
+            {
+                $tmp .= "<span class='q2'>Missing Label (".mysql_num_rows($result)." Results)</span><br />";
+            } else {
+                $row = mysql_fetch_assoc($result);
+                $tmp .= "<span class='q2'>".$row['label']."</span><br />";
+            }
+        }
+
         // Gems
         foreach($item['gems'] as $gem)
         {
             if(isset($gem['id']))
             {
                 if ($gem['id'] == 49110) // Nightmare Tear
-                {
                      $tmp .= '<img src=\'http://www.linuxlounge.net/~martin/wowimages/?item='.$gem['id'].'\' height=\'16\' width=\'16\'>&nbsp;+10 alle Werte';
-                }
+                elseif ($gem['id'] == 42702) // Enchanted Tear
+                     $tmp .= '<img src=\'http://www.linuxlounge.net/~martin/wowimages/?item='.$gem['id'].'\' height=\'16\' width=\'16\'>&nbsp;+6 alle Werte';
                 else
                 {
                     $query  = "SELECT `stat_type1`, `stat_value1`, `stat_type2`, `stat_value2` 
@@ -157,7 +176,16 @@ class tooltips
                 echo "Missing Spell Description <a href=\"http://wotlk.openwow.com/spell=".$tpl['spellid_1']."\">".$tpl['spellid_1']."</a><br />";
             elseif (strlen($_spell_desc[$tpl['spellid_1']]) > 0) // length is important because of invisible spells like visual effects
                 if ($tpl['spelltrigger_1'] == 0)
-                    $tmp .= '<span class=\'q2\'>Benutzen: '.$_spell_desc[$tpl['spellid_1']].'</span><br />';
+                {
+                    $cooldown = $tpl['spellcooldown_1'] / 1000;
+                    $cooldown_label = "Sek.";
+                    if ($cooldown > 60)
+                    {
+                        $cooldown /= 60;
+                        $cooldown_label = "Min.";
+                    }
+                    $tmp .= '<span class=\'q2\'>Benutzen: '.$_spell_desc[$tpl['spellid_1']].' ('.$cooldown.' '.$cooldown_label.' Cooldown)</span><br />';
+                }
                 else
                     $tmp .= '<span class=\'q2\'>Anlegen: '.$_spell_desc[$tpl['spellid_1']].'</span><br />';
 
