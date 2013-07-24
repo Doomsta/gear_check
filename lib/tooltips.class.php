@@ -184,7 +184,7 @@ class tooltips
                         $cooldown /= 60;
                         $cooldown_label = "Min.";
                     }
-                    $tmp .= '<span class=\'q2\'>Benutzen: '.$_spell_desc[$tpl['spellid_1']].' ('.$cooldown.' '.$cooldown_label.' Cooldown)</span><br />';
+                    $tmp .= '<span class=\'q2\'>Benutzen: '.$_spell_desc[$tpl['spellid_1']].' ('.$cooldown.' '.$cooldown_label.' Abklingzeit)</span><br />';
                 }
                 else
                     $tmp .= '<span class=\'q2\'>Anlegen: '.$_spell_desc[$tpl['spellid_1']].'</span><br />';
