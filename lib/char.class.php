@@ -71,7 +71,7 @@ class char
         foreach($tmp['items'] as $key => $value)
             if(isset($this->equipment[$key]))
             {
-                $result = mysql_query("SELECT flags FROM ".MYSQL_DATABASE.".item_template WHERE entry = ".$tmp['items'][$key]['id']."") or die(mysql_error());
+                $result = mysql_query("SELECT flags FROM ".MYSQL_DATABASE_TDB.".item_template WHERE entry = ".$tmp['items'][$key]['id']."") or die(mysql_error());
                 $row = mysql_fetch_assoc($result);
 
 
