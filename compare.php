@@ -46,14 +46,24 @@ for($i=0;$i<count($cn);$i++)
     $data['stat'][$statid][$i]['absolute']  = $statvalue;
     $data['trinkets'][$i] = $chars[$i]->getItems(array(1 => 13, 2 => 14));   
     
-        foreach ($_skill_name as $id => $name)
-        {
-            $tmp = $chars[$i]->getProfessions();
-            if (isset($tmp[$id]))
-                $data['professions'][$id][$i] = $tmp[$id];
-            else
-                $data['professions'][$id][$i] = false;
-        }
+    foreach ($_skill_name as $id => $name)
+    {
+        $tmp = $chars[$i]->getProfessions();
+        if (isset($tmp[$id]))
+            $data['professions'][$id][$i] = $tmp[$id];
+        else
+             $data['professions'][$id][$i] = false;
+    }
+}
+//clean up professions
+foreach ($_skill_name as $profession_id => $profession)
+{ 
+    $tmp = 0;
+    foreach ($data['professions'][$profession_id] as $char_id => $char_profession)
+        if(isset($char_profession['max']) AND $char_profession['val'] > 385)
+            $tmp++;
+    if($tmp == 0)
+        unset($data['professions'][$profession_id]);
 }
 //fill array with zeros
 //stats
