@@ -135,7 +135,7 @@ class tooltips
         }
 
         // Socket Bonus
-        if($item['socketBonus'] != 0)
+        if($item['socketBonus']!= 0 AND isset($item['socketBonus']['stat_value1']))
         {
             if (isset($item['socketBonusActive']) AND $item['socketBonusActive'])
                 $tmp .= '<span class=\'q2\'>Sockelbonus: +'.$item['socketBonus']['stat_value1'].' '.$_stat_name[$item['socketBonus']['stat_type1']].'</span><br />';
