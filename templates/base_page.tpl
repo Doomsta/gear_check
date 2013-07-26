@@ -29,6 +29,9 @@
     <body>
 	<div class="navbar navbar-inverse navbar-fixed-top">
       <div class="navbar-inner">
+      <a href="https://github.com/Doomsta/gear_check">
+        <img style="position: absolute; top: 0; left: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_left_darkblue_121621.png" alt="Fork me on GitHub">
+      </a>
         <div class="container">
           <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
             <span class="icon-bar"></span>
