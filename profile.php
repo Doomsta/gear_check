@@ -26,6 +26,7 @@ if (isset($_GET['cn']))
 		$tpl->assign_vars('_class_name', $_class_name);
 	}
 }
+$tpl->setLeftTemplate("content_left.tpl");
 $tpl->set_vars(array(
     'page_title'        => 'Envy Gear-Check',
     'author'            => 'author',

@@ -27,11 +27,11 @@ if(isset($_GET['cns']))
 	    $data['avgItemLevel'][$i] = $chars[$i]->getAvgItemLevel();
 	    $data['talent'][$i] = $chars[$i]->getActiveTalent();
 	    
-	    $tmp[$i]['char'] = $chars[$i]->getCharArray();
-	    $data['name'][$i] = $tmp[$i]['char']['name']; 
-	    $data['classId'][$i] = $tmp[$i]['char']['classId']; 
-	    
-	    $tmp[$i]['stats'] = $chars[$i]->getStats();
+        $tmp[$i]['char'] = $chars[$i]->getCharArray();
+        $data['name'][$i] = $tmp[$i]['char']['name']; 
+        $data['classId'][$i] = $tmp[$i]['char']['classId']; 
+        
+        $tmp[$i]['stats'] = $chars[$i]->getStats();
 	    foreach($tmp[$i]['stats']  as $j => $value)
 	    $data['stats'][$j][$i]['absolute']  = $value;
 	    
@@ -114,6 +114,8 @@ if(isset($_GET['cns']))
 		$tpl->assign_vars('data', $data);
 	}	//for($i=0;$i<count($cn);$i++)
 }	//if(isset($_GET['cns']))
+    
+$tpl->setLeftTemplate("content_left.tpl");
 $tpl->set_vars(array(
     'page_title'        => 'Envy Gear-Check',
     'author'            => 'author',

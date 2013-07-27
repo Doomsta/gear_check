@@ -12,6 +12,7 @@ class tpl
     private $icon;
     private $errors;
     private $base_template;
+    private $left_inner_template;
     
     function __construct($base_template) 
     {
@@ -23,6 +24,10 @@ class tpl
     function setBaseTemplate($template)
     {
         $this->base_template =  $template;
+    }
+    function setLeftTemplate($template)
+    {
+        $this->left_inner_template =  $template;
     }
     function add_js_file($path)
     {
@@ -134,6 +139,7 @@ class tpl
         $this->smarty->assign("CSS_FILES", $this->css_files);
         $this->smarty->assign("CSS_CODE", ""); //todo
         $this->smarty->assign("SCRIPT", $this->script);
+        $this->smarty->assign("LEFT_INNER_TEMPLATE", $this->left_inner_template);
         $this->smarty->display( $this->base_template );
     }
 }

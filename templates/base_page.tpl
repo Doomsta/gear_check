@@ -16,7 +16,7 @@
     <link href="{$BOOTSRAPPATH}css/bootstrap-responsive.css" rel="stylesheet">
     <link href="{$BOOTSRAPPATH}css/docs.css" rel="stylesheet">
     <link href="css/base.css" rel="stylesheet">
-	<style>
+    <style>
       body {
         padding-top: 40px; /* 60px to make the container go all the way to the bottom of the topbar */
       }
@@ -27,7 +27,7 @@
   </head>
 
     <body>
-	<div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="navbar navbar-inverse navbar-fixed-top">
       <div class="navbar-inner">
       <a href="https://github.com/Doomsta/gear_check">
         <img style="position: absolute; top: 0; left: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_left_darkblue_121621.png" alt="Fork me on GitHub">
@@ -49,7 +49,7 @@
         </div>
    </div>
     </div>
-	<!-- Subhead
+    <!-- Subhead
 ================================================== -->
 <header class="jumbotron subhead">
   <div class="container">
@@ -62,7 +62,10 @@
 
 <div class="container">
     <div class="row">
-        <div class="span12">
+        <div class="span3">
+            {include file="{$LEFT_INNER_TEMPLATE}"}
+        </div>
+        <div class="span9">
         
            <!-- alert print
            =========================================-->	
