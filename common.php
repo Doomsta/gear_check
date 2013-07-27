@@ -24,6 +24,14 @@ $nav_links = array(
         'name'    => 'Home',
         'url'    => './index.php'
     ),
+    1 => array(
+        'name'    => 'Profile',
+        'url'    => './profile.php'
+    ),
+    2  => array(
+         'name'    => 'Compare',
+         'url'    => './compare.php'
+    ),
 );
 $tpl->add_nav_links($nav_links);
 $tpl->set_defaultIcon('./img/icon.png');
