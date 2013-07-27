@@ -14,7 +14,7 @@ class char
 
     private $slotOrder = array(1, 2, 3, 15, 5, 4, 19, 9, 10, 6, 7, 8, 11, 12, 13, 14, 16, 17, 18);
 
-    public function __construct($name, $import = FALSE)
+    public function __construct($name)
     {
         $this->name = $name;
         $this->prefix = null;
@@ -37,16 +37,17 @@ class char
         global $_stat_name;
         foreach($_stat_name as $key => $value)
             $this->stats[$value] = 0;
-        if ($import)
-        {
-            if(!$this->fetch(TRUE))
-                return false;
-            $this->loadItems();
-            $this->equipment = Provider::checkGemBonus($this->equipment); // TODO: these should be generic and not provider dependant!
-            $this->equipment = Provider::lookupGemBonuses($this->equipment);
-        }
     }
-
+	public function load()
+	{
+		if(!$this->fetch(TRUE))
+			return false;
+		$this->loadItems();
+		$this->equipment = Provider::checkGemBonus($this->equipment); // TODO: these should be generic and not provider dependant!
+		$this->equipment = Provider::lookupGemBonuses($this->equipment);
+		return true;
+	}
+	
     public function fetch($ExecuteQuirksHandler = FALSE)
     {
         $tmp = Provider::fetchCharacterData($this->name);

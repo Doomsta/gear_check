@@ -1,3 +1,17 @@
+{if !isset($char)}
+<form method="get">
+    <fieldset>
+        <legend>Legend</legend>
+        <label>Charname:</label>
+        <input type="text" name="cn" placeholder="Charname..">
+        <span class="help-block">Example block-level help text here.</span>
+        <label class="checkbox">
+            <input type="checkbox"> Force load (TODO)
+        </label>
+        <button type="submit" class="btn">Submit</button>
+    </fieldset>
+</form>
+{else} {*isset($char)*}
 <div class="profile">
 	<div class="name">
 		<a href="http://armory.wow-castle.de/character-sheet.xml?r=WoW-Castle+PvE&cn={$char['name']}">{$char['name']}</a>
@@ -171,5 +185,6 @@ gem count<br />
 {/foreach}
 <h3>PvP</h3>
 </div>
+{/if}
 
 

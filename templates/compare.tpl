@@ -1,3 +1,21 @@
+{if !isset($data)}
+<form method="get">
+    <fieldset>
+        <legend>Legend</legend>
+        <label>Charnames:</label>
+        <input type="text" name="cns" placeholder="Charname..">
+        <span class="help-block">
+            Charnamen mit Leerzeichen trennen <br />
+            <b>Beispiel:</b><br />
+            <code>Char1 char2 char3 char4</code>
+        </span>
+        <label class="checkbox">
+            <input type="checkbox"> Force load (TODO)
+        </label>
+        <button type="submit" class="btn">Submit</button>
+    </fieldset>
+</form>
+{else}
 <table class="table table-hover">
   <thead>
   <tr>
@@ -99,4 +117,5 @@
 {/foreach}
   <tbody>
 </table>  
+{/if} {*!isset($char)*}
   
