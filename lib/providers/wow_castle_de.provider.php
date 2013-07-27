@@ -38,25 +38,27 @@ class Provider
         $out['points'] = (int) $xml->characterInfo->character['points'];
 
         // basic talent info (active, point distribution by tree, name)
+        $talent_xml = Provider::fetch_xml_document('http://armory.wow-castle.de/character-talents.xml?r=WoW-Castle+PvE&cn='.$name);
         $out['talents'] = array();
-        foreach($xml->characterInfo->characterTab->talentSpecs->talentSpec as $spec)
+        foreach($talent_xml->characterInfo->talents->talentGroup as $spec)
         if($spec['active'] == 1)
             $out['talents']['active'] = array(
-                'icon' => (string) $spec['icon'],
-                'name' => (string) $spec['prim'],
-                '1' => (int) $spec['treeOne'],
-                '2' => (int) $spec['treeTwo'],
-                '3' => (int) $spec['treeThree'],
+                'icon' => (string) $spec->talentSpec['icon'],
+                'name' => (string) $spec->talentSpec['prim'],
+                '1' => (int) $spec->talentSpec['treeOne'],
+                '2' => (int) $spec->talentSpec['treeTwo'],
+                '3' => (int) $spec->talentSpec['treeThree'],
+            	'value' => (string) $spec->talentSpec['value']	
             );
         else
             $out['talents']['inactive'] = array(
-                'icon' => (string) $spec['icon'],
-                'name' => (string) $spec['prim'],
-                '1' => (int) $spec['treeOne'],
-                '2' => (int) $spec['treeTwo'],
-                '3' =>(int)  $spec['treeThree'],
+                'icon' => (string) $spec->talentSpec['icon'],
+                'name' => (string) $spec->talentSpec['prim'],
+                '1' => (int) $spec->talentSpec['treeOne'],
+                '2' => (int) $spec->talentSpec['treeTwo'],
+                '3' => (int) $spec->talentSpec['treeThree'],
+            	'value' => (string)  $spec->talentSpec['value']	
             );
-            
         // arena teams
         if(isset($xml->characterInfo->character->arenaTeams->arenaTeam))
         {
@@ -181,7 +183,7 @@ class Provider
         $out['stats']['defense']['resilienceRating'] = (string) $xml->characterInfo->characterTab->defenses->resilience['value'];
         $out['stats']['defense']['resilienceHitPercent'] = (string) $xml->characterInfo->characterTab->defenses->resilience['hitPercent'];
         $out['stats']['defense']['resilienceDamagePercent'] = (string) $xml->characterInfo->characterTab->defenses->resilience['damagePercent'];
-
+    		
         // return parsed data
         return $out;
     }
