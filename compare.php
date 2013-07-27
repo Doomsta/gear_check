@@ -8,16 +8,16 @@ define('MAX_CHARS', '16');
 
 if(isset($_GET['cns']))
 {
-    $cn = explode(" ",$_GET['cns']);
-	for($i=0;$i<count($cn);$i++)
+    $cns = explode(" ",$_GET['cns']);
+	for($i=0;$i<count($cns);$i++)
 	{
 	    //handle cache
-	    if( $cache->getCachedTime($cn[$i]) < 60 AND $cache->getCachedTime($cn[$i]) != false)
-	        $chars[$i] = $cache->load($cn[$i]);
+	    if( $cache->getCachedTime($cns[$i]) < 60 AND $cache->getCachedTime($cns[$i]) != false)
+	        $chars[$i] = $cache->load($cns[$i]);
 	    else
 	    {
-	        $chars[$i] = new char($cn[$i], true);
-	        $cache->store($cn[$i],$chars[$i]); 
+	        $chars[$i] = new char($cns[$i], true);
+	        $cache->store($cns[$i],$chars[$i]); 
 	    }
 	    
 	    if(!$chars[$i]->load())
@@ -77,7 +77,7 @@ if(isset($_GET['cns']))
 		//stats
 		foreach($data['stats'] as $statid => $stat)
 		{
-		    for($char=0;$char<count($cn);$char++)
+		    for($char=0;$char<count($cns);$char++)
 		        if(!isset($data['stats'][$statid][$char]))
 		            $data['stats'][$statid][$char]['absolute']  = 0;
 		    ksort($data['stats'][$statid]);
@@ -86,7 +86,7 @@ if(isset($_GET['cns']))
 		//gems
 		foreach($data['gem'] as $gemid => $gem)
 		{
-		    for($char=0;$char<count($cn);$char++)
+		    for($char=0; $char<count($cns); $char++)
 		        if(!isset($gem['count'][$char]))
 		            $data['gem'][$gemid]['count'][$char]['absolute'] = 0;
 		    ksort($data['gem'][$gemid]['count']);
@@ -110,7 +110,7 @@ if(isset($_GET['cns']))
 		}
 		$tpl->assign_vars('_stat_name', $_stat_name);
 		$tpl->assign_vars('_skill_name', $_skill_name);
-		$tpl->assign_vars('count', count($cn));
+		$tpl->assign_vars('count', count($cns));
 		$tpl->assign_vars('data', $data);
 	}	//for($i=0;$i<count($cn);$i++)
 }	//if(isset($_GET['cns']))
