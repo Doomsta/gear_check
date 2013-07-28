@@ -4,6 +4,9 @@
 	margin: 0;
 	padding: 0;
 }
+header.jumbotron {
+  background: url(../img/header.png) center;
+}
 div.profile {
 	padding-bottom: 20px;
 }
