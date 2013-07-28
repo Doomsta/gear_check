@@ -42,23 +42,46 @@ class Provider
         $out['talents'] = array();
         foreach($talent_xml->characterInfo->talents->talentGroup as $spec)
         if($spec['active'] == 1)
+        {
             $out['talents']['active'] = array(
-                'icon' => (string) $spec->talentSpec['icon'],
+                'icon' => (string) $spec['icon'],
+                'prim' => (string) $spec['prim'],
                 'name' => (string) $spec->talentSpec['prim'],
                 '1' => (int) $spec->talentSpec['treeOne'],
                 '2' => (int) $spec->talentSpec['treeTwo'],
                 '3' => (int) $spec->talentSpec['treeThree'],
             	'value' => (string) $spec->talentSpec['value']	
             );
+            //glyphs
+            foreach ($spec->glyphs->glyph as $glyph)
+            {
+                if( isset($glyph['type']))
+                    $out['talents']['active']['glyphs'][ (string) $glyph['type'] ][] = array(
+                        'effect'    => (string) $glyph['effect'],
+                        'id'    => (int) $glyph['id'],
+                        'name' => (string) $glyph['name']
+                    );
+            }
+        }
         else
+        {
             $out['talents']['inactive'] = array(
-                'icon' => (string) $spec->talentSpec['icon'],
+                'icon' => (string) $spec['icon'],
+                'prim' => (string) $spec['prim'],
                 'name' => (string) $spec->talentSpec['prim'],
                 '1' => (int) $spec->talentSpec['treeOne'],
                 '2' => (int) $spec->talentSpec['treeTwo'],
                 '3' => (int) $spec->talentSpec['treeThree'],
             	'value' => (string)  $spec->talentSpec['value']	
             );
+            foreach ($spec->glyphs->glyph as $glyph)
+            //if( isset($glyph['type']))
+                $out['talents']['inactive']['glyphs'][ (string) $glyph['type'] ][] = array(
+                        'effect'    => (string) $glyph['effect'],
+                        'id'    => (int) $glyph['id'],
+                        'name' => (string) $glyph['name']
+                );
+        }
         // arena teams
         if(isset($xml->characterInfo->character->arenaTeams->arenaTeam))
         {
