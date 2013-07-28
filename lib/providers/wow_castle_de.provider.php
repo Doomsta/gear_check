@@ -137,7 +137,8 @@ class Provider
         {
             $out['professions'][(int) $skill['id']] = array(
                 'val' => (int) $skill['value'],
-                'max' => (int) $skill['max']
+                'max' => (int) $skill['max'],
+                'key' => (string) $skill['key']
             );
         }
         

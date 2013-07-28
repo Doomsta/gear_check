@@ -102,6 +102,11 @@ class char
             $this->equipment[$i]['tooltip'] = $tooltip->get_item_tooltip($this->equipment[$i], $itemlist);
     }
 
+    public function getTalents()
+    {
+        return $this->talents;
+    }
+    
     public function getActiveTalent()
     {
         return $this->talents['active'];
@@ -294,7 +299,12 @@ class char
     {
         if($slots === false)
             foreach($this->equipment as $i => $gear)
-                $tmp[] = $gear;
+            {
+               if(!empty($gear['slotId']))
+               {
+                    $tmp[] = $gear;
+               }
+            }
         else
              foreach($slots as $i => $item)
                 $tmp[$item] = $this->equipment[$item];
