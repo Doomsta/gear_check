@@ -24,6 +24,7 @@ class char
             'id' => null, 
             'flags' => 0,
             'name' => null, 
+            'slotId' => $value,
             'level' => null, 
             'rarity' => null, 
             'stats' => array(),
@@ -299,12 +300,7 @@ class char
     {
         if($slots === false)
             foreach($this->equipment as $i => $gear)
-            {
-               if(!empty($gear['slotId']))
-               {
                     $tmp[] = $gear;
-               }
-            }
         else
              foreach($slots as $i => $item)
                 $tmp[$item] = $this->equipment[$item];

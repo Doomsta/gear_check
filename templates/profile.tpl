@@ -48,7 +48,7 @@
             <img src="http://www.linuxlounge.net/~martin/wowimages/?item={$items[$i]['id']}" class="item q{$items[$i]['rarity']}" />
         </a>
         {else}
-         <img src="img/slots/{$items[$i]['slotId']}.png" />
+         <img class="item q1" src="img/slots/{$items[$i]['slotId']}.png" />
         {/if}
     </td>
     <td>
@@ -67,18 +67,20 @@
         {if isset($items[$i]['level'])}
         <span class="ilvl">{$items[$i]['level']}</span>&nbsp;
         {/if}
-        {if $items[$i]['flags'] & 8}
+        {if isset($items[$i]['flags']) AND  $items[$i]['flags'] & 8}
         <span class="hc-label">HC</span>&nbsp;
         {/if}
-        {if $items[$i]['permanentEnchantItemId'] != 0}
+        {if isset($items[$i]['permanentEnchantItemId']) AND $items[$i]['permanentEnchantItemId'] != 0}
         <a href="http://wotlk.openwow.com/item={$items[$i]['permanentEnchantItemId']}"><img class="enchant" src="http://www.linuxlounge.net/~martin/wowimages/?item={$items[$i]['permanentEnchantItemId']}" /></a>
         {/if}
         {if isset($items[$i]['permanentEnchantSpellId'])}
         <a href="http://wotlk.openwow.com/spell={$items[$i]['permanentEnchantSpellId']}"><img class="enchant" src="http://www.linuxlounge.net/~martin/wowimages/?spell={$items[$i]['permanentEnchantSpellId']}" /></a>
         {/if}
+        {if isset($items[$i].gems)}
         {foreach from=$items[$i].gems item=gem}
         <div class="socket socket{$gem['socketColor']}">{if isset($gem['id'])}<a href="http://wotlk.openwow.com/item={$gem['id']}" rel="item={$gem['id']}"><img class="gem" src="http://www.linuxlounge.net/~martin/wowimages/?item={$gem['id']}" /></a>{else}<img class="gem" src="img/sockets/{$gem['socketColor']}.gif" />{/if}</div>
         {/foreach}
+        {/if}
     </div>
     </td>
     <td align="right">
