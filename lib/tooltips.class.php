@@ -3,7 +3,7 @@ class tooltips
 {
     private $tooltip_js = '$(\'a\').tooltip().tooltip();';
 
-    function __construct($tpl, $js=true) 
+    function __construct(&$tpl, $js=true) 
     {
         if($js == true)
             $tpl->add_script($this->tooltip_js);
@@ -16,13 +16,13 @@ class tooltips
 
         if(!isset($item['id']))
             return;
-        $tpl = $this->get_item_template($item['id']); // TODO: Interpret item_template and integrate it into 
+        $item_tpl = $this->get_item_template($item['id']); // TODO: Interpret item_template and integrate it into 
 
         // Item Name
-        $tmp = '<div><table width=\'450\'><tr><td><b class=\'q'.$tpl['Quality'].'\'>'.$item['name'].'</b><br />';
+        $tmp = '<div><table width=\'450\'><tr><td><b class=\'q'.$item_tpl['Quality'].'\'>'.$item['name'].'</b><br />';
 
         // Heroic?
-        if ($tpl['Flags'] & 8)
+        if ($item_tpl['Flags'] & 8)
             $tmp .= '<span class=\'q2\'>Heroisch</span><br />';
 
         // TODO: Item Binding
@@ -31,17 +31,17 @@ class tooltips
         $tmp .='<table width=\'100%\'><tr style=\'color: #ffffff;\'>';
 
         // Item Classification
-        $item_class = $_item_class[$tpl['class']][$tpl['subclass']];
-        $inventory_type = $_inventory_type[$tpl['InventoryType']];
+        $item_class = $_item_class[$item_tpl['class']][$item_tpl['subclass']];
+        $inventory_type = $_inventory_type[$item_tpl['InventoryType']];
 
         $tmp .='<td>'.$inventory_type.'</td><td style=\'text-align:right;\'>'.$item_class[1].'</td>';
 
         $tmp .='</tr></table><table width=\'100%\'>';
 
         // Weapon Damage
-        if ($tpl['class'] == 2) // melee or ranged weapon
+        if ($item_tpl['class'] == 2) // melee or ranged weapon
         {
-            $prop = get_weapon_properties($tpl['entry']); // TODO: Integrate this directly into the item
+            $prop = get_weapon_properties($item_tpl['entry']); // TODO: Integrate this directly into the item
             if ($prop)
             {
                 $tmp .= '<tr><td>'.$prop['min'].' - '.$prop['max'].' Schaden</td><td style=\'text-align:right;\'>Tempo '.number_format($prop['delay'] / 1000, 2).'</td></tr>';
@@ -53,7 +53,7 @@ class tooltips
         // Armor
         if (isset($item['stats'][ItemStats::ITEM_MOD_ARMOR]) && $item['stats'][ItemStats::ITEM_MOD_ARMOR] > 0)
         {
-            if ($tpl['ArmorDamageModifier'] > 0) // bonus armor has a green label
+            if ($item_tpl['ArmorDamageModifier'] > 0) // bonus armor has a green label
                 $tmp .= '<span class=\'q2\'>'.$item['stats'][ItemStats::ITEM_MOD_ARMOR].' '.$_stat_name[ItemStats::ITEM_MOD_ARMOR].'</span><br />';
             else
                 $tmp .= '<span class=\'q1\'>'.$item['stats'][ItemStats::ITEM_MOD_ARMOR].' '.$_stat_name[ItemStats::ITEM_MOD_ARMOR].'</span><br />';
@@ -147,8 +147,8 @@ class tooltips
         // Not sure if armory hands out the proper data
 
         // Level Requirement
-        if ($tpl['RequiredLevel'] > 1)
-            $tmp .= '<span style=\'color: #ffffff\'>Ben&ouml;tigt Level '.$tpl['RequiredLevel'].'</span><br />';
+        if ($item_tpl['RequiredLevel'] > 1)
+            $tmp .= '<span style=\'color: #ffffff\'>Ben&ouml;tigt Level '.$item_tpl['RequiredLevel'].'</span><br />';
 
         // Item Level
         $tmp .= '<span style=\'color: #ffffff\'>Gegenstandsstufe '.$item['level'].'</span><br />';        
@@ -170,24 +170,28 @@ class tooltips
         // TODO: 
         // - Move Spell Tooltips to DB
         // - Check for spellid2 through spellid9
-        if ($tpl['spellid_1'] > 0)
+        if ($item_tpl['spellid_1'] > 0)
         {
-            if (!isset($_spell_desc[$tpl['spellid_1']]))
-                echo "Missing Spell Description <a href=\"http://wotlk.openwow.com/spell=".$tpl['spellid_1']."\">".$tpl['spellid_1']."</a><br />";
-            elseif (strlen($_spell_desc[$tpl['spellid_1']]) > 0) // length is important because of invisible spells like visual effects
-                if ($tpl['spelltrigger_1'] == 0)
+            if (!isset($_spell_desc[$item_tpl['spellid_1']]))
+            {
+                //print error TODO 
+                global $tpl; 
+                $tpl->print_error('Missing Spell Description <a href="http://wotlk.openwow.com/spell='.$item_tpl['spellid_1'].'">'.$item_tpl['spellid_1'].'</a>');
+            }
+            elseif (strlen($_spell_desc[$item_tpl['spellid_1']]) > 0) // length is important because of invisible spells like visual effects
+                if ($item_tpl['spelltrigger_1'] == 0)
                 {
-                    $cooldown = $tpl['spellcooldown_1'] / 1000;
+                    $cooldown = $item_tpl['spellcooldown_1'] / 1000;
                     $cooldown_label = "Sek.";
                     if ($cooldown > 60)
                     {
                         $cooldown /= 60;
                         $cooldown_label = "Min.";
                     }
-                    $tmp .= '<span class=\'q2\'>Benutzen: '.$_spell_desc[$tpl['spellid_1']].' ('.$cooldown.' '.$cooldown_label.' Abklingzeit)</span><br />';
+                    $tmp .= '<span class=\'q2\'>Benutzen: '.$_spell_desc[$item_tpl['spellid_1']].' ('.$cooldown.' '.$cooldown_label.' Abklingzeit)</span><br />';
                 }
                 else
-                    $tmp .= '<span class=\'q2\'>Anlegen: '.$_spell_desc[$tpl['spellid_1']].'</span><br />';
+                    $tmp .= '<span class=\'q2\'>Anlegen: '.$_spell_desc[$item_tpl['spellid_1']].'</span><br />';
 
         }
 
@@ -196,20 +200,20 @@ class tooltips
             </table></div>';
 
         // Description
-        if (strlen($tpl['description']) > 0)
-            $tmp .= '<span class=\'q\'>&quot;'.$tpl['description'].'&quot;</span>';
+        if (strlen($item_tpl['description']) > 0)
+            $tmp .= '<span class=\'q\'>&quot;'.$item_tpl['description'].'&quot;</span>';
 
         // Item Set
         // TODO:
         // - Fetch set names, bonuses and activation data
-        if ($tpl['itemset'] > 0)
+        if ($item_tpl['itemset'] > 0)
         {
             $tmp .= "<br />";
 
             $set = array();
             $settmp = null;
             
-            $query = "SELECT `InventoryType`, `entry`, `name` FROM `".MYSQL_DATABASE_TDB."`.`item_template`  WHERE `itemset` = ".$tpl['itemset']."";
+            $query = "SELECT `InventoryType`, `entry`, `name` FROM `".MYSQL_DATABASE_TDB."`.`item_template`  WHERE `itemset` = ".$item_tpl['itemset']."";
             $result = mysql_query($query);
             while($row = mysql_fetch_array($result))
             {
