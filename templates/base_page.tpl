@@ -70,13 +70,15 @@
            <!-- alert print
            =========================================-->	
            {if isset($ERROR_MSG)}
+                <div class="notify">
            {foreach from=$ERROR_MSG item=error}
-                <div class="alert alert-block alert-error fade in">
-                <button type="button" class="close" data-dismiss="alert">×</button>
-                <h4 class="alert-heading">{$error['head']}</h4>
-                <p>{$error['text']}</p>
-                </div>
+                    <div class="alert alert-block alert-error fade in ">
+                    <button type="button" class="close" data-dismiss="alert">×</button>
+                    <h4 class="alert-heading">{$error['head']}</h4>
+                    <p>{$error['text']}</p>
+                 </div>
               {/foreach}  
+                </div>
              {/if}
             <!-- Overview
             ================================================== -->

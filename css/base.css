@@ -137,3 +137,11 @@ div[class="tooltip-inner"] {
     text-align: left;
     font-weight: normal;
 }
+.notify {
+    width: 350px;
+    position: fixed;
+    top: 50px;
+    right: 10px;
+    z-index: 9999;
+    display: block;
+}
