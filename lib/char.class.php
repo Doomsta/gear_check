@@ -75,8 +75,6 @@ class char
             {
                 $result = mysql_query("SELECT flags FROM ".MYSQL_DATABASE_TDB.".item_template WHERE entry = ".$tmp['items'][$key]['id']."") or die(mysql_error());
                 $row = mysql_fetch_assoc($result);
-
-
                 $this->equipment[$key] = $tmp['items'][$key];
                 $this->equipment[$key]['flags'] = $row['flags'];
 
@@ -127,7 +125,6 @@ class char
             }
         ksort($tmp);
         return $tmp;
-    
     }
 
     public function getSockets()
@@ -146,9 +143,8 @@ class char
             $tmp[$i] = get_gems_stats($i);
             $tmp[$i]['count'] = $c; 
         }
-        uasort($tmp, "cmp");        
+        //uasort($tmp, "cmp");  //need to handle errors       
         return $tmp;
-        
     }
 
     public function getEnchants()
@@ -192,8 +188,10 @@ class char
         $gems = $this->getSockets();
         foreach($gems as $gem)
         {
-                $stats[$gem['stat_type1']] += ($gem['stat_value1']*$gem['count']);  
-                $stats[$gem['stat_type2']] += ($gem['stat_value2']*$gem['count']);
+            if(!isset($gem['stat_type1']) OR !isset($gem['stat_type2']))
+                continue;
+            $stats[$gem['stat_type1']] += ($gem['stat_value1']*$gem['count']);  
+            $stats[$gem['stat_type2']] += ($gem['stat_value2']*$gem['count']);
         }
         //add socket boni
         foreach($this->equipment as $item)

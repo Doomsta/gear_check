@@ -102,15 +102,21 @@ class tooltips
                         WHERE `id` = ".$gem['id'];
                     $result = mysql_query($query);
                     $row = mysql_fetch_assoc($result);
+                    if(mysql_num_rows($result)==0)
+                    {
+                        //error is already handled in provider static function checkGemBonus($items) 
+                    }
+                    else
+                    {
+                        // first property
+                        $str = " +".$row['stat_value1']." ".$_stat_name[$row['stat_type1']];
 
-                    // first property
-                    $str = " +".$row['stat_value1']." ".$_stat_name[$row['stat_type1']];
-
-                    // second property
-                    if ($row['stat_type2'] != 0)
+                        // second property
+                        if ($row['stat_type2'] != 0)
                         $str .= " und +".$row['stat_value2']." ".$_stat_name[$row['stat_type2']]."";
 
-                    $tmp .='<img src=\'http://www.linuxlounge.net/~martin/wowimages/?item='.$gem['id'].'\' height=\'16\' width=\'16\'>'.$str.'';
+                        $tmp .='<img src=\'http://www.linuxlounge.net/~martin/wowimages/?item='.$gem['id'].'\' height=\'16\' width=\'16\'>'.$str.'';
+                    }
                 }
             }
             else

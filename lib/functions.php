@@ -61,9 +61,10 @@ function get_gems_stats($id)
         FROM `'.MYSQL_DATABASE .'`.`socket_stats`
         WHERE id = '.$id.'';
     $result = mysql_query($query);
-    $data = mysql_fetch_array($result);
-    for($i=0;$i<6;$i++)
-        unset($data[$i]);
+    if(mysql_num_rows($result) == 1)
+        $data = mysql_fetch_assoc($result);
+    else
+        $data['name'] = 'unknown';   
     return $data;
 }
 function get_item_gems($id)
@@ -72,9 +73,7 @@ function get_item_gems($id)
         FROM `'.MYSQL_DATABASE_TDB.'`.`item_template` 
         WHERE `entry` = '.$id.'';
     $result = mysql_query($query);
-    $data = mysql_fetch_array($result);
-    for($i=0;$i<count($data);$i++)
-        unset($data[$i]);
+    $data = mysql_fetch_assoc($result);
     for($i=1;$i<4;$i++)
         if($data['socketColor_'.$i] == 0)
             unset($data['socketColor_'.$i]);

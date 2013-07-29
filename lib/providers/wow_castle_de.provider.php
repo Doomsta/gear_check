@@ -386,7 +386,7 @@ class Provider
                 if (isset($gem['id']) AND !isset($color[$gem['id']]))
                 {
                     global $tpl;
-                    $tpl->print_error('Missing Spell Description: '.$gem['id']);
+                    $tpl->print_error('Missing Gem: <a href="http://wotlk.openwow.com/item='.$gem['id'].'">'.$gem['id'].'</a>');
                     continue;
                     
                     $items[$slot]['socketBonusActive'] = false;
@@ -464,7 +464,7 @@ class Provider
                 if(!isset($boni[$item['socketBonus']]))
                 {
                     global $tpl;
-                    $tpl->print_error('Undefined SockelBonus ID: '.$item['socketBonus'].' ItemID: '.$items[$i]['id']);
+                    $tpl->print_error('Undefined SockelBonus ID: '.$item['socketBonus'].' ItemID: <a href="http://wotlk.openwow.com/item='.$items[$i]['id'].'">'.$items[$i]['id'].'</a>');
                     continue;
                 }                
                 $items[$i]['socketBonus'] = array(

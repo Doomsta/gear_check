@@ -41,7 +41,9 @@ class tpl
     
     function print_error($msg, $head = 'Oh snap! There is an error!')
     {
-        $this->errors[] = array('head' => $head, 'text' => $msg);
+        $hash = md5($msg."-".$head);
+        if(!isset($this->errors[$hash]))
+            $this->errors[$hash] = array('head' => $head, 'text' => $msg);
     }
     
     function add_nav_links($array)
