@@ -39,11 +39,14 @@ class tpl
         $this->css_files .= '<link href="'.$path.'" rel="stylesheet">'."\n";
     }
     
-    function print_error($msg, $head = 'Oh snap! There is an error!')
+    function print_error($msg, $head = 'Oh snap! There is an error!', $doLog = true)
     {
         $hash = md5($msg."-".$head);
-        if(!isset($this->errors[$hash]))
-            $this->errors[$hash] = array('head' => $head, 'text' => $msg);
+        if(isset($this->errors[$hash]))
+            return;
+        $this->errors[$hash] = array('head' => $head, 'text' => $msg);
+        if($doLog)
+            $this->doLog($msg);
     }
     
     function add_nav_links($array)
@@ -143,6 +146,15 @@ class tpl
         $this->smarty->assign("SCRIPT", $this->script);
         $this->smarty->assign("LEFT_INNER_TEMPLATE", $this->left_inner_template);
         $this->smarty->display( $this->base_template );
+    }
+    
+    private function doLog($text)
+    {
+
+        $filename = "./logfile.log";
+        $fh = fopen($filename, "a") or die("Could not open log file.");
+        fwrite($fh, "[".date("d-m-Y, H:i")."] - ".$text."\n") or die("Could not write file!");
+        fclose($fh);
     }
 }
 ?>
