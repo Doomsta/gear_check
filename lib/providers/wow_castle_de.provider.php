@@ -36,6 +36,7 @@ class Provider
         $out['guildName'] = (string) $xml->characterInfo->character['guildName'];
         $out['level'] = (int) $xml->characterInfo->character['level'];
         $out['points'] = (int) $xml->characterInfo->character['points'];
+        $out['items'] = array();
 
         // basic talent info (active, point distribution by tree, name)
         $talent_xml = Provider::fetch_xml_document('http://armory.wow-castle.de/character-talents.xml?r=WoW-Castle+PvE&cn='.$name);
@@ -448,8 +449,12 @@ class Provider
     { 
         $boni = array();
         foreach ($items as $item)
-        if (isset($item['socketBonus']))
-            $boni[$item['socketBonus']] = true;
+            if (isset($item['socketBonus']))
+                $boni[$item['socketBonus']] = true;
+
+        if (count($boni) == 0) // no bonuses, no lookup
+            return $items;
+
         $query = "SELECT  `id`, `stat_type1`, `stat_value1` FROM `". MYSQL_DATABASE ."`.`socket_bonus` WHERE id IN (".implode(",", array_keys($boni)).")";
         $result = mysql_query($query);
         $boni = array();

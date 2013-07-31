@@ -338,6 +338,8 @@ $_skill_name = array(
 
 $_spell_desc = array(
     //icc
+    73326 => 'Durchflutet seinen Träger mit Licht.',
+    71903 => 'Eure Nahkampfangriffe haben eine Chance, ein Seelenfragment zu entziehen, welches Euch 30 Stärke gewährt. Sobald Ihr 10 Seelenfragmente angesammelt habt, werden sie als Chaosbann entfesselt, der 1900 to 2100 Schattenschaden verursacht, dieser Schaden wird unter allen Zielen innerhalb von 15 Metern aufgeteilt. Zudem werden Euch 10 Sek. lang 270 Stärke gewährt.',
     71397 => 'Immer, wenn Ihr einem Gegner Nahkampf- oder Distanzschaden zufügt, erhaltet Ihr 10 Sek. lang 17 Angriffskraft. Dieser Effekt ist bis zu 20-mal stapelbar.',
     71406 => 'Eure Nahkampfangriffe haben eine Chance, Euch Partikel des Zorns zu gewähren. Habt Ihr 8 Partikel des Zorns, werden sie wirksam und veranlassen Euch zu einem sofortigen Angriff mit einer Eurer Nahkampfwaffen für 50% Waffenschaden.',
     71545 => 'Eure Nahkampfangriffe haben eine Chance, Euch Partikel des Zorns zu gewähren. Habt Ihr 8 Partikel des Zorns, werden sie wirksam und veranlassen Euch zu einem sofortigen Angriff mit einer Eurer Nahkampfwaffen für 50% Waffenschaden.',
@@ -371,11 +373,13 @@ $_spell_desc = array(
     71865 => 'Jedes Mal, wenn Eure Zauber ein Ziel heilen, besteht eine Chance, dass sowohl das Ziel Eurer Heilung als auch Verbündete in einem Umkreis von 10 Metern 6 Sek. lang pro Sekunde um 217 geheilt werden.',
     71838 => 'Stiehlt dem gegnerischen Ziel 2138 to 2362 Leben.',
     //icc ringe
-    71653 => 'When struck in combat has a chance of increasing your armor by 2400 for 10 sec.',
-    71655 => 'Your helpful spells have a chance to increase your spell power by 285 for 10 sec.',
+    71653 => '', // Icecrown - Reputation Ring - Tank Path
+    72415 => 'Bei einem Treffer im Kampf besteht die Chance, dass Eure Rüstung 10 Sek. lang um 2400 erhöht wird.',
+    71655 => '', // Icecrown - Reputation Ring - Healer Path
+    72419 => 'Eure hilfreichen Zauber haben eine Chance, Eure Zaubermacht 10 Sek. lang um 285 zu erhöhen.',
+    73961 => '', // Icecrown - Reputation Ring - Strength Path
+    71650 => '', // Icecrown - Reputation Ring - Melee Path
     72413 => 'Chance bei Treffer, Eure Angriffskraft 10 Sek. lang um 480 zu erhöhen.',
-    73961 => 'Chance bei Treffer, Eure Angriffskraft 10 Sek. lang um 480 zu erhöhen.',
-    71650 => 'Chance bei Treffer, Eure Angriffskraft 10 Sek. lang um 480 zu erhöhen.',
     72968 => 'Eine Schleife der Zuneigung.',
     71168 => '', //Unerfülltes Verlangen Beschreibt die Aura von Schattenschneide
     //frozen halls
@@ -392,6 +396,7 @@ $_spell_desc = array(
     61252 => 'Verringert die Energiekosten eurer F&auml;higkeit \'Zerfleddern\' um 15.',
     //pvp trinkets
     64527 => 'Erhöht 20 Sek. lang Euer Tempo um 375',
+    67596 => 'Erhöht die maximale Gesundheit 15 Sek. lang um 4608. Teilt eine Abklingzeit mit anderen Schmuckstücken des Kampfmeisters.',
     //pdk
     66238 => 'Teleports the caster to the Argent Tournament Grounds.',
     67752 => 'Jedes Mal, wenn Ihr einen Zauber wirkt, gewinnt Ihr 10 Sek. lang 18 Mana alle 5 Sek. Bis zu 8-mal stapelbar.',
@@ -401,7 +406,8 @@ $_spell_desc = array(
     67702 => 'Wenn Ihr Schaden verursacht, habt Ihr eine Chance zu einem Vorbild zu werden, was Eure Stärke oder Beweglichkeit 15 Sek. lang um 450 erhöht. Es wird immer Euer höherer Wert gewählt.',
     67771 => 'Wenn Ihr Schaden verursacht, habt Ihr eine Chance zu einem Vorbild zu werden, was Eure Stärke oder Beweglichkeit 15 Sek. lang um 510 erhöht. Es wird immer Euer höherer Wert gewählt.',
     67672 => 'Jedes Mal, wenn Ihr mit einem Nahkampf- oder Distanzangriff trefft, habt Ihr eine Chance, 10 Sek. lang 1008 Angriffskraft zu gewinnen.',
-    71581 => 'Eure Offensivzauber haben eine Chance, bei einem Treffer Eure Zaubermacht 10 Sek. lang um 285 zu erhöhen.',
+    71581 => '', // Icecrown - Reputation Ring - Caster Path
+    72417 => 'Eure Offensivzauber haben eine Chance, bei einem Treffer Eure Zaubermacht 10 Sek. lang um 285 zu erhöhen.',
     67744 => 'Each time you cast a harmful spell, you gain 64 haste rating. Stacks up to 8 times. Entire effect lasts 20 sec.',
     67694 => 'Increases dodge rating by 512 for 20 sec.',
     67753 => 'Erhöht die maximale Gesundheit 15 Sek. lang um 5186. Teilt eine Abklingzeit mit allen anderen Schmuckstücken des Kampfmeisters.',
@@ -466,6 +472,7 @@ $_spell_desc = array(
     67361 => 'Each time your Moonfire spell deals periodic damage, you have a chance to gain 200 critical strike rating for 12 sec.',
     71174 => 'Der regelmäßige Schaden Eurer Fähigkeiten \'Aufschlitzen\' und \'Krallenhieb\' gewährt Euch 15 sec lang 44 Beweglichkeit. Bis zu 44-mal stapelbar.',
     60775 => 'Increases the spell power of your Starfire spell by 165.',
+    33830 => 'Verringert die Zauberzeit eures Zaubers \'Wirbelsturm\' um 0.1 Sek.',
     //schami
     60554 => 'Your Lava Lash ability also grants you 204 attack power for 10 sec.',
     60575 => 'Your Shock spells grant 119 spell power for 10 sec.',
@@ -477,6 +484,7 @@ $_spell_desc = array(
     60574 => 'Your Shock spells grant 101 spell power for 10 sec.',
     60560 => 'Increases spell power of Lesser Healing Wave by 404.',
     72958 => '', // T10 Shoulder Visual
+    67389 => 'Jedes mal wenn ihr den Zauber \'Kettenheilung\' wirkt, besteht eine Chance, 15 Sek. lang 234 Zaubermacht zu gewinnen.',
     //dk
     60690 => 'Your Plague Strike ability also grants you 204 attack power for 10 sec.',
     71228 => 'Your Rune Strike ability grants 44 dodge rating for 15 sec. Stacks up to 5 times.',
@@ -486,6 +494,8 @@ $_spell_desc = array(
     67384 => 'Each time you use your Death Strike, Obliterate, or Scourge Strike ability, you have a chance to gain 200 Strength for 20 sec.',
     64962 => 'Increases the damage done by your Death Coil ability by 380 and by your Frost Strike ability by 113.',
     54695 => 'Chance, bei einem Nahkampf- oder Distanztreffer \'Unerträgliche Schmerzen\' hervorzurufen. Dieser Effekt bewirkt, dass Euch Eure Angriffe jeweils 15 zusätzlichen kritischen Trefferwert verleihen. Bis zu 10-mal stapelbar',
+    // rogue
+    61249 => 'Verringert die Energiekosten eurer F&auml;higkeit \'Tritt\' um 10.',
     //ilvl213 stuff
     60524 => 'Jedes Mal, wenn Ihr einen Zauber wirkt, erhaltet Ihr für die nächsten 10 Sek. 18 Willenskraft. Bis zu 10-mal stapelbar.',
     60493 => 'Eure Zauber haben eine Chance, Eure Zaubermacht 10 Sek. lang um 765 zu erhöhen.',
@@ -499,6 +509,7 @@ $_spell_desc = array(
     60521 => 'Erh&ouml;ht Zaubermacht um 346 f&uuml;r 20 Sek.',
     60301 => 'Eure Nahkampf- und Distanzangriffe gewähren eine Chance, 10 Sek. lang Euer Tempo um 444 zu erhöhen.',
     48273 => 'Erh&ouml;ht Angriffskraft um 132',
+    49621 => 'Erh&ouml;ht die Zaubermacht um 106.',
     //quest rewards
     59657 => 'Erh&ouml;ht Zaubermacht um 281 f&uuml;r 20 Sek.',
     15827 => 'Erh&ouml;ht Angriffskraft um 82',
@@ -506,6 +517,9 @@ $_spell_desc = array(
     //random stuff
     63604 => 'Steht im Zentrum der Aufmerksamkeit.',
     17816 => 'Impress others with your fashion sense.', // smoking, yeah!
+    53820 => 'Erh&ouml;t R&uml;stungsdurchschlagwertung um 37',
+    54406 => 'Teleportiert den Zaubernden nach Dalaran.',
+    60439 => 'Erhöht die Angriffskraft 20 Sek. lang um 670.',
     //bc quest rewards
     33667 => 'Erh&ouml;ht eure Angriffskraft um 200 f&uuml;r 15 Sek.'
 );

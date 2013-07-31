@@ -175,30 +175,31 @@ class tooltips
         // Item Effects (Use, Proc)
         // TODO: 
         // - Move Spell Tooltips to DB
-        // - Check for spellid2 through spellid9
-        if ($item_tpl['spellid_1'] > 0)
+        for ($i = 1; $i <= 5; $i++)
         {
-            if (!isset($_spell_desc[$item_tpl['spellid_1']]))
+            if ($item_tpl['spellid_'.$i] > 0)
             {
-                //print error TODO 
-                global $tpl; 
-                $tpl->print_error('Missing Spell Description <a href="http://wotlk.openwow.com/spell='.$item_tpl['spellid_1'].'">'.$item_tpl['spellid_1'].'</a>');
-            }
-            elseif (strlen($_spell_desc[$item_tpl['spellid_1']]) > 0) // length is important because of invisible spells like visual effects
-                if ($item_tpl['spelltrigger_1'] == 0)
+                if (!isset($_spell_desc[$item_tpl['spellid_'.$i]]))
                 {
-                    $cooldown = $item_tpl['spellcooldown_1'] / 1000;
-                    $cooldown_label = "Sek.";
-                    if ($cooldown > 60)
-                    {
-                        $cooldown /= 60;
-                        $cooldown_label = "Min.";
-                    }
-                    $tmp .= '<span class=\'q2\'>Benutzen: '.$_spell_desc[$item_tpl['spellid_1']].' ('.$cooldown.' '.$cooldown_label.' Abklingzeit)</span><br />';
+                    //print error TODO 
+                    global $tpl; 
+                    $tpl->print_error('Missing Spell Description <a href="http://wotlk.openwow.com/spell='.$item_tpl['spellid_'.$i].'">'.$item_tpl['spellid_'.$i].'</a>');
                 }
-                else
-                    $tmp .= '<span class=\'q2\'>Anlegen: '.$_spell_desc[$item_tpl['spellid_1']].'</span><br />';
-
+                elseif (strlen($_spell_desc[$item_tpl['spellid_'.$i]]) > 0) // length is important because of invisible spells like visual effects
+                    if ($item_tpl['spelltrigger_'.$i] == 0)
+                    {
+                        $cooldown = $item_tpl['spellcooldown_'.$i] / 1000;
+                        $cooldown_label = "Sek.";
+                        if ($cooldown > 60)
+                        {
+                            $cooldown /= 60;
+                            $cooldown_label = "Min.";
+                        }
+                        $tmp .= '<span class=\'q2\'>Benutzen: '.$_spell_desc[$item_tpl['spellid_'.$i]].' ('.$cooldown.' '.$cooldown_label.' Abklingzeit)</span><br />';
+                    }
+                    else
+                        $tmp .= '<span class=\'q2\'>Anlegen: '.$_spell_desc[$item_tpl['spellid_'.$i]].'</span><br />';
+            }
         }
 
         $tmp .='       </td>
