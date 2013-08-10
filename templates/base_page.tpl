@@ -11,9 +11,6 @@
     <!-- Le styles -->
     {$CSS_FILES}    
     <link href="{$BOOTSRAPPATH}css/bootstrap.css" rel="stylesheet">
-    <link href="{$BOOTSRAPPATH}css/bootstrap-responsive.css" rel="stylesheet">
-    <link href="{$BOOTSRAPPATH}css/bootstrap.css" rel="stylesheet">
-    <link href="{$BOOTSRAPPATH}css/bootstrap-responsive.css" rel="stylesheet">
     <link href="{$BOOTSRAPPATH}css/docs.css" rel="stylesheet">
     <link href="css/base.css" rel="stylesheet">
     <style>
@@ -27,27 +24,20 @@
   </head>
 
     <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
-      <div class="navbar-inner">
-      <a href="https://github.com/Doomsta/gear_check">
+          <a href="https://github.com/Doomsta/gear_check">
         <img style="position: absolute; top: 0; left: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_left_darkblue_121621.png" alt="Fork me on GitHub">
       </a>
-        <div class="container">
-          <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="brand" href="#">{$PROJEKTNAME}</a>
-          <div class="nav-collapse collapse">
-            <ul class="nav"> 
+      
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <a class="navbar-brand" href="#">{$PROJEKTNAME}</a>
+        <ul class="nav navbar-nav">
 {foreach key=schluessel item=wert from=$NAV_LINKS}
               <li class="{$wert.class}"><a href="{$wert.url}">{$wert.name}</a></li>
 {/foreach}
-            </ul>
-          </div>
-        </div>
-   </div>
+        </ul>
+    </div>
+
+
     </div>
     <!-- Subhead
 ================================================== -->
@@ -62,10 +52,10 @@
 
 <div class="container">
     <div class="row">
-        <div class="span3">
+        <div class="col-lg-3">
             {include file="{$LEFT_INNER_TEMPLATE}"}
         </div>
-        <div class="span9">
+        <div class="col-lg-9">
         
            <!-- alert print
            =========================================-->	
