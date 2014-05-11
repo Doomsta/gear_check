@@ -9,7 +9,7 @@ if (isset($_GET['cn']))
     $cn = $_GET['cn'];
     
 	$char = new char($cn, true);
-	if($char->load())
+	if ($char->load())
 	{
 		$tooltips = new tooltips($tpl);
 		$char->addItemTooltips($tooltips);
@@ -38,4 +38,4 @@ $tpl->set_vars(array(
     'template_file'        => 'profile.tpl',
 ));
 $tpl->display();
-?>
+

@@ -1,4 +1,5 @@
 <?php
+/** @deprecated */
 class cache {
 
     private $cachepath = 'cache/';
@@ -20,7 +21,7 @@ class cache {
     {
         $key = md5($key);
         $path = $this->cachepath.'/'.$key.'.'.$this->extension;
-        if(!file_exists($path))
+        if (!file_exists($path))
             return false;
         return time() - filemtime($path);
     }
@@ -29,9 +30,9 @@ class cache {
     {
         $key = md5($key);
         $path = $this->cachepath.'/'.$key.'.'.$this->extension;
-        if( file_exists($path))
+        if ( file_exists($path))
         {
-            if(time() < (filemtime($path) + $expire) OR $expire == 0)
+            if (time() < (filemtime($path) + $expire) or $expire == 0)
                 return unserialize(file_get_contents($path));
             else
                 unlink($path);

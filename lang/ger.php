@@ -217,4 +217,3 @@ $_spell_desc = array(
     67384 => 'Each time you use your Death Strike, Obliterate, or Scourge Strike ability, you have a chance to gain 200 Strength for 20 sec.',
     64962 => 'Increases the damage done by your Death Coil ability by 380 and by your Frost Strike ability by 113.'
     );
-?>

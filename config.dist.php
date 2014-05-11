@@ -11,4 +11,4 @@ define('MYSQL_DATABASE', '');
 
 define('PROVIDER', 'wow_castle_de');
 
-?>
+

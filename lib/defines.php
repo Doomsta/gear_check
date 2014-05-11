@@ -523,4 +523,4 @@ $_spell_desc = array(
     //bc quest rewards
     33667 => 'Erh&ouml;ht eure Angriffskraft um 200 f&uuml;r 15 Sek.'
 );
-?>
+

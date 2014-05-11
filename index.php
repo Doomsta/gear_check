@@ -16,4 +16,4 @@ $tpl->set_vars(array(
     'template_file'        => 'index.tpl',
 ));
 $tpl->display();
-?>
+

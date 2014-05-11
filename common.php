@@ -39,5 +39,3 @@ $tpl->set_defaultIcon('./img/icon.png');
 # MySQL Connection
 mysql_connect($mysql_host, $mysql_user, $mysql_pass);
 unset($mysql_pass); # lose the password right here, we don't need it anymore afterwards
-
-?>

@@ -23,7 +23,7 @@ class Provider
         // fetch xml character document
         $url = Provider::build_fetch_url("character-sheet.xml", array("r" => "WoW-Castle+PvE", "cn" => $name));
         $xml = Provider::fetch_xml_document($url);
-        if($xml->characterInfo->character['name'] == false)
+        if ($xml->characterInfo->character['name'] == false)
             return false;
         
         // parse data
@@ -41,8 +41,8 @@ class Provider
         // basic talent info (active, point distribution by tree, name)
         $talent_xml = Provider::fetch_xml_document('http://armory.wow-castle.de/character-talents.xml?r=WoW-Castle+PvE&cn='.$name);
         $out['talents'] = array();
-        foreach($talent_xml->characterInfo->talents->talentGroup as $spec)
-        if($spec['active'] == 1)
+        foreach ($talent_xml->characterInfo->talents->talentGroup as $spec)
+        if ($spec['active'] == 1)
         {
             $out['talents']['active'] = array(
                 'icon' => (string) $spec['icon'],
@@ -51,12 +51,12 @@ class Provider
                 '1' => (int) $spec->talentSpec['treeOne'],
                 '2' => (int) $spec->talentSpec['treeTwo'],
                 '3' => (int) $spec->talentSpec['treeThree'],
-            	'value' => (string) $spec->talentSpec['value']	
+                'value' => (string) $spec->talentSpec['value']
             );
             //glyphs
             foreach ($spec->glyphs->glyph as $glyph)
             {
-                if( isset($glyph['type']))
+                if ( isset($glyph['type']))
                     $out['talents']['active']['glyphs'][ (string) $glyph['type'] ][] = array(
                         'effect'    => (string) $glyph['effect'],
                         'id'    => (int) $glyph['id'],
@@ -73,10 +73,10 @@ class Provider
                 '1' => (int) $spec->talentSpec['treeOne'],
                 '2' => (int) $spec->talentSpec['treeTwo'],
                 '3' => (int) $spec->talentSpec['treeThree'],
-            	'value' => (string)  $spec->talentSpec['value']	
+                'value' => (string)  $spec->talentSpec['value']
             );
             foreach ($spec->glyphs->glyph as $glyph)
-            //if( isset($glyph['type']))
+            //if ( isset($glyph['type']))
                 $out['talents']['inactive']['glyphs'][ (string) $glyph['type'] ][] = array(
                         'effect'    => (string) $glyph['effect'],
                         'id'    => (int) $glyph['id'],
@@ -84,12 +84,12 @@ class Provider
                 );
         }
         // arena teams
-        if(isset($xml->characterInfo->character->arenaTeams->arenaTeam))
+        if (isset($xml->characterInfo->character->arenaTeams->arenaTeam))
         {
-            foreach($xml->characterInfo->character->arenaTeams->arenaTeam as $arenaTeam)
+            foreach ($xml->characterInfo->character->arenaTeams->arenaTeam as $arenaTeam)
             {
                 $ts = (int) $arenaTeam['size'];
-                if($ts == 5)
+                if ($ts == 5)
                     break; // 5v5 at castle xD
                 $out['arena'][$ts]['name'] = (string) $arenaTeam['name'];
                 $out['arena'][$ts]['rating'] = (int) $arenaTeam['rating'];
@@ -97,7 +97,7 @@ class Provider
                 $out['arena'][$ts]['gamesPlayed'] = (int) $arenaTeam['gamesPlayed'];
                 $out['arena'][$ts]['seasonGamesWon'] = (int) $arenaTeam['seasonGamesWon'];
                 $out['arena'][$ts]['seasonGamesPlayed'] = (int) $arenaTeam['seasonGamesPlayed'];
-                foreach($arenaTeam->emblem->members->member as $member)
+                foreach ($arenaTeam->emblem->members->member as $member)
                 {
                     $out['arena'][$ts]['member'][] = array(
                         'name' => (string) $member['name'],
@@ -115,7 +115,7 @@ class Provider
         }
         
         // equipment
-        foreach($xml->characterInfo->characterTab->items->item as $item) 
+        foreach ($xml->characterInfo->characterTab->items->item as $item)
         {
             $sn = (int)$item['slot'] +1;
             $out['items'][$sn]['id']  = (string) $item['id'];
@@ -134,7 +134,7 @@ class Provider
         
         // professions
         $out['professions'] = array();
-        foreach($xml->characterInfo->characterTab->professions->skill as $skill)
+        foreach ($xml->characterInfo->characterTab->professions->skill as $skill)
         {
             $out['professions'][(int) $skill['id']] = array(
                 'val' => (int) $skill['value'],
@@ -208,7 +208,7 @@ class Provider
         $out['stats']['defense']['resilienceRating'] = (string) $xml->characterInfo->characterTab->defenses->resilience['value'];
         $out['stats']['defense']['resilienceHitPercent'] = (string) $xml->characterInfo->characterTab->defenses->resilience['hitPercent'];
         $out['stats']['defense']['resilienceDamagePercent'] = (string) $xml->characterInfo->characterTab->defenses->resilience['damagePercent'];
-    		
+
         // return parsed data
         return $out;
     }
@@ -408,7 +408,7 @@ class Provider
                 if ($c == SocketColor::Prismatic) // gem is prismatic, fits everywhere
                     $result = true;
                 else {
-                    if(!isset($gem['socketColor'])) break; 
+                    if (!isset($gem['socketColor'])) break;
                     switch ($gem['socketColor']) {
                         case SocketColor::Red: // socket is red
                             if ($c == SocketColor::Red || $c == SocketColor::Orange || $c == SocketColor::Violet)
@@ -462,11 +462,11 @@ class Provider
             $boni[$row['id']] = array('stat_type1' => $row['stat_type1'], 'stat_value1' => $row['stat_value1']);
         foreach ($items as $i => $item)
         {
-            if($items[$i]['socketBonus'] == 0)
+            if ($items[$i]['socketBonus'] == 0)
                 continue;
-            if(isset($items[$i]['socketBonus']))
+            if (isset($items[$i]['socketBonus']))
             {
-                if(!isset($boni[$item['socketBonus']]))
+                if (!isset($boni[$item['socketBonus']]))
                 {
                     global $tpl;
                     $tpl->print_error('Undefined SockelBonus ID: '.$item['socketBonus'].' ItemID: <a href="http://wotlk.openwow.com/item='.$items[$i]['id'].'">'.$items[$i]['id'].'</a>');
@@ -486,18 +486,18 @@ class Provider
     {
         $out = array();
         $xml = $this->fetchXML($this->build_fetch_url("arena-ladder.xml", array("ts" => $teamSize, "b" => "WoW-Castle", "sf" => "rating", "sd" => "d")));
-        if($xml === false)
+        if ($xml === false)
             return false;
         $maxPage = (int) $xml->arenaLadderPagedResult['maxPage'];
         for($i=0; $i<=$maxPage; $i++)
         {
-            if($i != 0) // 0 is already loaded
+            if ($i != 0) // 0 is already loaded
                 $xml = $this->fetchXML($this->build_fetch_url("arena-ladder.xml", array("p" => $i+1, "ts" => $teamSize, "b" => "WoW-Castle", "sf" => "rating", "sd" => "d")));
 
             //work with the data
-            foreach($xml->arenaLadderPagedResult->arenaTeams->arenaTeam as $row)
+            foreach ($xml->arenaLadderPagedResult->arenaTeams->arenaTeam as $row)
             {
-                if(count($out) > ($limit-1))
+                if (count($out) > ($limit-1))
                     break;
                 $out[] = array(
                     'name' => (string) $row['name'],
@@ -518,9 +518,9 @@ class Provider
         $out = array();
         $name = str_replace(" ", "+", $name); 
         $xml = $this->fetchXML($this->build_fetch_url("team-info.xml", array("b" => "WoW-Castle", "r" => "WoW-Castle+PvE", "select" => $name)));
-        if($xml === false)
+        if ($xml === false)
             return false;
-        foreach($xml->teamInfo->arenaTeam->members->character as $row)
+        foreach ($xml->teamInfo->arenaTeam->members->character as $row)
         {
             $out[] = array(
                 'name' => (string) $row['name'],

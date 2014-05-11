@@ -9,10 +9,10 @@ function get_item_stats($id)
     $result = mysql_query($query);
     $tmp = mysql_fetch_assoc($result);
     $data = array();
-    for($i=1;$i<9;$i++)
-    {
-        if($tmp['stat_value'.$i] == 0)
+    for ($i=1; $i<9; $i++) {
+        if ($tmp['stat_value'.$i] == 0) {
             break;
+        }
         $data[$tmp['stat_type'.$i]] = $tmp['stat_value'.$i];
     }
     
@@ -26,19 +26,21 @@ function get_item_stats($id)
 
 function get_weapon_properties($itemId)
 {
-        $query = 'SELECT `dmg_min1`, `dmg_max1`, `delay`
-                FROM `'. MYSQL_DATABASE_TDB .'`.`item_template`
-                WHERE `entry` = '.$itemId.'';
-        $result = mysql_query($query);
-        if (mysql_num_rows($result) == 0)
-            return false; // item not found
-        $row = mysql_fetch_assoc($result);
-        $data = array("min" => $row['dmg_min1'],
-                      "max" => $row['dmg_max1'],
-                      "delay" => $row['delay'],
-                      "dps" => number_format(round(((($row['dmg_min1'] + $row['dmg_max1']) / 2) / ($row['delay'] / 1000)), 1), 1)
-                );
-        return $data;        
+    $query = 'SELECT `dmg_min1`, `dmg_max1`, `delay`
+            FROM `'. MYSQL_DATABASE_TDB .'`.`item_template`
+            WHERE `entry` = '.$itemId.'';
+    $result = mysql_query($query);
+    if (mysql_num_rows($result) == 0) {
+        return false; // item not found
+    }
+    $row = mysql_fetch_assoc($result);
+    $data = array("min" => $row['dmg_min1'],
+                  "max" => $row['dmg_max1'],
+                  "delay" => $row['delay'],
+                  "dps" =>
+                      number_format(round(((($row['dmg_min1']+$row['dmg_max1'])/2)/($row['delay']/1000)), 1), 1)
+            );
+    return $data;
 }
 
 function add_item_gems($item)
@@ -48,23 +50,26 @@ function add_item_gems($item)
         WHERE `entry` = \''.$item['id'].'\'';
     $result = mysql_query($query);
     $data = mysql_fetch_array($result);
-    for($i=0; $i<3; $i++)
-        if(!$data['socketColor_'.($i+1)] == 0)
-            $item['gems'][$i]['socketColor'] = $data['socketColor_'.($i+1)];
+    for ($i=0; $i<3; $i++) {
+        if (!$data['socketColor_' . ($i + 1)] == 0) {
+            $item['gems'][$i]['socketColor'] = $data['socketColor_' . ($i + 1)];
+        }
+    }
     $item['socketBonus'] = $data['socketBonus'];
-    return $item; 
+    return $item;
 }
 
 function get_gems_stats($id)
 {
     $query = 'SELECT `name`, `color`, `stat_type1`, `stat_value1`, `stat_type2`, `stat_value2`, `rarity`
-        FROM `'.MYSQL_DATABASE .'`.`socket_stats`
-        WHERE id = '.$id.'';
+        FROM `' . MYSQL_DATABASE . '`.`socket_stats`
+        WHERE id = ' . $id . '';
     $result = mysql_query($query);
-    if(mysql_num_rows($result) == 1)
+    if (mysql_num_rows($result) == 1) {
         $data = mysql_fetch_assoc($result);
-    else
-        $data['name'] = 'unknown';   
+    } else {
+        $data['name'] = 'unknown';
+    }
     return $data;
 }
 function get_item_gems($id)
@@ -74,9 +79,12 @@ function get_item_gems($id)
         WHERE `entry` = '.$id.'';
     $result = mysql_query($query);
     $data = mysql_fetch_assoc($result);
-    for($i=1;$i<4;$i++)
-        if($data['socketColor_'.$i] == 0)
-            unset($data['socketColor_'.$i]);
+    for ($i=1; $i<4; $i++) {
+        if ($data['socketColor_' . $i] == 0) {
+            unset($data['socketColor_' . $i]);
+        }
+    }
+
     return $data;
 }
 
@@ -88,8 +96,9 @@ function get_enchant_stats($id, $type)
         FROM `'.MYSQL_DATABASE.'`.`enchant`
         WHERE `'.$type.'` = '.$id.'';
     $result = mysql_query($query) or die(mysql_error());
-    if (mysql_num_rows($result) == 0)
+    if (mysql_num_rows($result) == 0) {
         return false;
+    }
     $data = mysql_fetch_assoc($result);
     return $data;
 }
@@ -98,5 +107,3 @@ function cmp($a, $b)
 {
     return strcmp($a["color"], $b["color"]);
 }
-
-?>

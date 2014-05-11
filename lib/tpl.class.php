@@ -1,4 +1,5 @@
 <?php
+/** @deprecated */
 class tpl
 {
     private $smarty;
@@ -14,79 +15,80 @@ class tpl
     private $base_template;
     private $left_inner_template;
     
-    function __construct($base_template) 
+    public function __construct($base_template)
     {
         require('smarty/Smarty.class.php');
         $this->smarty = new Smarty;
         
         $this->base_template = $base_template;
     }
-    function setBaseTemplate($template)
+    public function setBaseTemplate($template)
     {
         $this->base_template =  $template;
     }
-    function setLeftTemplate($template)
+    public function setLeftTemplate($template)
     {
         $this->left_inner_template =  $template;
     }
-    function add_js_file($path)
+    public function add_js_file($path)
     {
         $this->js_files .= '<script src="'.$path.'"></script>'."\n";
     }
-    
-    function add_css_file($path)
+
+    public function add_css_file($path)
     {
         $this->css_files .= '<link href="'.$path.'" rel="stylesheet">'."\n";
     }
-    
-    function print_error($msg, $head = 'Oh snap! There is an error!', $doLog = true)
+
+    public function print_error($msg, $head = 'Oh snap! There is an error!', $doLog = true)
     {
         $hash = md5($msg."-".$head);
-        if(isset($this->errors[$hash]))
+        if (isset($this->errors[$hash]))
             return;
         $this->errors[$hash] = array('head' => $head, 'text' => $msg);
-        if($doLog)
+        if ($doLog) {
             $this->doLog($msg);
+        }
     }
-    
-    function add_nav_links($array)
+
+    public function add_nav_links($array)
     {
         // get current active page to determine whether to show submenu
         $path_parts = pathinfo($_SERVER['PHP_SELF']);
         
-        foreach($array as $data)
-        {
-            $this->nav_links[] = array( 
+        foreach ($array as $data) {
+            $this->nav_links[] = array(
                 'name'    => $data['name'],
                 'url'    => $data['url'],
                 'class'    => "none"
             );
             
-            if (!isset($data['sub']))
+            if (!isset($data['sub'])) {
                 continue;
-            
+            }
+
             // determine if submenu is needed
             $show_submenu = false;
-            foreach ($data['sub'] as $sdata)
-            {
+            foreach ($data['sub'] as $sdata) {
                 $tmp = pathinfo($sdata['url']);
-                if ($tmp['basename'] == $path_parts['basename'])
+                if ($tmp['basename'] == $path_parts['basename']) {
                     $show_submenu = true;
+                }
             }
-            if (!$show_submenu)
+            if (!$show_submenu) {
                 continue;
+            }
             
-            foreach ($data['sub'] as $subdata)
-            {
-                $tmp = array( 
+            foreach ($data['sub'] as $subdata) {
+                $tmp = array(
                     'name'  => $subdata['name'],
                     'url'   => $subdata['url'],
                     'class' => "none"
                 );
                 
-                if (isset($subdata['icon']))
+                if (isset($subdata['icon'])) {
                     $tmp['icon'] = $subdata['icon'];
-                
+                }
                 $this->sub_nav_links[] = $tmp;
             }
         }
@@ -94,58 +96,58 @@ class tpl
     
     private function set_active($name, $array)
     {    
-        for($i=0;$i<count($array);$i++)
-        {
-            if($array[$i]['name'] == $name)
+        for ($i=0; $i<count($array); $i++) {
+            if ($array[$i]['name'] == $name) {
                 $array[$i]['class'] = 'active';
-            else
+            } else {
                 $array[$i]['class'] = '';
+            }
         }
         return $array;
     }
-    
-    function assign_vars($name, $value)
+
+    public function assign_vars($name, $value)
     {
         $this->smarty->assign($name, $value);
     }
-    
-    function add_script($value)
+
+    public function add_script($value)
     {
         $this->script .= "<script>".$value."</script>\n";
     }
-    
-    function set_defaultIcon($icon)
+
+    public function set_defaultIcon($icon)
     {
         $this->icon = $icon;
     }
-    
-    function set_vars($array)
+
+    public function set_vars($array)
     {
         $this->smarty->assign("PAGE_TITLE", $array['page_title']);
         $this->smarty->assign("DESCRIPTION", $array['description']);
         $this->smarty->assign("AUTHOR", $array['author']);
-        if(!empty($this->icon))
+        if (!empty($this->icon)) {
             $this->smarty->assign("ICON", $this->icon);
-        else
+        } else {
             $this->smarty->assign("ICON", $array['icon']);
-        
+        }
         $this->smarty->assign("SUBHEADBIG", $array['subHeadBig']);
         $this->smarty->assign("SUBHEADSMALL", $array['subHeadSmall']);
         $this->tpl_file = $array['template_file'];
-        $this->smarty->assign("NAV_LINKS", $this->set_active($array['nav_active'], $this->nav_links)); 
-        $this->smarty->assign("SUB_NAV_LINKS", $this->set_active($array['sub_nav_active'], $this->sub_nav_links)); 
+        $this->smarty->assign("NAV_LINKS", $this->set_active($array['nav_active'], $this->nav_links));
+        $this->smarty->assign("SUB_NAV_LINKS", $this->set_active($array['sub_nav_active'], $this->sub_nav_links));
     }
-    
-    function display()
+
+    public function display()
     {
         $this->smarty->assign("ERROR_MSG", $this->errors);
-        $this->smarty->assign("JS_FILES", $this->js_files); 
+        $this->smarty->assign("JS_FILES", $this->js_files);
         $this->smarty->assign("TEMPLATEFILE", $this->tpl_file);
         $this->smarty->assign("CSS_FILES", $this->css_files);
         $this->smarty->assign("CSS_CODE", ""); //todo
         $this->smarty->assign("SCRIPT", $this->script);
         $this->smarty->assign("LEFT_INNER_TEMPLATE", $this->left_inner_template);
-        $this->smarty->display( $this->base_template );
+        $this->smarty->display($this->base_template);
     }
     
     private function doLog($text)
@@ -157,4 +159,4 @@ class tpl
         fclose($fh);
     }
 }
-?>
+

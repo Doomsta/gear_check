@@ -1,3 +1,8 @@
-config.php
-cache/*
-templates_c/*
+/config.php
+/cache/*
+/templates_c/*
+/vendor/
+/.idea/
+/composer.lock
+/*.iml
+
