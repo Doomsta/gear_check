@@ -3,7 +3,7 @@
 if (!defined('PROVIDER'))
     die("Error: No Provider loaded".PHP_EOL);
 
-class char
+class Char
 {
     private $name;
     private $prefix;

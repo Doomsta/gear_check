@@ -1,6 +1,6 @@
 <?php
 /** @deprecated */
-class cache {
+class Cache {
 
     private $cachepath = 'cache/';
     private $extension = 'cache';

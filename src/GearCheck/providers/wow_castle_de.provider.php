@@ -23,7 +23,7 @@ class Provider
         // fetch xml character document
         $url = Provider::build_fetch_url("character-sheet.xml", array("r" => "WoW-Castle+PvE", "cn" => $name));
         $xml = Provider::fetch_xml_document($url);
-        if ($xml->characterInfo->character['name'] == false)
+        if (isset($xml->characterInfo->character['name']) === false)
             return false;
         
         // parse data

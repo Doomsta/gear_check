@@ -1,8 +1,8 @@
 <?php
-$rootpath = './';
-include ($rootpath.'common.php');
-require_once($rootpath.'lib/providers/'.PROVIDER.'.provider.php');
-require_once($rootpath.'lib/char.class.php');
+$rootPath = './';
+include ($rootPath.'common.php');
+require_once($rootPath.'src/GEarCheck/providers/'.PROVIDER.'.provider.php');
+require_once($rootPath . 'src/GearCheck/Char.php');
 
 if (isset($_GET['cn']))
 {
@@ -11,7 +11,7 @@ if (isset($_GET['cn']))
 	$char = new char($cn, true);
 	if ($char->load())
 	{
-		$tooltips = new tooltips($tpl);
+		$tooltips = new Tooltip($tpl);
 		$char->addItemTooltips($tooltips);
 	
 		$tpl->assign_vars('avg', $char->getAvgItemLevel());

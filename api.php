@@ -2,7 +2,7 @@
 $rootpath = './';
 include ($rootpath.'common.php');
 require_once($rootpath.'lib/providers/'.PROVIDER.'.provider.php');
-require_once($rootpath.'lib/char.class.php');
+require_once($rootpath . 'lib/Char.php');
 
 if (isset($_GET['cn'])) {
     $cn = $_GET['cn'];

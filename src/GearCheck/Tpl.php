@@ -1,6 +1,6 @@
 <?php
 /** @deprecated */
-class tpl
+class Tpl
 {
     private $smarty;
     private $tpl_file;
@@ -17,7 +17,7 @@ class tpl
     
     public function __construct($base_template)
     {
-        require('smarty/Smarty.class.php');
+        require(realpath(__DIR__.'/../../lib/smarty/Smarty.class.php'));
         $this->smarty = new Smarty;
         
         $this->base_template = $base_template;

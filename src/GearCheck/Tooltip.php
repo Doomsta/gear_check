@@ -1,5 +1,5 @@
 <?php
-class tooltips
+class Tooltip
 {
     private $tooltip_js = '$(\'a\').tooltip().tooltip();';
 

@@ -1,8 +1,8 @@
 <?php
-$rootpath = './';
-include ($rootpath.'common.php');
-require_once($rootpath.'lib/providers/'.PROVIDER.'.provider.php');
-require_once($rootpath.'lib/char.class.php');
+$rootPath = './';
+include ($rootPath.'common.php');
+require_once($rootPath.'src/GearCheck/providers/'.PROVIDER.'.provider.php');
+require_once($rootPath . 'src/GearCheck/Char.php');
 
 $tpl->setLeftTemplate("content_left.tpl");
 $tpl->set_vars(array(
