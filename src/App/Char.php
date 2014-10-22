@@ -94,15 +94,12 @@ class Char
         return true;
     }
 
-    public function fetch($ExecuteQuirksHandler = false)
+    public function fetch()
     {
         $provider = new Provider();
         $tmp = $provider->fetchCharacterData($this->name);
         if ($tmp === false) {
             return false;
-        }
-        if ($ExecuteQuirksHandler) {
-            $tmp = $provider->HandleQuirks($tmp);
         }
         $this->name = $tmp['name'];
         $this->prefix = $tmp['prefix'];
@@ -220,6 +217,13 @@ class Char
         return $tmp;
     }
 
+    /**
+     * @TODO racial bonuses
+     * @param bool $base
+     * @param bool $items
+     * @param bool $gems
+     * @return array
+     */
     public function getStats($base = true, $items = true, $gems = true)
     {
         $stats = array();

@@ -50,8 +50,6 @@ class Provider
     public function fetchCharacterData($name)
     {
         $out = array();
-        
-        // fetch xml character document
 
         $url = $this->buildUrl("character-sheet.xml", array("r" => "WoW-Castle+PvE", "cn" => $name));
         $xml = $this->fetchXML($url);
@@ -245,6 +243,11 @@ class Provider
         return $out;
     }
 
+    /**
+     * @deprecated
+     * @param $xml
+     * @return mixed
+     */
     public function HandleQuirks($xml)
     {
         // Armory has several issues currently:
@@ -258,97 +261,7 @@ class Provider
         // - Some Titles are shown as prefix instead of suffix... (FIXED)
         // - Offhand Damage Min/Max/Dps/Speed is missing (TODO)
         // Let's calculate them here!
-        
-        // racial bonuses
-        $expertiseBonus = array();
-        
-        // determine weapon types
-        for ($i = 16; $i <= 17; $i++)
-        {
-            if (!isset($xml['items'][$i]))
-                continue;
-            
-            $query = 'SELECT `subclass` FROM `'. MYSQL_DATABASE_TDB .'`.`item_template` WHERE `entry` = "'.$xml['items'][$i]['id'].'"';
-            $result = mysql_query($query);
-            $row = mysql_fetch_assoc($result);
-            
-            $subclass = intval($row['subclass']);
-            
-            switch ($xml['raceId'])
-            {
-                case 1:
-                    # - Humans get +3 expertise with One or Two-Handed Swords and Maces.
-                    if (in_array($subclass, array(7, 8, 4, 5)))
-                        $expertiseBonus[$i] = 3;
-                    break;
-                case 2:
-                    # - Orcs get +5 expertise with One and Two-Handed Axes, and Fist Weapons.
-                    if (in_array($subclass, array(0, 1, 13)))
-                        $expertiseBonus[$i] = 5;
-                    break; 
-                case 3:
-                    # - Dwarves get +5 expertise with One and Two-Handed Maces.
-                    if (in_array($subclass, array(4, 5)))
-                        $expertiseBonus[$i] = 5;
-                    break;
-            }
-        }
-        
-        // some enchants come without an item like every crafting bonus, so translate to spellid
-
-        
-        foreach ($xml['items'] as $slot => $item)
-        {
-            if (!isset($item['permanentEnchantItemId']))
-                continue;
-            if ($item['permanentEnchantItemId'] != 0 || !isset($item['permanentEnchantSpellName']))
-                continue;
-            $spellId = $this->enchantNameToSpellId[$item['permanentEnchantSpellName']];
-            $xml['items'][$slot]['permanentEnchantSpellId'] = $spellId;
-            
-            // wow-castle.de has 4 primary trade professions, guess those that are not shown in armory
-            if (in_array($spellId, array(44636, 44645, 59636))) {
-                if (!isset($xml['professions'][333]))
-                    $xml['professions'][333] = array("val" => 400, "max" => "450", "guessed" => true);
-            }
-            elseif (in_array($spellId, array(61117, 61118, 61119, 61120))) {
-               if (!isset($xml['professions'][773]))
-                  $xml['professions'][773] = array("val" => 400, "max" => "450", "guessed" => true);
-            }
-            elseif (in_array($spellId, array(60584, 60583, 57683, 57690, 57691, 57692, 57694, 57696, 57699, 57701))) {
-               if (!isset($xml['professions'][165]))
-                  $xml['professions'][165] = array("val" => 400, "max" => 450, "guessed" => true);
-            }
-            elseif (in_array($spellId, array(56039, 56034, 55642, 55769, 55777))) {
-               if (!isset($xml['professions'][197]))
-                  $xml['professions'][197] = array("val" => (in_array($spellId, array(55642, 55769, 55777)) ? 420 : 405), "max" => 450, "guessed" => true);
-            }
-            elseif (in_array($spellId, array(54999, 54998, 54793, 55016, 63770, 55002, 63765, 54736))) {
-               if ($spellId == 54999 || $spellId == 54998 || $spellId == 63770) // 400
-                  $val = 400;
-               elseif ($spellId == 54793 || $spellId == 55002 || $spellId == 63765) // 380
-                  $val = 380;
-               elseif ($spellId == 55016) // 405
-                  $val = 405;
-               elseif ($spellId == 54736) // 390
-                  $val = 390;
-
-               if (!isset($xml['professions'][202]))
-                  $xml['professions'][202] = array("val" => $val, "max" => 450, "guessed" => "true");
-               elseif ($xml['professions']['202']['val'] < $val)
-                  $xml['professions']['202']['val'] = $val; // update with higher value
-               }
-           }
-
-           // jewelcrafting detection                
-           foreach ($xml['items'] as $slot => $item)
-               foreach ($item['gems'] as $gem)
-                   if (in_array($gem['id'], array(42142, 36766, 42148, 42143, 42152, 42153, 42146, 42158, 42154, 42150, 42156, 42144, 42149, 36767, 42145, 42155, 42151, 42157)))
-                       if (!isset($xml['professions'][755]))
-                           $xml['professions'][755] = array("val" => 375, "max" => "450", "guessed" => true);
-
-            // return xml with fixed quirks
-            return $xml;
+        return $xml;
     }
     
     public function checkGemBonus($items) // TODO: Gem bonuses are not provider-specific, move to character
