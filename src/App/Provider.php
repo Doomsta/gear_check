@@ -7,42 +7,6 @@ use SimpleXMLElement;
 
 class Provider
 {
-    private $enchantNameToSpellId = array(
-        'Sanctified Spellthread' => 56039,
-        'Master\'s Spellthread' => 56034,
-        'Lightweave Embroidery' => 55642,
-        'Darkglow Embroidery' => 55769,
-        'Swordguard Embroidery' => 55777,
-        'Hyperspeed Accelerators' => 54999,
-        'Hand-Mounted Pyro Rocket' => 54998,
-        'Frag Belt' => 54793,
-        'Nitro Boosts' => 55016,
-        'Reticulated Armor Webbing' => 63770,
-        'Flexweave Underlay' => 55002,
-        'Springy Arachnoweave' => 63765,
-        'Personal Electromagnetic Pulse Generator' => 54736,
-        'Nerubian Leg Reinforcements' => 60584,
-        'Jormungar Leg Reinforcements' => 60583,
-        'Fur Lining - Attack Power' => 57683,
-        'Fur Lining - Stamina' => 57690,
-        'Fur Lining - Spell Power' => 57691,
-        'Fur Lining - Fire Resist' => 57692,
-        'Fur Lining - Frost Resist' => 57694,
-        'Fur Lining - Shadow Resist' => 57696,
-        'Fur Lining - Nature Resist' => 57699,
-        'Fur Lining - Arcane Resist' => 57701,
-        'Master\'s Inscription of the Axe' => 61117,
-        'Master\'s Inscription of the Crag' => 61118,
-        'Master\'s Inscription of the Pinnacle' => 61119,
-        'Master\'s Inscription of the Storm' => 61120,
-        'Enchant Ring - Greater Spellpower' => 44636,
-        'Enchant Ring - Assault' => 44645,
-        'Enchant Ring - Stamina' => 59636,
-        'Rune of Razorice' => 53343,
-        'Rune of Cinderglacier' => 53341,
-        'Rune of the Fallen Crusader' => 53344,
-        'Rune of the Stoneskin Gargoyle' => 62158,
-    );
 
     private $armory_base_url = 'http://armory.wow-castle.de/';
 
@@ -243,27 +207,6 @@ class Provider
         return $out;
     }
 
-    /**
-     * @deprecated
-     * @param $xml
-     * @return mixed
-     */
-    public function HandleQuirks($xml)
-    {
-        // Armory has several issues currently:
-        // - Armor Penetration is missing (WIP)
-        // - Expertise is missing (WIP)
-        // - Hit Percentage is inaccurate (FIXED)
-        // - Melee Haste Percentage is missing (TODO)
-        // - Spell Penetration is missing (WIP)
-        // - Defense Rounding is slightly off (TODO, Note: has Diminishing Return!)
-        // - Some Items are missing Enchantment Ids but they show names, description and icon.... (FIXED)
-        // - Some Titles are shown as prefix instead of suffix... (FIXED)
-        // - Offhand Damage Min/Max/Dps/Speed is missing (TODO)
-        // Let's calculate them here!
-        return $xml;
-    }
-
     //############## ARENA/PvP #######################
     public function getArenaTeams($teamSize = 2, $limit = 20)
     {
@@ -300,7 +243,7 @@ class Provider
     {
         $out = array();
         $name = str_replace(" ", "+", $name); 
-        $xml = $this->fetchXML($this->build_fetch_url("team-info.xml", array("b" => "WoW-Castle", "r" => "WoW-Castle+PvE", "select" => $name)));
+        $xml = $this->fetchXML($this->buildUrl("team-info.xml", array("b" => "WoW-Castle", "r" => "WoW-Castle+PvE", "select" => $name)));
         if ($xml === false)
             return false;
         foreach ($xml->teamInfo->arenaTeam->members->character as $row)
