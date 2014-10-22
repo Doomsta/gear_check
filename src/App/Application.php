@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Model\Repository\CharRepository;
 use Silex\Application\TwigTrait;
 use Silex\Provider\ServiceControllerServiceProvider;
 use Silex\Provider\SessionServiceProvider;
@@ -56,8 +57,8 @@ class Application extends \Silex\Application
     protected function initController()
     {
         $this->get('/char/{name}', function ($name) {
-            $char = new Char($name, true);
-            $char->load();
+            $charRepo = new CharRepository();
+            $char = $charRepo->getChar($name);
             return $this->render('char.twig', array('char' => $char));
         });
     }

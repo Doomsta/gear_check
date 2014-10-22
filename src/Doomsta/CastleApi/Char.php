@@ -23,6 +23,16 @@ class Char
         return (string)$this->xml->characterInfo->character['name'];
     }
 
+    public function getPrefix()
+    {
+        return (string)$this->xml->characterInfo->character['prefix'];
+    }
+
+    public function getSuffix()
+    {
+        return (string)$this->xml->characterInfo->character['suffix'];
+    }
+
     public function getGuildName()
     {
         return (string)$this->xml->characterInfo->character['guildName'];

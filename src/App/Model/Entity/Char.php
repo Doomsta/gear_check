@@ -1,22 +1,20 @@
 <?php
 
+namespace App\Model\Entity;
 
-
-namespace App;
+use App\AbstractChar;
+use App\Functions;
+use App\Provider;
+use App\SocketInterface;
+use App\StatInterface;
 
 /**
  * Class Char
- * @deprecated
  */
-class Char
+class Char extends AbstractChar
 {
     private $name;
-    private $prefix;
-    private $suffix;
-    private $race;
-    private $class;
-    private $guild;
-    private $level;
+
     private $equipment = array();
     private $stats = array();
     private $talents = array();
@@ -51,14 +49,15 @@ class Char
         47 => 'Zauberdurchschlag',
         48 => 'Blockwert eures Schildes'
     );
-    private $achievement_points;
-    private $gender;
 
     public function __construct($name)
     {
         $this->name = $name;
-        $this->prefix = null;
-        $this->suffix = null;
+        $this->initArrays();
+    }
+
+    protected function initArrays()
+    {
         foreach ($this->slotOrder as $value) {
             $this->equipment[$value] = array(
                 'id' => null,
@@ -99,16 +98,8 @@ class Char
         if ($tmp === false) {
             return false;
         }
-        $this->name = $tmp['name'];
-        $this->prefix = $tmp['prefix'];
-        $this->suffix = $tmp['suffix'];
+        #$this->name = $tmp['name'];
         $this->talents = $tmp['talents'];
-        $this->race = $tmp['raceId'];
-        $this->class = $tmp['classId'];
-        $this->gender = $tmp['genderId'];
-        $this->guild = $tmp['guildName'];
-        $this->level = $tmp['level'];
-        $this->achievement_points = $tmp['points'];
         $this->professions = $tmp['professions'];
         //$this->arena = $tmp['arena'];
         $this->stats = $tmp['stats'];
@@ -304,28 +295,28 @@ class Char
 
     public function toArray()
     {
-        $tmp['name'] = $this->name;
-        $tmp['suffix'] = $this->suffix;
-        $tmp['prefix'] = $this->prefix;
-        $tmp['raceId'] = $this->race;
-        $tmp['classId'] = $this->class;
-        $tmp['genderId'] = $this->gender;
-        $tmp['level'] = $this->level;
-        $tmp['guild'] = $this->guild;
+        $tmp['name'] = $this->getName();
+        $tmp['suffix'] = $this->getSuffix();
+        $tmp['prefix'] = $this->getPrefix();
+        $tmp['raceId'] = $this->getRaceId();
+        $tmp['classId'] = $this->getClassId();
+        $tmp['genderId'] = $this->getGenderId();
+        $tmp['level'] = $this->getLevel();
+        $tmp['guild'] = $this->getGuildName();
         return $tmp;
     }
 
     public function getClassLevelStats()
     {
-        if (!isset($this->level) or !isset($this->class)) {
+        if (($this->getClassId() === false)) {
             return false;
         }
-        if ($this->level == 0) {
+        if ($this->getLevel() == 0) {
             return array();
         }
         $query = 'SELECT `str`, `agi`, `sta`, `inte`, `spi` 
             FROM `' . MYSQL_DATABASE_TDB . '`.`player_levelstats`
-            WHERE `race` = ' . $this->race . ' AND `class` = ' . $this->class . ' AND level = ' . $this->level . '';
+            WHERE `race` = ' . $this->getRaceId() . ' AND `class` = ' . $this->getClassId() . ' AND level = ' . $this->getLevel() . '';
         $result = mysql_query($query);
         $tmp = array();
         $row = mysql_fetch_assoc($result);
@@ -345,7 +336,7 @@ class Char
         }
         $query = 'SELECT `basehp`, `basemana`
             FROM `' . MYSQL_DATABASE_TDB . '`.`player_classlevelstats`
-            WHERE `class` = ' . $this->class . ' AND `level` = ' . $this->level . '';
+            WHERE `class` = ' . $this->getClassId() . ' AND `level` = ' . $this->getLevel() . '';
         $result = mysql_query($query);
         $tmp = array();
         $row = mysql_fetch_assoc($result);
@@ -394,51 +385,30 @@ class Char
     }
 
     /**
-     * @return string
-     */
-    public function getPrefix()
-    {
-        return $this->prefix;
-    }
-
-    /**
-     * @return string
-     */
-    public function getSuffix()
-    {
-        return $this->suffix;
-    }
-
-    /**
+     * @deprecated
      * @return string
      */
     public function getGuild()
     {
-        return $this->guild;
+        return $this->getGuildName();
     }
 
     /**
-     * @return int
-     */
-    public function getLevel()
-    {
-        return $this->level;
-    }
-
-    /**
+     * @deprecated
      * @return int
      */
     public function getRace()
     {
-        return $this->race;
+        return $this->getRaceId();
     }
 
     /**
+     * @deprecated
      * @return mixed
      */
     public function getClass()
     {
-        return $this->class;
+        return $this->getClassId();
     }
 
     public function getItem($slot)

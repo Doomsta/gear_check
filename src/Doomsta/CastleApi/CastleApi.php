@@ -25,9 +25,7 @@ class CastleApi
         try {
             if ($xml = self::fetchXmlDocument($charUrl)) {
                 $char = new Char($xml);
-                if($char->isValid()) {
-                    return $char;
-                }
+                return $char;
             }
         } catch(Exception $e) {
             return null;
