@@ -87,20 +87,22 @@ class Char
             return false;
         }
         $this->loadItems();
+        $provider = new Provider();
         // TODO: these should be generic and not provider dependant!
-        $this->equipment = Provider::checkGemBonus($this->equipment);
-        $this->equipment = Provider::lookupGemBonuses($this->equipment);
+        $this->equipment = $provider->checkGemBonus($this->equipment);
+        $this->equipment = $provider->lookupGemBonuses($this->equipment);
         return true;
     }
 
     public function fetch($ExecuteQuirksHandler = false)
     {
-        $tmp = Provider::fetchCharacterData($this->name);
+        $provider = new Provider();
+        $tmp = $provider->fetchCharacterData($this->name);
         if ($tmp === false) {
             return false;
         }
         if ($ExecuteQuirksHandler) {
-            $tmp = Provider::HandleQuirks($tmp);
+            $tmp = $provider->HandleQuirks($tmp);
         }
         $this->name = $tmp['name'];
         $this->prefix = $tmp['prefix'];
@@ -270,7 +272,7 @@ class Char
             }
         }
         // final calculations
-        $stats = $this->DeriveStats($stats);
+        $stats = $this->deriveStats($stats);
 
         //clean up array
         foreach ($stats as $key => $value) {
@@ -298,7 +300,7 @@ class Char
         return $tmp;
     }
 
-    public function getCharArray()
+    public function toArray()
     {
         $tmp['name'] = $this->name;
         $tmp['suffix'] = $this->suffix;
@@ -351,7 +353,7 @@ class Char
     }
 
     // this function needs to be called last, because all calculations scale with talents, enchants, etc.
-    public function DeriveStats($stats)
+    private function deriveStats($stats)
     {
         // Armor from Agility
         $stats[StatInterface::ITEM_MOD_ARMOR] += $stats[StatInterface::ITEM_MOD_AGILITY] * 2;

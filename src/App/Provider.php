@@ -7,20 +7,54 @@ use SimpleXMLElement;
 
 class Provider
 {
-    private static $armory_base_url = 'http://armory.wow-castle.de/';
+    private $enchantNameToSpellId = array(
+        'Sanctified Spellthread' => 56039,
+        'Master\'s Spellthread' => 56034,
+        'Lightweave Embroidery' => 55642,
+        'Darkglow Embroidery' => 55769,
+        'Swordguard Embroidery' => 55777,
+        'Hyperspeed Accelerators' => 54999,
+        'Hand-Mounted Pyro Rocket' => 54998,
+        'Frag Belt' => 54793,
+        'Nitro Boosts' => 55016,
+        'Reticulated Armor Webbing' => 63770,
+        'Flexweave Underlay' => 55002,
+        'Springy Arachnoweave' => 63765,
+        'Personal Electromagnetic Pulse Generator' => 54736,
+        'Nerubian Leg Reinforcements' => 60584,
+        'Jormungar Leg Reinforcements' => 60583,
+        'Fur Lining - Attack Power' => 57683,
+        'Fur Lining - Stamina' => 57690,
+        'Fur Lining - Spell Power' => 57691,
+        'Fur Lining - Fire Resist' => 57692,
+        'Fur Lining - Frost Resist' => 57694,
+        'Fur Lining - Shadow Resist' => 57696,
+        'Fur Lining - Nature Resist' => 57699,
+        'Fur Lining - Arcane Resist' => 57701,
+        'Master\'s Inscription of the Axe' => 61117,
+        'Master\'s Inscription of the Crag' => 61118,
+        'Master\'s Inscription of the Pinnacle' => 61119,
+        'Master\'s Inscription of the Storm' => 61120,
+        'Enchant Ring - Greater Spellpower' => 44636,
+        'Enchant Ring - Assault' => 44645,
+        'Enchant Ring - Stamina' => 59636,
+        'Rune of Razorice' => 53343,
+        'Rune of Cinderglacier' => 53341,
+        'Rune of the Fallen Crusader' => 53344,
+        'Rune of the Stoneskin Gargoyle' => 62158,
+    );
+
+    private $armory_base_url = 'http://armory.wow-castle.de/';
+
     
-    private static function build_fetch_url($path, $params = array())
-    {
-        return Provider::$armory_base_url."$path?".http_build_query($params);
-    }
-    
-    public static function fetchCharacterData($name)
+    public function fetchCharacterData($name)
     {
         $out = array();
         
         // fetch xml character document
-        $url = Provider::build_fetch_url("character-sheet.xml", array("r" => "WoW-Castle+PvE", "cn" => $name));
-        $xml = Provider::fetch_xml_document($url);
+
+        $url = $this->buildUrl("character-sheet.xml", array("r" => "WoW-Castle+PvE", "cn" => $name));
+        $xml = $this->fetchXML($url);
         if (isset($xml->characterInfo->character['name']) === false)
             return false;
         
@@ -37,7 +71,7 @@ class Provider
         $out['items'] = array();
 
         // basic talent info (active, point distribution by tree, name)
-        $talent_xml = Provider::fetch_xml_document('http://armory.wow-castle.de/character-talents.xml?r=WoW-Castle+PvE&cn='.$name);
+        $talent_xml = $this->fetchXml('http://armory.wow-castle.de/character-talents.xml?r=WoW-Castle+PvE&cn='.$name);
         $out['talents'] = array();
         foreach ($talent_xml->characterInfo->talents->talentGroup as $spec)
         if ($spec['active'] == 1)
@@ -211,8 +245,8 @@ class Provider
         return $out;
     }
 
-    static function HandleQuirks($xml)
-        {
+    public function HandleQuirks($xml)
+    {
         // Armory has several issues currently:
         // - Armor Penetration is missing (WIP)
         // - Expertise is missing (WIP)
@@ -261,47 +295,7 @@ class Provider
         }
         
         // some enchants come without an item like every crafting bonus, so translate to spellid
-        $_enchant_name_to_spell = array();
-        // Tailoring
-        $_enchant_name_to_spell["Sanctified Spellthread"] = 56039;
-        $_enchant_name_to_spell["Master's Spellthread"] = 56034;
-        $_enchant_name_to_spell["Lightweave Embroidery"] = 55642;
-        $_enchant_name_to_spell["Darkglow Embroidery"] = 55769;
-        $_enchant_name_to_spell["Swordguard Embroidery"] = 55777;
-        // Engineering
-        $_enchant_name_to_spell["Hyperspeed Accelerators"] = 54999;
-        $_enchant_name_to_spell["Hand-Mounted Pyro Rocket"] = 54998;
-        $_enchant_name_to_spell["Frag Belt"] = 54793;
-        $_enchant_name_to_spell["Nitro Boosts"] = 55016;
-        $_enchant_name_to_spell["Reticulated Armor Webbing"] = 63770;
-        $_enchant_name_to_spell["Flexweave Underlay"] = 55002;
-        $_enchant_name_to_spell["Springy Arachnoweave"] = 63765;
-        $_enchant_name_to_spell["Personal Electromagnetic Pulse Generator"] = 54736;
-        // Leatherworking
-        $_enchant_name_to_spell["Nerubian Leg Reinforcements"] = 60584;
-        $_enchant_name_to_spell["Jormungar Leg Reinforcements"] = 60583;
-        $_enchant_name_to_spell["Fur Lining - Attack Power"] = 57683;
-        $_enchant_name_to_spell["Fur Lining - Stamina"] = 57690;
-        $_enchant_name_to_spell["Fur Lining - Spell Power"] = 57691;
-        $_enchant_name_to_spell["Fur Lining - Fire Resist"] = 57692;
-        $_enchant_name_to_spell["Fur Lining - Frost Resist"] = 57694;
-        $_enchant_name_to_spell["Fur Lining - Shadow Resist"] = 57696;
-        $_enchant_name_to_spell["Fur Lining - Nature Resist"] = 57699;
-        $_enchant_name_to_spell["Fur Lining - Arcane Resist"] = 57701;
-        // Inscription
-        $_enchant_name_to_spell["Master's Inscription of the Axe"] = 61117;
-        $_enchant_name_to_spell["Master's Inscription of the Crag"] = 61118;
-        $_enchant_name_to_spell["Master's Inscription of the Pinnacle"] = 61119;
-        $_enchant_name_to_spell["Master's Inscription of the Storm"] = 61120;
-        // Enchanting
-        $_enchant_name_to_spell["Enchant Ring - Greater Spellpower"] = 44636;
-        $_enchant_name_to_spell["Enchant Ring - Assault"] = 44645;
-        $_enchant_name_to_spell["Enchant Ring - Stamina"] = 59636;
-        // Runeforging
-        $_enchant_name_to_spell["Rune of Razorice"] = 53343;
-        $_enchant_name_to_spell["Rune of Cinderglacier"] = 53341;
-        $_enchant_name_to_spell["Rune of the Fallen Crusader"] = 53344;
-        $_enchant_name_to_spell["Rune of the Stoneskin Gargoyle"] = 62158;
+
         
         foreach ($xml['items'] as $slot => $item)
         {
@@ -309,7 +303,7 @@ class Provider
                 continue;
             if ($item['permanentEnchantItemId'] != 0 || !isset($item['permanentEnchantSpellName']))
                 continue;
-            $spellId = $_enchant_name_to_spell[$item['permanentEnchantSpellName']];
+            $spellId = $this->enchantNameToSpellId[$item['permanentEnchantSpellName']];
             $xml['items'][$slot]['permanentEnchantSpellId'] = $spellId;
             
             // wow-castle.de has 4 primary trade professions, guess those that are not shown in armory
@@ -355,9 +349,9 @@ class Provider
 
             // return xml with fixed quirks
             return $xml;
-        }
+    }
     
-    static function checkGemBonus($items) // TODO: Gem bonuses are not provider-specific, move to character
+    public function checkGemBonus($items) // TODO: Gem bonuses are not provider-specific, move to character
     {
         $gems = array();
         foreach ($items as $item)
@@ -440,7 +434,7 @@ class Provider
         return $items;
     }
     
-    static function lookupGemBonuses($items) // TODO: Gem bonuses are not provider-specific, move to character
+    public function lookupGemBonuses($items) // TODO: Gem bonuses are not provider-specific, move to character
     { 
         $boni = array();
         foreach ($items as $item)
@@ -527,26 +521,19 @@ class Provider
         return $out;
     }
 
-    private static function fetch_xml_document($url) // TODO: not provider-specific, relocate to generic place
+    private static function fetchXml($url)
     {
-        $handle = curl_init();
-        
-        curl_setopt($handle, CURLOPT_URL, $url);
-        curl_setopt($handle, CURLOPT_USERAGENT, "Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.8.1.12) Gecko/20080201 Firefox/2.0.0.12");
-        curl_setopt($handle, CURLOPT_RETURNTRANSFER, 1);
-        curl_setopt($handle, CURLOPT_HTTPHEADER, array("Accept-Language: de-de, de;"));
-        curl_setopt($handle, CURLOPT_CONNECTTIMEOUT, 10 );
-        curl_setopt($handle, CURLOPT_TIMEOUT_MS, 1500);     
-        $content = curl_exec ($handle);
-        curl_close ($handle);
-        
-        // create xml object from http data
-        try{
-            $xml = new SimpleXMLElement($content);
+        try {
+            $xml = new SimpleXMLElement(file_get_contents($url));
         } catch (Exception $e) {
             return false;
-        } 
-        
+        }
         return $xml;
+    }
+
+
+    private function buildUrl($path, $params = array())
+    {
+        return $this->armory_base_url."$path?".http_build_query($params);
     }
 }
