@@ -1,0 +1,48 @@
+<table>
+    <tr>
+        <td>
+            <div>
+                <div class="item-name">
+                    {% if item.name %}
+                        <span class="q{{ item.rarity }}">
+                    <a class="q{{ item.rarity }}" href="#" rel="tooltip" data-placement='right' data-html='true'
+                       data-original-title=" item.tooltip ">
+                        {{ item.name }}
+                    </a>
+                </span>
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="item-under-name">
+                {% if item.level %}
+                    <span class="ilvl">{{ item.level }}</span>&nbsp;
+                {% endif %}
+                {% if (item.flags) and (item.flags) %}
+                    <span class="hc-label">HC</span>&nbsp;
+                {% endif %}
+                {% if item.permanentEnchantItemId and item.permanentEnchantItemId != 0 %}
+                    <a href="http://wotlk.openwow.com/item={{ item.permanentEnchantItemId }}"><img class="enchant"
+                                                                                                   src="https://www.linuxlounge.net/~martin/wowimages/?item={{ item.permanentEnchantItemId }}"/></a>
+                {% endif %}
+                {% if item.permanentEnchantSpellId is defined %}
+                    <a href="http://wotlk.openwow.com/spell={$items[$i]['permanentEnchantSpellId']}"><img
+                                class="enchant"
+                                src="https://www.linuxlounge.net/~martin/wowimages/?spell={{ item.permanentEnchantSpellId }}"/></a>
+                {% endif %}
+
+            </div>
+        </td>
+        <td style="text-align:center;vertical-align:middle;">
+            {% if item %}
+                <a href="http://wotlk.openwow.com/item={{ item.slotId }}" target="_blank">
+                    <img src="https://www.linuxlounge.net/~martin/wowimages/?item={{ item.id }}"
+                         class="item q{{ item.rarity }}"/>
+                </a>
+            {% else %}
+                <img class="item q1" src="img/slots/{{ item.slotId }}.png"/>
+            {% endif %}
+
+        </td>
+    </tr>
+</table>

@@ -1,0 +1,147 @@
+.clear {
+	clear: both;
+	display: block;
+	margin: 0;
+	padding: 0;
+}
+header.jumbotron {
+  background: url(/img/header.png) center;
+}
+div.profile {
+	padding-bottom: 20px;
+}
+div.title-guild {
+	float: left;
+	padding-left: 10px;
+	padding-top: 10px;
+}
+div.guild { 
+	font-size: 10pt;
+	line-height: 15px;
+}
+div.title {
+	font-size: 14px;
+	line-height: 25px;
+}
+div.name { 
+	float: left;
+	font-size: 56px;
+	font-weight: bold;
+	letter-spacing: -0.05em;
+	line-height: 1.1em;
+}
+
+span.level, span.race, span.class {
+	text-shadow: 3px 3px 3px 3px #000000;
+}
+span.race {}
+span.class {}
+
+div.average-ilvl {
+   border-bottom: 0 none;
+    font-family: "Arial Black",Arial,sans-serif;
+    font-size: 30px;
+    font-weight: 900;
+    letter-spacing: -0.025em;
+    line-height: 32px;
+    margin-right: 5px;
+}
+
+img.item
+{
+	width: 39px;
+	height: 39px;
+	box-shadow: 0 0 8px black;
+	-webkit-border-radius: 6px;
+	-moz-border-radius: 6px;
+	border-radius: 6px;
+	margin-right: 6px;
+}
+
+div.item-name {
+	font-size: 9pt;
+	text-shadow: 1px 1px #000000;
+}
+
+div.item-under-name {
+	line-height: 13px;
+	vertical-align: middle;
+}
+
+span.ilvl {
+	color: #AAAAAA;
+	font-size: 8pt;
+	text-shadow: 1px 1px #000000;
+}
+span.hc-label {
+	color: #26c426;
+	font-size: 8pt;
+	text-shadow: 1px 1px #000000;
+font-weight: bold;
+}
+
+.class1 { color: #C69B6D; }
+.class2 { color: #F48CBA; }
+.class3 { color: #AAD372; }
+.class4 { color: #FFF468; }
+.class5 { color: #FFFFFF; }
+.class6 { color: #C41F3B; }
+.class7 { color: #1A3CAA; }
+.class8 { color: #68CCEF; }
+.class9 { color: #9382C9; }
+.class11 { color: #FF7C0A; }
+
+span.q4 { color: #C600FF !important; }
+
+img.q1 { border: 3px solid #cccccc; }
+img.q2 { border: 3px solid #26c426; }
+img.q3 { border: 3px solid #2d2de1; }
+img.q4 { border: 3px solid #8c02cd; }
+img.q5 { border: 3px solid #f0940a; }
+img.q7 { border: 3px solid #ccb896; }
+
+div.socket {
+	width: 16px;
+	height: 16px;
+	display: inline-table;
+}
+
+img.gem { 
+	width: 16px;
+	height: 16px;
+        -webkit-border-radius: 2px;
+        -moz-border-radius: 2px;
+        border-radius: 2px;
+
+}
+img.enchant {
+	width: 16px;
+	height: 16px;
+}
+
+div.socket1 {
+	border: 1px solid #cccccc;
+}
+div.socket2 {
+	border: 1px solid red;
+}
+div.socket4 {
+	border: 1px solid yellow;
+}
+div.socket8 {
+	border: 1px solid blue;
+}
+
+div[class="tooltip-inner"] {
+    max-width: 295px;
+    text-align: left;
+    font-weight: normal;
+}
+.notify {
+    width: 350px;
+    position: fixed;
+    top: 50px;
+    right: 10px;
+    z-index: 9999;
+    display: block;
+}

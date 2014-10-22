@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="shortcut icon" href="" type="image/png"/>
+    <link rel="icon" href="" type="image/png"/>
+    <link href="{{ app.request.basepath }}/bootstrap/css/bootstrap.css" rel="stylesheet">
+    <link href="{{ app.request.basepath }}/bootstrap/css/docs.css" rel="stylesheet">
+    <link href="{{ app.request.basepath }}/css/base.css" rel="stylesheet">
+    <style>
+        body {
+            padding-top: 40px; /* 60px to make the container go all the way to the bottom of the topbar */
+        }
+    </style>
+</head>
+<body>
+
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <a class="navbar-brand" href="#">PROJEKTNAME</a>
+        <ul class="nav navbar-nav">
+        </ul>
+    </div>
+
+    <header class="jumbotron subhead">
+        <div class="container">
+            <h1>SUBHEADBIG</h1>
+            <p class="lead">subhead</p>
+        </div>
+    </header>
+    <div class="container">
+        <div class="notify">
+            {% block notifications %}
+                {% include 'misc/notifications.twig' %}
+            {% endblock %}
+        </div>
+        <div class="row">
+            <div class="col-lg-3">
+                {% block widgets %}
+                {% endblock %}
+            </div>
+            <div class="col-lg-9">
+                {% block content %}
+                {% endblock %}
+            </div>
+        </div>
+    </div>
+    <footer class="footer">
+        {% block footer %}
+        {% endblock %}
+    </footer>
+    <script src="{{ app.request.basepath }}/bootstrap/js/jquery.js"></script>
+    <script src="{{ app.request.basepath }}/bootstrap/js/bootstrap.js"></script>
+    <script type="text/javascript" src="http://cdn.openwow.com/api/tooltip.js"></script>
+</body>
+</html>
