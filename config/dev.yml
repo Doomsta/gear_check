@@ -1,0 +1,5 @@
+debug: false
+monolog.logfile: %LOG_PATH%/dev.log
+monolog.level: INFO
+twig.options:
+  cache: false

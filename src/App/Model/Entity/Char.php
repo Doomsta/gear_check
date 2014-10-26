@@ -4,6 +4,7 @@ namespace App\Model\Entity;
 
 use App\AbstractChar;
 use App\Functions;
+use App\Model\StatCollection;
 use App\Provider;
 use App\SocketInterface;
 use App\StatInterface;
@@ -14,7 +15,7 @@ use App\StatInterface;
 class Char extends AbstractChar
 {
     private $name;
-
+    /** @var Item[]  */
     private $equipment = array();
     private $stats = array();
     private $talents = array();
@@ -58,72 +59,9 @@ class Char extends AbstractChar
 
     protected function initArrays()
     {
-        foreach ($this->slotOrder as $value) {
-            $this->equipment[$value] = array(
-                'id' => null,
-                'flags' => 0,
-                'name' => null,
-                'slotId' => $value,
-                'level' => null,
-                'rarity' => null,
-                'stats' => array(),
-                'icon' => 'inv_empty',
-                'gems' => array(),
-                'permanentEnchantItemId' => null,
-                'permanentEnchantSpellName' => null,
-                'permanentEnchantSpellId' => null,
-                'tooltip' => null
-            );
-        }
         foreach ($this::$statName as $value) {
             $this->stats[$value] = 0;
         }
-    }
-
-    public function load()
-    {
-        if (!$this->fetch(true)) {
-            return false;
-        }
-        $this->loadItems();
-        $this->equipment = $this->checkGemBonus($this->equipment);
-        $this->equipment = $this->lookupGemBonuses($this->equipment);
-        return true;
-    }
-
-    public function fetch()
-    {
-        $provider = new Provider();
-        $tmp = $provider->fetchCharacterData($this->name);
-        if ($tmp === false) {
-            return false;
-        }
-        #$this->name = $tmp['name'];
-        $this->talents = $tmp['talents'];
-        $this->professions = $tmp['professions'];
-        //$this->arena = $tmp['arena'];
-        $this->stats = $tmp['stats'];
-        foreach ($tmp['items'] as $key => $value) {
-            if (isset($this->equipment[$key])) {
-                $result = mysql_query(
-                    "SELECT flags FROM " . MYSQL_DATABASE_TDB . ".item_template WHERE entry = " . $tmp['items'][$key]['id']
-                ) or die(mysql_error());
-                $row = mysql_fetch_assoc($result);
-                $this->equipment[$key] = $tmp['items'][$key];
-                $this->equipment[$key]['flags'] = $row['flags'];
-
-            }
-        }
-        return true;
-    }
-
-    public function loadItems()
-    {
-        foreach ($this->slotOrder as $i) {
-            $this->equipment[$i]['stats'] = Functions::get_item_stats($this->equipment[$i]['id']);
-            $this->equipment[$i] = Functions::add_item_gems($this->equipment[$i]);
-        }
-        return true;
     }
 
     public function addItemTooltips(&$tooltip)
@@ -149,33 +87,22 @@ class Char extends AbstractChar
 
     public function getEquipmentStats()
     {
-        foreach ($this::$statName as $key => $value) {
-            $tmp[$key] = 0;
-        }
-
+        $tmp = new StatCollection();
         foreach ($this->equipment as $item) {
-            foreach ($item['stats'] as $key => $value) {
-                if (!isset($tmp[$key])) {
-                    $tmp[$key] = 0;
-                }
-                $tmp[$key] += $value;
-            }
+            $tmp->merge($item->getStats());
         }
-        ksort($tmp);
-        return $tmp;
+        return $tmp->toArray();
     }
 
     public function getSockets()
     {
         $tmp = array();
         foreach ($this->equipment as $item) {
-            foreach ($item['gems'] as $gem) {
-                if (isset($gem['id'])) { //TODO handle empty slots better
-                    if (isset($tmp[$gem['id']])) {
-                        $tmp[$gem['id']]['count'] += 1;
-                    } else {
-                        $tmp[$gem['id']] = array('count' => 1);
-                    }
+            foreach ($item->getGemCollection()->getGems() as $gem) {
+                if (isset( $tmp[$gem->getId()] )) {
+                    $tmp[$gem->getId()]['count'] += 1;
+                } else {
+                    $tmp[$gem->getId()] = array('count' => 1);
                 }
             }
         }
@@ -184,36 +111,38 @@ class Char extends AbstractChar
             $tmp[$i] = Functions::get_gems_stats($i);
             $tmp[$i]['count'] = $c;
         }
-        //uasort($tmp, "cmp");  //need to handle errors
         return $tmp;
     }
 
+    /**
+     * @TODO fix
+     */
     public function getEnchants()
     {
         $tmp = array();
-        foreach ($this->equipment as $item) {
-            if (isset($item['permanentEnchantItemId']) && $item['permanentEnchantItemId'] > 0) {
-                $stats = Functions::get_enchant_stats($item['permanentEnchantItemId'], 'item');
-            } elseif (isset($item['permanentEnchantSpellId']) && $item['permanentEnchantSpellId'] > 0) {
-                $stats = Functions::get_enchant_stats($item['permanentEnchantSpellId'], 'spell');
-            } else {
-                $stats = false;
-            }
-            if ($stats) {
-                $tmp[] = $stats;
-            }
-        }
+        #foreach ($this->equipment as $item) {
+        #    if (isset($item['permanentEnchantItemId']) && $item['permanentEnchantItemId'] > 0) {
+        #        $stats = Functions::get_enchant_stats($item['permanentEnchantItemId'], 'item');
+        #    } elseif (isset($item['permanentEnchantSpellId']) && $item['permanentEnchantSpellId'] > 0) {
+        #        $stats = Functions::get_enchant_stats($item['permanentEnchantSpellId'], 'spell');
+        #    } else {
+        #        $stats = false;
+        #    }
+        #    if ($stats) {
+        #        $tmp[] = $stats;
+        #    }
+        #}
         return $tmp;
     }
 
     /**
      * @TODO racial bonuses
-     * @param bool $base
-     * @param bool $items
-     * @param bool $gems
+     * @TODO socket boni
+     * @TODO handle bars mana and so on
+     * @TODO use StatCollection
      * @return array
      */
-    public function getStats($base = true, $items = true, $gems = true)
+    public function getStats()
     {
         $stats = array();
 
@@ -248,15 +177,15 @@ class Char extends AbstractChar
             $stats[$gem['stat_type2']] += ($gem['stat_value2'] * $gem['count']);
         }
         //add socket boni
-        foreach ($this->equipment as $item) {
-            if (
-                isset($item['socketBonus']['stat_value1']) and
-                isset($item['socketBonusActive']) and
-                $item['socketBonusActive'] == 1
-            ) {
-                $stats[$item['socketBonus']['stat_type1']] += $item['socketBonus']['stat_value1'];
-            }
-        }
+        #foreach ($this->equipment as $item) {
+        #    if (
+        #        isset($item['socketBonus']['stat_value1']) and
+        #        isset($item['socketBonusActive']) and
+        #        $item['socketBonusActive'] == 1
+        #    ) {
+        #        $stats[$item['socketBonus']['stat_type1']] += $item['socketBonus']['stat_value1'];
+        #    }
+        #}
         //add enchants
         $enchants = $this->getEnchants();
         foreach ($enchants as $enchant) {
@@ -273,9 +202,15 @@ class Char extends AbstractChar
                 unset($stats[$key]);
             }
         }
+
+        $stats[0] = 10000; #TODO the 1000 is just a placeholder
         return $stats;
     }
 
+    /**
+     * @TODO move this into a ItemCollection/Container/Handler or so on
+     * @return float|int|mixed
+     */
     public function getAvgItemLevel()
     {
         $tmp = 0;
@@ -283,9 +218,9 @@ class Char extends AbstractChar
             if ($slot == 4 or $slot == 19) {
                 continue;
             }
-            $tmp += $item['level'];
+            $tmp += $item->getLevel();
         }
-        if (isset($this->equipment[16]['name']) and isset($this->equipment[17]['name'])) {
+        if (isset($this->equipment[16]) and isset($this->equipment[17])) {
             $tmp = round(($tmp / 17), 1);
         } else {
             $tmp = round(($tmp / 16), 1);
@@ -293,19 +228,28 @@ class Char extends AbstractChar
         return $tmp;
     }
 
+    /**
+     * @return array
+     */
     public function toArray()
     {
-        $tmp['name'] = $this->getName();
-        $tmp['suffix'] = $this->getSuffix();
-        $tmp['prefix'] = $this->getPrefix();
-        $tmp['raceId'] = $this->getRaceId();
-        $tmp['classId'] = $this->getClassId();
-        $tmp['genderId'] = $this->getGenderId();
-        $tmp['level'] = $this->getLevel();
-        $tmp['guild'] = $this->getGuildName();
-        return $tmp;
+        return array(
+            'name' => $this->getName(),
+            'suffix' => $this->getSuffix(),
+            'prefix' => $this->getPrefix(),
+            'raceId' => $this->getRaceId(),
+            'classId' => $this->getClassId(),
+            'genderId' => $this->getGenderId(),
+            'level' => $this->getLevel(),
+            'guild' => $this->getGuildName()
+        );
+
     }
 
+    /**
+     * @TODO remove sql stuff
+     * @return array|bool
+     */
     public function getClassLevelStats()
     {
         if (($this->getClassId() === false)) {
@@ -329,6 +273,10 @@ class Char extends AbstractChar
         return $tmp;
     }
 
+    /**
+     * @TODO remove sql stuff
+     * @return array|bool
+     */
     public function getClassBaseStats()
     {
         if (!isset($this->race)) {
@@ -357,18 +305,9 @@ class Char extends AbstractChar
         return $stats;
     }
 
-    public function getItems($slots = false)
+    public function getItems()
     {
-        if ($slots === false) {
-            foreach ($this->equipment as $gear) {
-                $tmp[] = $gear;
-            }
-        } else {
-            foreach ($slots as $item) {
-                $tmp[$item] = $this->equipment[$item];
-            }
-        }
-        return $tmp;
+         return array_values($this->equipment);
     }
 
     public function getProfessions()
@@ -416,6 +355,11 @@ class Char extends AbstractChar
         return $this->equipment[$slot];
     }
 
+    /**
+     * @deprecated
+     * @param $items
+     * @return mixed
+     */
     public function checkGemBonus($items) // TODO: Gem bonuses are not provider-specific, move to character
     {
         $gems = array();
@@ -443,11 +387,8 @@ class Char extends AbstractChar
             {
                 if (isset($gem['id']) AND !isset($color[$gem['id']]))
                 {
-                    #global $tpl;
-                    #$tpl->print_error('Missing Gem: <a href="http://wotlk.openwow.com/item='.$gem['id'].'">'.$gem['id'].'</a>');
                     continue;
                 }
-                // empty socket
                 if (!isset($gem['id']))
                 {
                     $items[$slot]['socketBonusActive'] = false;
@@ -464,19 +405,19 @@ class Char extends AbstractChar
                 else {
                     if (!isset($gem['socketColor'])) break;
                     switch ($gem['socketColor']) {
-                        case SocketInterface::Red: // socket is red
+                        case SocketInterface::Red:
                             if ($c == SocketInterface::Red || $c == SocketInterface::Orange || $c == SocketInterface::Violet)
                                 $result = true;
                             break;
-                        case SocketInterface::Yellow: // socket is yellow
+                        case SocketInterface::Yellow:
                             if ($c == SocketInterface::Yellow || $c == SocketInterface::Orange || $c == SocketInterface::Green)
                                 $result = true;
                             break;
-                        case SocketInterface::Blue: // socket is blue
+                        case SocketInterface::Blue:
                             if ($c == SocketInterface::Blue || $c == SocketInterface::Green || $c == SocketInterface::Violet)
                                 $result = true;
                             break;
-                        case SocketInterface::Meta: // no need to recheck here, because we established earlier, that there is a socket in here
+                        case SocketInterface::Meta:
                         case SocketInterface::Prismatic:
                             $result = true;
                             break;
@@ -499,6 +440,11 @@ class Char extends AbstractChar
         return $items;
     }
 
+    /**
+     * @deprecated
+     * @param $items
+     * @return mixed
+     */
     public function lookupGemBonuses($items) // TODO: Gem bonuses are not provider-specific, move to character
     {
         $boni = array();
@@ -531,5 +477,25 @@ class Char extends AbstractChar
             }
         }
         return $items;
+    }
+
+    /**
+     * @TODO implement ItemCollection
+     * @param $slot
+     * @param $item
+     */
+    public function addItem($slot, $item)
+    {
+        $this->equipment[$slot] = $item;
+    }
+
+    /**
+     * @TODO add ProfessionClass and ProfessionCollection
+     * @param $id
+     * @param $level
+     */
+    public function addProfession($id, $level)
+    {
+        $this->professions[$id] = $level;
     }
 }

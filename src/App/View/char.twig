@@ -120,10 +120,7 @@
             {% for profession in char.getprofessions %}
             <tr><td>
                 TODO {{ loop.index }}
-                {% if profession.guessed is defined and profession.guessed %}
-                <strong>~</strong>
-                {% endif %}
-                </td><td>{{ profession.val}}/{{ profession.max }}<td></tr>
+                </td><td>{{ profession}} / TODO max<td></tr>
             {% endfor %}
         </table>
     </div>

@@ -74,6 +74,24 @@ class Char
     }
 
     /**
+     * @return Profession[]
+     */
+    public function getProfessions()
+    {
+        $result = array();
+        foreach($this->xml->characterInfo->characterTab->professions->skill as $profession) {
+            $tmp = new Profession();
+            $tmp->setId((int)$profession['id']);
+            $tmp->setName((string)$profession['name']);
+            $tmp->setKey((string)$profession['key']);
+            $tmp->setLevel((int)$profession['value']);
+            $tmp->setMaxLevel((int)$profession['max']);
+            $result[] = $tmp;
+        }
+        return $result;
+    }
+
+    /**
      * @return Item[]
      */
     public function getItems()

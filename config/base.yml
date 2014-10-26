@@ -1,0 +1,15 @@
+twig.path: %APP_PATH%/Views
+monolog.name: 'test'
+site:
+  name: app
+  title: APP_TITLE
+  description: desc
+db.options:
+  driver: pdo_mysql
+  user: admin
+  password: admin
+  host: 127.0.0.1
+  port: 3306
+  dbname: gear_check
+
+

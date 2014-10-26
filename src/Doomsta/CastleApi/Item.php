@@ -31,4 +31,17 @@ class Item
     {
         return (int)$this->xml['level'];
     }
+
+    public function getGemIds()
+    {
+        $result = array();
+        for($i = 0;; $i++) {
+            if(isset(  $this->xml['gem'.$i.'Id'])) {
+                $result[] = (int) $this->xml['gem'.$i.'Id'];
+            } else {
+                break;
+            }
+        }
+        return $result;
+    }
 } 

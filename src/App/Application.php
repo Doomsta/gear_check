@@ -3,12 +3,16 @@
 namespace App;
 
 use App\Model\Repository\CharRepository;
+use Igorw\Silex\ConfigServiceProvider;
 use Silex\Application\TwigTrait;
+use Silex\Provider\DoctrineServiceProvider;
 use Silex\Provider\ServiceControllerServiceProvider;
 use Silex\Provider\SessionServiceProvider;
 use Silex\Provider\TwigServiceProvider;
 use Silex\Provider\UrlGeneratorServiceProvider;
 use Twig_Extension_Debug;
+
+define('ROOT_PATH', realpath(__DIR__.'/../..'));
 
 class Application extends \Silex\Application
 {
@@ -38,6 +42,24 @@ class Application extends \Silex\Application
 
     protected function initConfig()
     {
+        $this->register(new ConfigServiceProvider(
+            ROOT_PATH . '/config/base.yml',
+            array(
+                'ROOT_PATH' => ROOT_PATH,
+                'APP_PATH' => __DIR__,
+                'DATA_PATH' => ROOT_PATH . '/data',
+                'LOG_PATH' => ROOT_PATH . '/log',
+            )
+        ));
+        $this->register(new ConfigServiceProvider(
+            ROOT_PATH . '/config/dev.yml',
+            array(
+                'ROOT_PATH' => ROOT_PATH,
+                'APP_PATH' => __DIR__,
+                'DATA_PATH' => ROOT_PATH . '/data',
+                'LOG_PATH' => ROOT_PATH . '/log',
+            )
+        ));
     }
 
     protected function initProvider()
@@ -52,12 +74,17 @@ class Application extends \Silex\Application
             )
         );
         $this['twig']->addExtension(new Twig_Extension_Debug());
+        $this->register(new DoctrineServiceProvider(), array(
+
+            )
+
+        );
     }
 
     protected function initController()
     {
         $this->get('/char/{name}', function ($name) {
-            $charRepo = new CharRepository();
+            $charRepo = new CharRepository($this['db']);
             $char = $charRepo->getChar($name);
             return $this->render('char.twig', array('char' => $char));
         });

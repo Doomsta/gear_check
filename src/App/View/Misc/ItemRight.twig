@@ -30,17 +30,17 @@
                                 class="enchant"
                                 src="https://www.linuxlounge.net/~martin/wowimages/?spell={{ item.permanentEnchantSpellId }}"/></a>
                 {% endif %}
-                {% if item.gems %}
-                {% for gem in item.gems %}
+
+                {% for gem in item.getGemCollection.getGems %}
                 <div class="socket socket{$gem['socketColor']}">{% if gem.id %}<a href="http://wotlk.openwow.com/item={{ gem.id }}" rel="item={{ gem.id }}"><img class="gem" src="https://www.linuxlounge.net/~martin/wowimages/?item={{ gem.id }}" /></a>{% else %}<img class="gem" src="img/sockets/{{ gem.socketColor }}.gif" />{% endif %}</div>
                 {% endfor %}
-                {% endif %}
+
 
             </div>
         </td>
         <td style="text-align:center;vertical-align:middle;">
             {% if item %}
-                <a href="http://wotlk.openwow.com/item={{ item.slotId }}" target="_blank">
+                <a href="http://wotlk.openwow.com/item={{ item.id }}" target="_blank">
                     <img src="https://www.linuxlounge.net/~martin/wowimages/?item={{ item.id }}"
                          class="item q{{ item.rarity }}"/>
                 </a>

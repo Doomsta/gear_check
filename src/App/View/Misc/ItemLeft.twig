@@ -4,7 +4,7 @@
             {% if item %}
                 <a href="http://wotlk.openwow.com/item={{ item.id  }}" target="_blank">
                     <img src="https://www.linuxlounge.net/~martin/wowimages/?item={{ item.id }}"
-                         class="item q{{ item.rarity }}"/>
+                         class="item q{{ item.getRarity }}"/>
                 </a>
             {% else %}
                 <img class="item q1" src="img/slots/{{ item.slotId }}.png"/>
@@ -15,21 +15,22 @@
             <div>
                 <div class="item-name">
                     {% if item.name %}
-                        <span class="q{{ item.rarity }}">
-                    <a class="q{{ item.rarity }}" href="#" rel="tooltip" data-placement='right' data-html='true'
-                       data-original-title=" item.tooltip ">
-                        {{ item.name }}
-                    </a>
-                </span>
+                    <span class="q{{ item.getRarity }}">
+                        <a class="q{{ item.getRarity }}" href="#" rel="tooltip" data-placement='right' data-html='true'
+                           data-original-title=" item.tooltip ">
+                            {{ item.name }}
+                        </a>
+                    </span>
                     {% endif %}
                 </div>
             </div>
 
             <div class="item-under-name">
+
                 {% if item.level %}
                     <span class="ilvl">{{ item.level }}</span>&nbsp;
                 {% endif %}
-                {% if (item.flags) and (item.flags) %}
+                {% if item.isHero %}
                     <span class="hc-label">HC</span>&nbsp;
                 {% endif %}
                 {% if item.permanentEnchantItemId and item.permanentEnchantItemId != 0 %}
@@ -37,15 +38,13 @@
                                                                                                    src="https://www.linuxlounge.net/~martin/wowimages/?item={{ item.permanentEnchantItemId }}"/></a>
                 {% endif %}
                 {% if item.permanentEnchantSpellId is defined %}
-                    <a href="http://wotlk.openwow.com/spell={$items[$i]['permanentEnchantSpellId']}"><img
+                    <a href="http://wotlk.openwow.com/spell={{ item.permanentEnchantSpellId }}"><img
                                 class="enchant"
                                 src="https://www.linuxlounge.net/~martin/wowimages/?spell={{ item.permanentEnchantSpellId }}"/></a>
                 {% endif %}
-                {% if item.gems %}
-                    {% for gem in item.gems %}
+                    {% for gem in item.getGemCollection.getGems %}
                         <div class="socket socket{$gem['socketColor']}">{% if gem.id %}<a href="http://wotlk.openwow.com/item={{ gem.id }}" rel="item={{ gem.id }}"><img class="gem" src="https://www.linuxlounge.net/~martin/wowimages/?item={{ gem.id }}" /></a>{% else %}<img class="gem" src="img/sockets/{{ gem.socketColor }}.gif" />{% endif %}</div>
                     {% endfor %}
-                {% endif %}
             </div>
         </td>
     </tr>
