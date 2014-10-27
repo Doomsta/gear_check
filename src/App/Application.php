@@ -88,6 +88,15 @@ class Application extends \Silex\Application
             $char = $charRepo->getChar($name);
             return $this->render('char.twig', array('char' => $char));
         });
+
+        $this->get('/debug/{name}', function ($name) {
+            $charRepo = new CharRepository($this['db']);
+            $char = $charRepo->getChar($name);
+            echo '<pre>';
+            print_r($char->getStats());
+            echo '</pre>';
+            return '';
+        });
     }
 
     protected function initGearCheck()

@@ -31,9 +31,34 @@ class StatCollection
         }
     }
 
+    /**
+     * @return Stat[]
+     */
     public function getStats()
     {
-        return $this->stats;
+        return array_values($this->stats);
+    }
+
+    public function getPrimStats()
+    {
+        $tmp = array();
+        foreach($this->getStats() as $stat) {
+            if($stat->getType() > 0 && $stat->getType() < 8) {
+                $tmp[$stat->getType()] = $stat;
+            }
+        }
+        return $tmp;
+    }
+
+    public function getSekStats()
+    {
+        $tmp = array();
+        foreach($this->getStats() as $stat) {
+            if($stat->getType() < 0 || $stat->getType() > 8) {
+                $tmp[$stat->getType()] = $stat;
+            }
+        }
+        return $tmp;
     }
 
     public function toArray()
@@ -43,5 +68,13 @@ class StatCollection
             $result[$stat->getType()] = $stat->toArray();
         }
         return $result;
+    }
+
+    public function getStat($id)
+    {
+        if(isset($this->stats[$id])) {
+            return $this->stats[$id];
+        }
+        return new Stat($id, 0);
     }
 }

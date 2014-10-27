@@ -36,7 +36,8 @@ class GemRepository
                 continue;
             }
         }
-        $gem = new Gem($id, $data['color'], $stats, $data['rarity']);
+        $gem = new Gem($id, $data['color'], $stats, $data['rarity'] - 1 ); #TODO
+        $gem->setName($data['name']);
         return $gem;
     }
 } 

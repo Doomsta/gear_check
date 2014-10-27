@@ -53,7 +53,12 @@ class GemCollection
         return array_values($this->gems);
     }
 
-    public function getStats($bonus = true) //TODO
+    /**
+     * @TODO bonus
+     * @param bool $bonus
+     * @return StatCollection
+     */
+    public function getStats($bonus = true)
     {
         $result = new StatCollection();
         foreach ($this->gems as $gem) {

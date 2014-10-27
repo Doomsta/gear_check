@@ -61,6 +61,9 @@ class Char extends AbstractChar
         $this->initArrays();
     }
 
+    /**
+     * @deprecated
+     */
     protected function initArrays()
     {
         foreach ($this::$statName as $value) {
@@ -89,13 +92,16 @@ class Char extends AbstractChar
         return $this->talents['active'];
     }
 
+    /**
+     * @return StatCollection
+     */
     public function getEquipmentStats()
     {
         $tmp = new StatCollection();
         foreach ($this->equipment as $item) {
             $tmp->merge($item->getStats());
         }
-        return $tmp->toArray();
+        return $tmp;
     }
 
     /**
@@ -107,15 +113,24 @@ class Char extends AbstractChar
         $tmp = array();
         foreach ($this->equipment as $item) {
             foreach ($item->getGemCollection()->getGems() as $gem) {
-                $tmp[$gem->getId()] = $gem->toArray();
+
                 if (isset( $tmp[$gem->getId()] )) {
-                    $tmp[$gem->getId()]['count'] += 1;
+                    $tmp[$gem->getId()]['count']++;
                 } else {
-                    $tmp[$gem->getId()] = array('count' => 1);
+                    $tmp[$gem->getId()] = $gem->toArray();
+                    $tmp[$gem->getId()]['count'] = 1;
                 }
             }
         }
         return $tmp;
+    }
+
+    /**
+     * @TODO
+     * @return int
+     */
+    public function getMaxHp() {
+        return $this->getStats()->getStat(StatInterface::ITEM_MOD_HEALTH)->getValue();
     }
 
     /**
@@ -144,70 +159,39 @@ class Char extends AbstractChar
      * @TODO socket boni
      * @TODO handle bars mana and so on
      * @TODO use StatCollection
-     * @return array
+     * @return StatCollection
      */
     public function getStats()
     {
-        $stats = array();
+        $stats = new StatCollection();
 
-        //init whole array
-        foreach ($this::$statName as $key => $value) {
-            $stats[$key] = 0;
-        }
         //add base stats
-        if ($baseStats = $this->getClassBaseStats()) {
-            foreach ($baseStats as $statId => $statValue) {
-                $stats[$statId] += $statValue;
-            }
-        }
-        //add class stats
-        if ($classStats = $this->getClassLevelStats()) {
-            foreach ($classStats as $statId => $statValue) {
-                $stats[$statId] += $statValue;
-            }
-        }
-        //add gear stats
-        $eqstats = $this->getEquipmentStats();
-        foreach ($eqstats as $key => $eqstat) {
-            $stats[$key] += $eqstat;
-        }
-        //add gems
-        $gems = $this->getSockets();
-        foreach ($gems as $gem) {
-            if (!isset($gem['stat_type1']) or !isset($gem['stat_type2'])) {
-                continue;
-            }
-            $stats[$gem['stat_type1']] += ($gem['stat_value1'] * $gem['count']);
-            $stats[$gem['stat_type2']] += ($gem['stat_value2'] * $gem['count']);
-        }
-        //add socket boni
-        #foreach ($this->equipment as $item) {
-        #    if (
-        #        isset($item['socketBonus']['stat_value1']) and
-        #        isset($item['socketBonusActive']) and
-        #        $item['socketBonusActive'] == 1
-        #    ) {
-        #        $stats[$item['socketBonus']['stat_type1']] += $item['socketBonus']['stat_value1'];
+        #if ($baseStats = $this->getClassBaseStats()) {
+        $stats->merge($this->getClassLevelStats());
+        #    foreach ($baseStats as $statId => $statValue) {
+        #        $stats[$statId] += $statValue;
         #    }
         #}
+        //add class stats
+        #if ($classStats = $this->getClassLevelStats()) {
+        #    foreach ($classStats as $statId => $statValue) {
+        #        $stats[$statId] += $statValue;
+        #    }
+        #}
+        $stats->merge($this->getEquipmentStats());
+        //add socket boni
         //add enchants
-        $enchants = $this->getEnchants();
-        foreach ($enchants as $enchant) {
-            for ($i = 1; $i <= 5; $i++) {
-                $stats[$enchant['stat' . $i . '_type']] += $enchant['stat' . $i . '_value'];
-            }
-        }
+        #$enchants = $this->getEnchants();
+        #foreach ($enchants as $enchant) {
+        #    for ($i = 1; $i <= 5; $i++) {
+        #        $stats[$enchant['stat' . $i . '_type']] += $enchant['stat' . $i . '_value'];
+        #    }
+        #}
         // final calculations
-        $stats = $this->deriveStats($stats);
+        #$stats = $this->deriveStats($stats);
 
-        //clean up array
-        foreach ($stats as $key => $value) {
-            if ($value == 0) {
-                unset($stats[$key]);
-            }
-        }
 
-        $stats[0] = 10000; #TODO the 1000 is just a placeholder
+        #$stats[0] = 10000; #TODO the 1000 is just a placeholder
         return $stats;
     }
 
@@ -252,7 +236,7 @@ class Char extends AbstractChar
 
     /**
      * @TODO remove sql stuff
-     * @return array|bool
+     * @return StatCollection
      */
     public function getClassLevelStats()
     {
@@ -266,15 +250,16 @@ class Char extends AbstractChar
             FROM `' . MYSQL_DATABASE_TDB . '`.`player_levelstats`
             WHERE `race` = ' . $this->getRaceId() . ' AND `class` = ' . $this->getClassId() . ' AND level = ' . $this->getLevel() . '';
         $result = mysql_query($query);
-        $tmp = array();
-        $row = mysql_fetch_assoc($result);
-        $tmp[StatInterface::ITEM_MOD_STRENGTH] = $row['str'];
-        $tmp[StatInterface::ITEM_MOD_AGILITY] = $row['agi'];
-        $tmp[StatInterface::ITEM_MOD_STAMINA] = $row['sta'];
-        $tmp[StatInterface::ITEM_MOD_INTELLECT] = $row['inte'];
-        $tmp[StatInterface::ITEM_MOD_SPIRIT] = $row['spi'];
 
-        return $tmp;
+        $row = mysql_fetch_assoc($result);
+        $stats = new StatCollection();
+        $stats->add(new Stat(StatInterface::ITEM_MOD_STRENGTH, $row['str']));
+        $stats->add(new Stat(StatInterface::ITEM_MOD_AGILITY, $row['agi']));
+        $stats->add(new Stat(StatInterface::ITEM_MOD_STAMINA, $row['sta']));
+        $stats->add(new Stat(StatInterface::ITEM_MOD_INTELLECT, $row['inte']));
+        $stats->add(new Stat(StatInterface::ITEM_MOD_SPIRIT, $row['spi']));
+
+        return $stats;
     }
 
     /**
@@ -292,8 +277,10 @@ class Char extends AbstractChar
         $result = mysql_query($query);
         $tmp = array();
         $row = mysql_fetch_assoc($result);
-        $tmp[StatInterface::ITEM_MOD_MANA] = $row['basemana'];
-        $tmp[StatInterface::ITEM_MOD_HEALTH] = $row['basehp'];
+
+        $stats = new StatCollection();
+        $stats->add(new Stat(StatInterface::ITEM_MOD_MANA, $row['basemana']));
+        $stats->add(new Stat(StatInterface::ITEM_MOD_HEALTH, $row['basehp']));
         return $tmp;
     }
 

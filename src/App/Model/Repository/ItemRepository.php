@@ -3,6 +3,8 @@
 namespace App\Model\Repository;
 
 use App\Model\Entity\Item;
+use App\Model\Entity\Stat;
+use App\Model\StatCollection;
 use Doctrine\DBAL\Connection;
 
 class ItemRepository
@@ -38,6 +40,12 @@ class ItemRepository
         $item->setName($data['name']);
         $item->setRarity($data['Quality']);
         $item->setFlags($data['Flags']);
+        for($i = 1; $i < 11; $i++) {
+            if($data['stat_type'.$i] === 0) {
+                continue;
+            }
+            $item->addStat(new Stat($data['stat_type'.$i], $data['stat_value'.$i]));
+        }
         return $item;
     }
 } 

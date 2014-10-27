@@ -211,7 +211,7 @@ class Item
     {
         $result = new StatCollection();
         $result->merge($this->statCollection);
-        #$result->merge($this->gemManager->getStats());
+        $result->merge($this->gemCollection->getStats());
         #foreach ($this->getEnchants() as $enchant) {
         #    $result->merge($enchant->getStats());
         #}
