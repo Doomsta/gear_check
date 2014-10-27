@@ -25,7 +25,6 @@ class Item
     private $gemCollection;
     private $enchants;
 
-
     public function __construct($id)
     {
         $this->id = $id;

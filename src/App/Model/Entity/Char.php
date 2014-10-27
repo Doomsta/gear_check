@@ -21,6 +21,10 @@ class Char extends AbstractChar
     private $talents = array();
     private $professions = array();
     private $slotOrder = array(1, 2, 3, 15, 5, 4, 19, 9, 10, 6, 7, 8, 11, 12, 13, 14, 16, 17, 18);
+    /**
+     * @var array
+     * @deprecated use Stat:: instead .. coming soon
+     */
     private static $statName = array(
         -1 => 'R&uuml;stung', // custom
         0 => 'Mana',
@@ -66,12 +70,12 @@ class Char extends AbstractChar
 
     public function addItemTooltips(&$tooltip)
     {
-        $itemlist = array();
+        $itemList = array();
         foreach ($this->slotOrder as $i) {
-            $itemlist[$i] = $this->equipment[$i]['id'];
+            $itemList[$i] = $this->equipment[$i]['id'];
         }
         foreach ($this->slotOrder as $i) {
-            $this->equipment[$i]['tooltip'] = $tooltip->get_item_tooltip($this->equipment[$i], $itemlist);
+            $this->equipment[$i]['tooltip'] = $tooltip->get_item_tooltip($this->equipment[$i], $itemList);
         }
     }
 
@@ -94,22 +98,22 @@ class Char extends AbstractChar
         return $tmp->toArray();
     }
 
+    /**
+     * @TODO return ja fancy collection class or a flat array
+     * @return array
+     */
     public function getSockets()
     {
         $tmp = array();
         foreach ($this->equipment as $item) {
             foreach ($item->getGemCollection()->getGems() as $gem) {
+                $tmp[$gem->getId()] = $gem->toArray();
                 if (isset( $tmp[$gem->getId()] )) {
                     $tmp[$gem->getId()]['count'] += 1;
                 } else {
                     $tmp[$gem->getId()] = array('count' => 1);
                 }
             }
-        }
-        foreach ($tmp as $i => $gems) {
-            $c = $tmp[$i]['count'];
-            $tmp[$i] = Functions::get_gems_stats($i);
-            $tmp[$i]['count'] = $c;
         }
         return $tmp;
     }

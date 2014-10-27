@@ -20,6 +20,12 @@ class Gem
      * @var int
      */
     private $id;
+
+    /**
+     * @var string
+     */
+    private $name = 'unknown';
+
     /**
      * @var int
      */
@@ -29,6 +35,9 @@ class Gem
      */
     private $color;
 
+    /**
+     * @var StatCollection
+     */
     private $statCollection;
 
     /**
@@ -84,9 +93,26 @@ class Gem
         return $this->statCollection;
     }
 
+    /**
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * @param string $name
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+    }
+
     public function toArray()
     {
         $tmp = array();
+        $tmp['name'] = $this->getName();
         $tmp['color'] = $this->getColor();
         $tmp['colorName'] = $this->getColorName();
         $tmp['id'] = $this->getId();
@@ -94,4 +120,5 @@ class Gem
         $tmp['stats'] = $this->statCollection->toArray();
         return $tmp;
     }
+
 }

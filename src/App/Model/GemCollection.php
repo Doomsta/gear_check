@@ -3,7 +3,6 @@
 namespace App\Model;
 
 use App\Model\Entity\Gem;
-use Exception;
 
 class GemCollection
 {
@@ -46,7 +45,11 @@ class GemCollection
         //TODO
     }
 
-    public function getGems() {
+    /**
+     * @return Gem[]
+     */
+    public function getGems()
+    {
         return array_values($this->gems);
     }
 

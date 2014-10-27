@@ -14,6 +14,7 @@ class CharRepository
         $this->castleArmory = new CastleApi();
         $this->itemRepository = new ItemRepository($conn);
         $this->gemRepository = new GemRepository($conn);
+        $this->enchantRepository = new EnchantRepository($conn);
 
     }
 
@@ -34,11 +35,11 @@ class CharRepository
         }
         foreach($armoryChar->getItems() as $slot => $armoryItem) {
             $item = $this->itemRepository->getById($armoryItem->getId());
-            foreach($armoryItem->getGemIds() as $gemId)
-            $item->getGemCollection()->addGem($this->gemRepository->getById($gemId));
+            foreach($armoryItem->getGemIds() as $gemId) {
+                $item->getGemCollection()->addGem($this->gemRepository->getById($gemId));
+            }
             $char->addItem($slot, $item);
         }
-
         return $char;
     }
 } 

@@ -37,7 +37,6 @@ class GemRepository
             }
         }
         $gem = new Gem($id, $data['color'], $stats, $data['rarity']);
-        #$gem->s
         return $gem;
     }
 } 
