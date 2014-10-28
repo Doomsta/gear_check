@@ -35,25 +35,4 @@ class Functions
         );
         return $data;
     }
-
-    /**
-     * @deprecated will be moved in in Enchant repo
-     * @param $id
-     * @param $type
-     * @return array|bool
-     */
-    public static function get_enchant_stats($id, $type)
-    {
-        $query = 'SELECT `stat1_type`, `stat1_value`, `stat2_type`, `stat2_value`,
-        `stat3_type`, `stat3_value`, `stat4_type`, `stat4_value`,
-        `stat5_type`, `stat5_value`
-        FROM `' . MYSQL_DATABASE . '`.`enchant`
-        WHERE `' . $type . '` = ' . $id . '';
-        $result = mysql_query($query) or die(mysql_error());
-        if (mysql_num_rows($result) == 0) {
-            return false;
-        }
-        $data = mysql_fetch_assoc($result);
-        return $data;
-    }
 }

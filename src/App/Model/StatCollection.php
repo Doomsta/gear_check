@@ -27,7 +27,7 @@ class StatCollection
     public function merge(StatCollection $statCollection)
     {
         foreach ($statCollection->getStats() as $stat) {
-            $this->add($stat);
+            $this->add(clone $stat);
         }
     }
 

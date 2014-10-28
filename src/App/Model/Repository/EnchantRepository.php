@@ -20,11 +20,25 @@ class EnchantRepository
     }
 
     /**
+     * @param $id
      * @return Enchant
      */
-    public function getItemEnchant()
+    public function getItemEnchant($id)
     {
-        #return new Enchant();
+        $queryBuilder = $this->conn->createQueryBuilder();
+        $queryBuilder
+            ->select('e.*')
+            ->from('enchant', 'e')
+            ->where($queryBuilder->expr()->eq('e.item', ':id'));
+        $queryBuilder->setParameters(array(':id' => $id));
+        $statement = $queryBuilder->execute();
+        $data = $statement->fetch();
+
+        $enchant = new Enchant($id, $data['label']);
+        for($i = 1; $i < 6; $i++) {
+            $enchant->addStat(new Stat($data['stat'.$i.'_type'], $data['stat'.$i.'_value']));
+        }
+        return $enchant;
     }
 
     /**
@@ -36,15 +50,15 @@ class EnchantRepository
         $queryBuilder = $this->conn->createQueryBuilder();
         $queryBuilder
             ->select('e.*')
-            ->from('e', 'enchant')
-            ->where($queryBuilder->expr()->eq('e.id', ':id'));
+            ->from('enchant', 'e')
+            ->where($queryBuilder->expr()->eq('e.spell', ':id'));
         $queryBuilder->setParameters(array(':id' => $id));
         $statement = $queryBuilder->execute();
         $data = $statement->fetch();
 
         $enchant = new Enchant($id, $data['label']);
         for($i = 1; $i < 6; $i++) {
-            $enchant->addStat(new Stat($data['stat'.$i.'type'], $data['stat'.$i.'value']));
+            $enchant->addStat(new Stat($data['stat'.$i.'_type'], $data['stat'.$i.'_value']));
         }
         return $enchant;
     }

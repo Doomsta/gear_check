@@ -28,20 +28,22 @@
 
     <div class="container" style="padding: 20px;">
         <table style="width: 740px; height: 550px; background-image: none;"><!-- /*url(http://eu.battle.net/wow/static/images/2d/profilemain/race/{$char['raceId']}-{$char['genderId']}.jpg)*/">-->
-            {% for i in 1..7 %}
+            {% for i in 0..7 %}
             <tr clas="item" style="vertical-align: top;">
                 <td>
-                   {{ include('Misc/itemLeft.twig', {item: char.getItem(i)}) }}
+                   {{ include('Misc/itemLeft.twig', {item: char.getItem(i) , slot: i+1 })}}
                 </td>
                 <td>
-                    {{ include('Misc/itemRight.twig', {item: char.getItem(i+8)}) }}
+                 {{ include('Misc/itemRight.twig', {item: char.getItem(i+8), slot: i+10 })}}
                 </td>
             </tr>
             {% endfor %}
             {% for i in 16..18 %}
             <tr>
                 <td>
-                {{ include('Misc/itemLeft.twig', {item: char.getItem(i)}) }}
+
+                {{ include('Misc/itemLeft.twig', {item: char.getItem(i) , slot: i }) }}
+
                 </td>
             </tr>
             {% endfor %}

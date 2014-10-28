@@ -101,7 +101,7 @@ class Stat
     public function __construct($type, $value)
     {
         if (!isset(self::$statName[$type])) {
-            throw new \Exception('worng stat type: >'.$type.'<');
+            $type = $value = 0;
         }
         $this->type = $type;
         $this->value = $value;

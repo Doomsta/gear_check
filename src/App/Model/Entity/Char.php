@@ -3,11 +3,8 @@
 namespace App\Model\Entity;
 
 use App\AbstractChar;
-use App\Functions;
+use App\Model\EquipCollection;
 use App\Model\StatCollection;
-use App\Provider;
-use App\SocketInterface;
-use App\StatInterface;
 
 /**
  * Class Char
@@ -15,8 +12,8 @@ use App\StatInterface;
 class Char extends AbstractChar
 {
     private $name;
-    /** @var Item[]  */
-    private $equipment = array();
+    /** @var EquipCollection  */
+    private $equipment;
     private $stats = array();
     private $talents = array();
     private $professions = array();
@@ -25,6 +22,7 @@ class Char extends AbstractChar
     public function __construct($name)
     {
         $this->name = $name;
+        $this->equipment = new EquipCollection();
     }
 
 
@@ -56,7 +54,7 @@ class Char extends AbstractChar
     public function getEquipmentStats()
     {
         $tmp = new StatCollection();
-        foreach ($this->equipment as $item) {
+        foreach ($this->equipment->getItems() as $item) {
             $tmp->merge($item->getStatCollection());
         }
         return $tmp;
@@ -69,9 +67,8 @@ class Char extends AbstractChar
     public function getSockets()
     {
         $tmp = array();
-        foreach ($this->equipment as $item) {
+        foreach ($this->equipment->getItems() as $item) {
             foreach ($item->getGemCollection()->getGems() as $gem) {
-
                 if (isset( $tmp[$gem->getId()] )) {
                     $tmp[$gem->getId()]['count']++;
                 } else {
@@ -87,8 +84,9 @@ class Char extends AbstractChar
      * @TODO
      * @return int
      */
-    public function getMaxHp() {
-        return $this->getStats()->getStat(StatInterface::ITEM_MOD_HEALTH)->getValue();
+    public function getMaxHp()
+    {
+        return $this->getStats()->getStat(Stat::HEALTH)->getValue();
     }
 
     /**
@@ -133,19 +131,7 @@ class Char extends AbstractChar
      */
     public function getAvgItemLevel()
     {
-        $tmp = 0;
-        foreach ($this->equipment as $slot => $item) {
-            if ($slot == 4 or $slot == 19) {
-                continue;
-            }
-            $tmp += $item->getLevel();
-        }
-        if (isset($this->equipment[16]) and isset($this->equipment[17])) {
-            $tmp = round(($tmp / 17), 1);
-        } else {
-            $tmp = round(($tmp / 16), 1);
-        }
-        return $tmp;
+        return $this->equipment->getAvgItemLevel();
     }
 
     /**
@@ -185,11 +171,11 @@ class Char extends AbstractChar
 
         $row = mysql_fetch_assoc($result);
         $stats = new StatCollection();
-        $stats->add(new Stat(StatInterface::ITEM_MOD_STRENGTH, $row['str']));
-        $stats->add(new Stat(StatInterface::ITEM_MOD_AGILITY, $row['agi']));
-        $stats->add(new Stat(StatInterface::ITEM_MOD_STAMINA, $row['sta']));
-        $stats->add(new Stat(StatInterface::ITEM_MOD_INTELLECT, $row['inte']));
-        $stats->add(new Stat(StatInterface::ITEM_MOD_SPIRIT, $row['spi']));
+        $stats->add(new Stat(Stat::STRENGTH, $row['str']));
+        $stats->add(new Stat(Stat::AGILITY, $row['agi']));
+        $stats->add(new Stat(Stat::STAMINA, $row['sta']));
+        $stats->add(new Stat(Stat::INTELLECT, $row['inte']));
+        $stats->add(new Stat(Stat::SPIRIT, $row['spi']));
 
         return $stats;
     }
@@ -211,8 +197,8 @@ class Char extends AbstractChar
         $row = mysql_fetch_assoc($result);
 
         $stats = new StatCollection();
-        $stats->add(new Stat(StatInterface::ITEM_MOD_MANA, $row['basemana']));
-        $stats->add(new Stat(StatInterface::ITEM_MOD_HEALTH, $row['basehp']));
+        $stats->add(new Stat(Stat::MANA, $row['basemana']));
+        $stats->add(new Stat(Stat::HEALTH, $row['basehp']));
         return $tmp;
     }
 
@@ -223,17 +209,17 @@ class Char extends AbstractChar
     private function deriveStats($stats)
     {
         // Armor from Agility
-        $stats[StatInterface::ITEM_MOD_ARMOR] += $stats[StatInterface::ITEM_MOD_AGILITY] * 2;
+        $stats[Stat::ARMOR] += $stats[Stat::AGILITY] * 2;
         // Health from Stamina
-        $stats[StatInterface::ITEM_MOD_HEALTH] += 20 + (max($stats[StatInterface::ITEM_MOD_STAMINA] - 20, 0)) * 10;
+        $stats[Stat::HEALTH] += 20 + (max($stats[Stat::STAMINA] - 20, 0)) * 10;
         // Mana from Intellect
-        $stats[StatInterface::ITEM_MOD_MANA] += 20 + (max($stats[StatInterface::ITEM_MOD_INTELLECT] - 20, 0)) * 15;
+        $stats[Stat::MANA] += 20 + (max($stats[Stat::INTELLECT] - 20, 0)) * 15;
         return $stats;
     }
 
     public function getItems()
     {
-         return array_values($this->equipment);
+         return $this->equipment;
     }
 
     public function getProfessions()
@@ -276,9 +262,15 @@ class Char extends AbstractChar
         return $this->getClassId();
     }
 
+    /**
+     * @TODO
+     * @param $slot
+     * @return null
+     */
     public function getItem($slot)
     {
-        return $this->equipment[$slot];
+        return $this->equipment->getItemBySlotId($slot);
+        #$this->equipment[$slot];
     }
 
     /**

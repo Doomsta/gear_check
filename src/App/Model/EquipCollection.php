@@ -8,7 +8,7 @@ use App\Model\Entity\Item;
 class EquipCollection implements \ArrayAccess
 {
     private $items;
-    private $slotOrder = array(1, 2, 3, 15, 5, 4, 19, 9, 10, 6, 7, 8, 11, 12, 13, 14, 16, 17, 18);
+    private $slotOrder = array( 1, 2, 3, 15, 5, 4, 19, 9, 10, 6, 7, 8, 11, 12, 13, 14, 16, 17, 18);
 
     public function __construct()
     {
@@ -51,6 +51,14 @@ class EquipCollection implements \ArrayAccess
     public function getItemBySlot($slot)
     {
         return $this->items[$slot];
+    }
+
+    public function getItemBySlotId($slotId)
+    {
+        if(!$this->offsetExists($this->slotOrder[$slotId])) {
+            return null;
+        }
+        return $this->items[$this->slotOrder[$slotId]];
     }
 
     /**

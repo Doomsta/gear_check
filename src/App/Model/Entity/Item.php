@@ -20,9 +20,9 @@ class Item
     private $level;
     private $flags;
     private $socketBonus;
-    private $statCollection; // w/o gems
+    private $statCollection;
     private $gemCollection;
-    private $enchants;
+    private $enchants = array();
 
     public function __construct($id)
     {
@@ -198,6 +198,9 @@ class Item
         foreach ($this->getEnchants() as $enchant) {
             $result->merge($enchant->getStatCollection());
         }
+        if($this->isSocketBonusActive()) {
+            $result->add($this->getSocketBonus());
+        }
         return $result;
     }
 
@@ -250,5 +253,22 @@ class Item
         $result['stats'] = $this->statCollection->toArray();
 
         return $result;
+    }
+
+    /**
+     * @TODO
+     * @return bool
+     */
+    private function isSocketBonusActive()
+    {
+        return true;
+    }
+
+    /**
+     * @return Stat
+     */
+    public function getSocketBonus()
+    {
+        return $this->socketBonus;
     }
 }

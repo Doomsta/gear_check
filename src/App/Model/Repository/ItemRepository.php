@@ -6,6 +6,7 @@ use App\Model\Entity\Item;
 use App\Model\Entity\Stat;
 use App\Model\StatCollection;
 use Doctrine\DBAL\Connection;
+use Symfony\Component\Config\Definition\Exception\Exception;
 
 class ItemRepository
 {
@@ -46,6 +47,23 @@ class ItemRepository
             }
             $item->addStat(new Stat($data['stat_type'.$i], $data['stat_value'.$i]));
         }
+
+
+
+        $item->addSocketBonus($this->getSocketBonus($data['socketBonus']));
         return $item;
+    }
+
+    protected function getSocketBonus($id)
+    {
+        $queryBuilder = $this->conn->createQueryBuilder();
+        $queryBuilder
+            ->select('i.*')
+            ->from('socket_bonus', 'i')
+            ->where($queryBuilder->expr()->eq('i.id', ':id'));
+        $queryBuilder->setParameters(array(':id' => $id));
+        $statement = $queryBuilder->execute();
+        $data = $statement->fetch();
+        return new Stat($data['stat_type1'], $data['stat_value1']);
     }
 } 

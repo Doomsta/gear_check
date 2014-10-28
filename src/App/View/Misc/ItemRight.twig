@@ -1,6 +1,7 @@
 <table>
     <tr>
         <td>
+            {% if item %}
             <div>
                 <div class="item-name">
                     {% if item.name %}
@@ -21,22 +22,13 @@
                 {% if (item.flags) and (item.flags) %}
                     <span class="hc-label">HC</span>&nbsp;
                 {% endif %}
-                {% if item.permanentEnchantItemId and item.permanentEnchantItemId != 0 %}
-                    <a href="http://wotlk.openwow.com/item={{ item.permanentEnchantItemId }}"><img class="enchant"
-                                                                                                   src="https://www.linuxlounge.net/~martin/wowimages/?item={{ item.permanentEnchantItemId }}"/></a>
-                {% endif %}
-                {% if item.permanentEnchantSpellId is defined %}
-                    <a href="http://wotlk.openwow.com/spell={$items[$i]['permanentEnchantSpellId']}"><img
-                                class="enchant"
-                                src="https://www.linuxlounge.net/~martin/wowimages/?spell={{ item.permanentEnchantSpellId }}"/></a>
-                {% endif %}
-
                 {% for gem in item.getGemCollection.getGems %}
                 <div class="socket socket{$gem['socketColor']}">{% if gem.id %}<a href="http://wotlk.openwow.com/item={{ gem.id }}" rel="item={{ gem.id }}"><img class="gem" src="https://www.linuxlounge.net/~martin/wowimages/?item={{ gem.id }}" /></a>{% else %}<img class="gem" src="img/sockets/{{ gem.socketColor }}.gif" />{% endif %}</div>
                 {% endfor %}
 
 
             </div>
+            {% endif %}
         </td>
         <td style="text-align:center;vertical-align:middle;">
             {% if item %}
@@ -45,8 +37,9 @@
                          class="item q{{ item.rarity }}"/>
                 </a>
             {% else %}
-                <img class="item q1" src="img/slots/{{ item.slotId }}.png"/>
+                <img class="item q1" src="/img/slots/{{ slot }}.png"/>
             {% endif %}
+
 
         </td>
     </tr>

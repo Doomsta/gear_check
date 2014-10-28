@@ -35,6 +35,12 @@ class CharRepository
         }
         foreach($armoryChar->getItems() as $slot => $armoryItem) {
             $item = $this->itemRepository->getById($armoryItem->getId());
+            if($id = $armoryItem->getEnchantSpellId()) {
+                $item->addEnchant($this->enchantRepository->getSpellEnchant($id));
+            }
+            if($id =  $armoryItem->getEnchantItemId()) {
+                $item->addEnchant($this->enchantRepository->getItemEnchant($id));
+            }
             foreach($armoryItem->getGemIds() as $gemId) {
                 $item->getGemCollection()->addGem($this->gemRepository->getById($gemId));
             }
