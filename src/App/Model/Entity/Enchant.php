@@ -44,4 +44,9 @@ class Enchant
         return $this->label;
     }
 
+    public function getStatCollection()
+    {
+        return $this->statCollection;
+    }
+
 } 

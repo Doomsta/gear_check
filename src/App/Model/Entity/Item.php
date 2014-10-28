@@ -15,7 +15,6 @@ class Item
     private $class;
     private $rarity;
     private $icon;
-    private $permanentEnchantItemId;
     private $displayedId;
     private $inventoryType;
     private $level;
@@ -139,23 +138,7 @@ class Item
     }
 
     /**
-     * @return mixed
-     */
-    public function getPermanentEnchantItemId()
-    {
-        return $this->permanentEnchantItemId;
-    }
-
-    /**
-     * @param mixed $permanentEnchantItemId
-     */
-    public function setPermanentEnchantItemId($permanentEnchantItemId)
-    {
-        $this->permanentEnchantItemId = $permanentEnchantItemId;
-    }
-
-    /**
-     * @return mixed
+     * @return string
      */
     public function getIcon()
     {
@@ -163,7 +146,7 @@ class Item
     }
 
     /**
-     * @param mixed $icon
+     * @param string $icon
      */
     public function setIcon($icon)
     {
@@ -179,7 +162,7 @@ class Item
     }
 
     /**
-     * @param mixed $rarity
+     * @param int $rarity
      */
     public function setRarity($rarity)
     {
@@ -187,7 +170,8 @@ class Item
     }
 
     /**
-     * @return mixed
+     * @deprecated move this to gearCollection
+     * @return int
      */
     public function getSlot()
     {
@@ -195,6 +179,7 @@ class Item
     }
 
     /**
+     * @deprecated move this to gearCollection
      * @param mixed $slot
      */
     public function setSlot($slot)
@@ -203,18 +188,16 @@ class Item
     }
 
     /**
-     * @TODO gems
-     * @TODO enchant
      * @return StatCollection
      */
-    public function getStats()
+    public function getStatCollection()
     {
         $result = new StatCollection();
         $result->merge($this->statCollection);
         $result->merge($this->gemCollection->getStats());
-        #foreach ($this->getEnchants() as $enchant) {
-        #    $result->merge($enchant->getStats());
-        #}
+        foreach ($this->getEnchants() as $enchant) {
+            $result->merge($enchant->getStatCollection());
+        }
         return $result;
     }
 
@@ -232,19 +215,19 @@ class Item
     }
 
     /**
-     * @return GemCollection
-     */
-    public function getGemCollection()
-    {
-       return $this->gemCollection;
-    }
-
-    /**
      * @return Enchant[]
      */
     public function getEnchants()
     {
         return $this->enchants;
+    }
+
+    /**
+     * @return GemCollection
+     */
+    public function getGemCollection()
+    {
+       return $this->gemCollection;
     }
 
     public function isHero()
