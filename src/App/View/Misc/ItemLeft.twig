@@ -17,8 +17,7 @@
                 <div class="item-name">
                     {% if item.name %}
                     <span class="q{{ item.getRarity }}">
-                        <a class="q{{ item.getRarity }}" href="#" rel="tooltip" data-placement='right' data-html='true'
-                           data-original-title=" item.tooltip ">
+                        <a class="q{{ item.getRarity }}" href="#" rel="tooltip" data-placement='right' data-html='true' data-original-title="{{ app.tool.getItemTooltip(item) }}">
                             {{ item.name }}
                         </a>
                     </span>

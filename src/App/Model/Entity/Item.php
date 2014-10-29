@@ -23,6 +23,9 @@ class Item
     private $statCollection;
     private $gemCollection;
     private $enchants = array();
+    private $requiredLevel;
+    private $description;
+    private $armorDamageModifier;
 
     public function __construct($id)
     {
@@ -188,18 +191,21 @@ class Item
     }
 
     /**
+     * @param bool $onlyItemItSelf
      * @return StatCollection
      */
-    public function getStatCollection()
+    public function getStatCollection($onlyItemItSelf = false)
     {
         $result = new StatCollection();
         $result->merge($this->statCollection);
         $result->merge($this->gemCollection->getStats());
-        foreach ($this->getEnchants() as $enchant) {
-            $result->merge($enchant->getStatCollection());
-        }
-        if($this->isSocketBonusActive()) {
-            $result->add($this->getSocketBonus());
+        if (!$onlyItemItSelf) {
+            foreach ($this->getEnchants() as $enchant) {
+                $result->merge($enchant->getStatCollection());
+            }
+            if ($this->getGemCollection()->isSocketBonusActive()) {
+                $result->add($this->getGemCollection()->getSocketBonus());
+            }
         }
         return $result;
     }
@@ -230,12 +236,12 @@ class Item
      */
     public function getGemCollection()
     {
-       return $this->gemCollection;
+        return $this->gemCollection;
     }
 
     public function isHero()
     {
-        return (bool) ($this->getFlags() & 8);
+        return (bool)($this->getFlags() & 8);
     }
 
     public function toArray()
@@ -256,19 +262,53 @@ class Item
     }
 
     /**
-     * @TODO
+     * /**
      * @return bool
      */
-    private function isSocketBonusActive()
+    public function hasSocketBonus()
     {
-        return true;
+        return (bool)($this->getGemCollection()->getSocketBonus()->getValue() >= 0);
+    }
+
+    public function getRequiredLevel()
+    {
+        return $this->requiredLevel;
     }
 
     /**
-     * @return Stat
+     * @param int $requiredLevel
      */
-    public function getSocketBonus()
+    public function setRequiredLevel($requiredLevel)
     {
-        return $this->socketBonus;
+        $this->requiredLevel = $requiredLevel;
+    }
+
+    public function setDescription($description)
+    {
+        $this->description = $description;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    /**
+     * @param $armorDamageModifier
+     */
+    public function setArmorDamageModifier($armorDamageModifier)
+    {
+        $this->armorDamageModifier = $armorDamageModifier;
+    }
+
+    /**
+     * @return bool
+     */
+    public function getArmorDamageModifier()
+    {
+        return $this->armorDamageModifier;
     }
 }

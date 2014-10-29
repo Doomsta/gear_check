@@ -83,6 +83,7 @@ class Application extends \Silex\Application
 
     protected function initController()
     {
+        $this['tool'] = new TooltipBuilder();
         $this->get('/char/{name}', function ($name) {
             $charRepo = new CharRepository($this['db']);
             $char = $charRepo->getChar($name);
@@ -91,11 +92,10 @@ class Application extends \Silex\Application
 
         $this->get('/debug/{name}', function ($name) {
             $charRepo = new CharRepository($this['db']);
+            $tB = new TooltipBuilder();
             $char = $charRepo->getChar($name);
             echo '<pre>';
-            foreach($char->getEquipmentCollection()->getItems() as $item) {
-                echo $item->getName().' -> '.$item->getGemCollection()->isSocketBonusActive().'<br/>';
-            }
+            echo $tB->getItemTooltip($char->getEquipmentCollection()->getItemBySlot(1), $char);
             echo '</pre>';
             return '';
         });

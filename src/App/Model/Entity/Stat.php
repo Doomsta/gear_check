@@ -100,8 +100,12 @@ class Stat
 
     public function __construct($type, $value)
     {
-        if (!isset(self::$statName[$type])) {
-            $type = $value = 0;
+        if (is_array($type)) {
+            $type = $type[0];
+        }
+        if (!isset(self::$statName[(string)$type])) {
+            $type = 0;
+            $value = 0;
         }
         $this->type = $type;
         $this->value = $value;

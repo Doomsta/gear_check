@@ -41,12 +41,16 @@ class ItemRepository
         $item->setName($data['name']);
         $item->setRarity($data['Quality']);
         $item->setFlags($data['Flags']);
+        $item->setRequiredLevel($data['RequiredLevel']);
+        $item->setDescription($data['description']);
+        $item->setArmorDamageModifier($data['ArmorDamageModifier']);
         for($i = 1; $i < 11; $i++) {
             if($data['stat_type'.$i] === 0) {
                 continue;
             }
             $item->addStat(new Stat($data['stat_type'.$i], $data['stat_value'.$i]));
         }
+        $item->addStat(new Stat(Stat::ARMOR, $data['armor']));
         for($i = 1; $i < 4; $i++) {
             if($data['socketColor_'.$i] === 0) {
                 continue;
@@ -54,7 +58,7 @@ class ItemRepository
             $item->getGemCollection()->addGemSlot($data['socketColor_'.$i]);
         }
 
-        $item->addSocketBonus($this->getSocketBonus($data['socketBonus']));
+        $item->getGemCollection()->addSocketBonus($this->getSocketBonus($data['socketBonus']));
         return $item;
     }
 

@@ -107,4 +107,9 @@ class GemCollection
         }
         return $result;
     }
+
+    public function addSocketBonus(Stat $bonus)
+    {
+        $this->bonus = $bonus;
+    }
 }

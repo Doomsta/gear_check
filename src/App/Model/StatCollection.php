@@ -17,6 +17,9 @@ class StatCollection
     public function add(Stat $stat)
     {
         $type = $stat->getType();
+        if($stat->getValue() == 0) {
+            return;
+        }
         if (!isset($this->stats[$type])) {
             $this->stats[$type] = $stat;
         } else {
@@ -39,6 +42,9 @@ class StatCollection
         return array_values($this->stats);
     }
 
+    /**
+     * @return Stat[]
+     */
     public function getPrimStats()
     {
         $tmp = array();
@@ -50,6 +56,9 @@ class StatCollection
         return $tmp;
     }
 
+    /**
+     * @return Stat[]
+     */
     public function getSekStats()
     {
         $tmp = array();
@@ -72,6 +81,9 @@ class StatCollection
 
     public function getStat($id)
     {
+        if(is_array($id)) {
+            $id = $id[0];
+        }
         if(isset($this->stats[$id])) {
             return $this->stats[$id];
         }
