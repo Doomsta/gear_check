@@ -203,6 +203,14 @@ class Char extends AbstractChar
     }
 
     /**
+     * @return EquipCollection
+     */
+    public function getEquipmentCollection()
+    {
+        return $this->equipment;
+    }
+
+    /**
      * this function needs to be called last, because all calculations scale with talents, enchants, etc.
      * @TODO handle this with auras
      */

@@ -93,7 +93,9 @@ class Application extends \Silex\Application
             $charRepo = new CharRepository($this['db']);
             $char = $charRepo->getChar($name);
             echo '<pre>';
-            print_r($char->getStats());
+            foreach($char->getEquipmentCollection()->getItems() as $item) {
+                echo $item->getName().' -> '.$item->getGemCollection()->isSocketBonusActive().'<br/>';
+            }
             echo '</pre>';
             return '';
         });

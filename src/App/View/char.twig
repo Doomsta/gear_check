@@ -9,8 +9,8 @@
                 {% if char.prefix|length > 0 %}{{ char.prefix }}{% endif %}
                 {% if char.suffix|length > 0 %}{{ char.suffix }}{% endif %}
             </div>
-            {% if char.guild|length > 0 %}
-            <div class="guild"><a href="http://armory.wow-castle.de/guild-info.xml?r=WoW-Castle+PvE&amp;gn={{ char.getGuild }}">{{ char.getGuild }}</a></div>
+            {% if char.getGuildName %}
+            <div class="guild"><a href="http://armory.wow-castle.de/guild-info.xml?r=WoW-Castle+PvE&amp;gn={{ char.getGuildName }}">{{ char.getGuildName }}</a></div>
             {% endif %}
         </div>
         <span class="clear"></span>
@@ -18,8 +18,8 @@
 		<span class="level">
 			<strong>{{ char.getLevel }}</strong>
 		</span>
-            <span class="race">{{ char.getRace }}</span>
-            <span class="class">{{ char.class }}</span>
+            <span class="race">{{ char.getRaceId }}</span>
+            <span class="class">{{ char.getClassId }}</span>
         </div>
         <div class="average-ilvl" style="width:740px;">
             {{ char.getAvgItemLevel }}

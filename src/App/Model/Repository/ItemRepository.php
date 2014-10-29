@@ -47,8 +47,12 @@ class ItemRepository
             }
             $item->addStat(new Stat($data['stat_type'.$i], $data['stat_value'.$i]));
         }
-
-
+        for($i = 1; $i < 4; $i++) {
+            if($data['socketColor_'.$i] === 0) {
+                continue;
+            }
+            $item->getGemCollection()->addGemSlot($data['socketColor_'.$i]);
+        }
 
         $item->addSocketBonus($this->getSocketBonus($data['socketBonus']));
         return $item;

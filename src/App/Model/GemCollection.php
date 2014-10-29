@@ -3,6 +3,7 @@
 namespace App\Model;
 
 use App\Model\Entity\Gem;
+use App\Model\Entity\Stat;
 
 class GemCollection
 {
@@ -11,10 +12,12 @@ class GemCollection
      */
     private $gems = array();
     private $slotColors = array();
+    /** @var Stat */
+    private $bonus;
 
     public function __construct()
     {
-
+        $this->bonus = new Stat(0, 0);
     }
 
     public function addGemSlot($color)
@@ -24,9 +27,6 @@ class GemCollection
 
     public function addGem(Gem $gem)
     {
-        if (count($this->gems) < count($this->slotColors)) {
-            return false;
-        }
         $this->gems[] = $gem;
         return true;
     }
@@ -40,9 +40,9 @@ class GemCollection
         return true;
     }
 
-    public function setBonus($id)
+    public function setBonus(Stat $bonus)
     {
-        //TODO
+        $this->bonus = $bonus;
     }
 
     /**
@@ -50,20 +50,61 @@ class GemCollection
      */
     public function getGems()
     {
+
         return array_values($this->gems);
     }
 
     /**
-     * @TODO bonus
-     * @param bool $bonus
+     * @return bool
+     */
+    public function isSocketBonusActive()
+    {
+        foreach ($this->slotColors as $key => $slotColor) {
+            if(!isset( $this->gems[$key])) {
+                continue;
+            }
+            $c = $this->gems[$key]->getColor();
+            switch ($slotColor) {
+                case Gem::RED:
+                    if ($c  != Gem::RED && $c  != Gem::ORANGE && $c  != Gem::VIOLET) {
+                        return false;
+                    }
+                    break;
+                case Gem::YELLOW:
+                    if ($c  != Gem::YELLOW && $c  != Gem::ORANGE && $c  != Gem::GREEN) {
+                        return false;
+                    }
+                    break;
+                case Gem::BLUE: // socket is blue
+                    if ($c  !== Gem::BLUE && $c  != Gem::GREEN && $c  != Gem::VIOLET){
+                        return false;
+                    }
+                    break;
+            }
+        }
+        return true;
+    }
+
+    /**
+     * @return Stat
+     */
+    public function getSocketBonus()
+    {
+        return $this->bonus;
+    }
+
+    /**
      * @return StatCollection
      */
-    public function getStats($bonus = true)
+    public function getStats()
     {
         $result = new StatCollection();
         foreach ($this->gems as $gem) {
             $result->merge($gem->getStats());
         }
+        if ($this->isSocketBonusActive()) {
+            $result->add($this->getSocketBonus());
+        }
         return $result;
     }
-} 
+}
