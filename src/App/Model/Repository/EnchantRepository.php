@@ -55,7 +55,6 @@ class EnchantRepository
         $queryBuilder->setParameters(array(':id' => $id));
         $statement = $queryBuilder->execute();
         $data = $statement->fetch();
-
         $enchant = new Enchant($id, $data['label']);
         for($i = 1; $i < 6; $i++) {
             $enchant->addStat(new Stat($data['stat'.$i.'_type'], $data['stat'.$i.'_value']));

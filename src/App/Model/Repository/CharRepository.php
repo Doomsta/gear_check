@@ -4,11 +4,18 @@ namespace App\Model\Repository;
 
 
 use App\Model\Entity\Char;
+use App\Model\Entity\Stat;
+use App\Model\StatCollection;
 use Doctrine\DBAL\Connection;
 use Doomsta\CastleApi\CastleApi;
 
 class CharRepository
 {
+    /**
+     * @var \Doctrine\DBAL\Connection
+     */
+    private $conn;
+
     public function __construct(Connection $conn)
     {
         $this->castleArmory = new CastleApi();
@@ -16,6 +23,7 @@ class CharRepository
         $this->gemRepository = new GemRepository($conn);
         $this->enchantRepository = new EnchantRepository($conn);
 
+        $this->conn = $conn;
     }
 
     public function getChar($name)
@@ -46,6 +54,26 @@ class CharRepository
             }
             $char->addItem($slot, $item);
         }
+
+        $queryBuilder = $this->conn->createQueryBuilder();
+        $queryBuilder
+            ->select('s.*')
+            ->from('player_levelstats', 's')
+            ->where($queryBuilder->expr()->eq('s.class', ':class'))
+            ->andWhere($queryBuilder->expr()->eq('s.level', ':level'));
+        $queryBuilder->setParameters(array(':class' => $char->getClassId(), ':level' => $char->getLevel()));
+        $row = $queryBuilder->execute()->fetch();
+        $stats = new StatCollection();
+        $stats->add(new Stat(Stat::STRENGTH, $row['str']));
+        $stats->add(new Stat(Stat::AGILITY, $row['agi']));
+        $stats->add(new Stat(Stat::STAMINA, $row['sta']));
+        $stats->add(new Stat(Stat::INTELLECT, $row['inte']));
+        $stats->add(new Stat(Stat::SPIRIT, $row['spi']));
+        $char->setClassLevelStats($stats);
+        return $stats;
+
+
+
         return $char;
     }
 } 

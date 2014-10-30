@@ -63,7 +63,7 @@ class StatCollection
     {
         $tmp = array();
         foreach($this->getStats() as $stat) {
-            if($stat->getType() < 0 || $stat->getType() > 8) {
+            if(($stat->getType() < 0 || $stat->getType() > 8) & $stat->getType() !== Stat::ARMOR) {
                 $tmp[$stat->getType()] = $stat;
             }
         }
@@ -81,9 +81,6 @@ class StatCollection
 
     public function getStat($id)
     {
-        if(is_array($id)) {
-            $id = $id[0];
-        }
         if(isset($this->stats[$id])) {
             return $this->stats[$id];
         }

@@ -10,11 +10,11 @@ use App\Model\StatCollection;
 class Item
 {
     private $id;
+    private $set;
     private $name;
-    private $slot;
+    private $icon;
     private $class;
     private $rarity;
-    private $icon;
     private $displayedId;
     private $inventoryType;
     private $level;
@@ -30,6 +30,7 @@ class Item
     public function __construct($id)
     {
         $this->id = $id;
+        $this->set = new ItemSet(0);
         $this->gemCollection = new GemCollection();
         $this->statCollection = new StatCollection();
     }
@@ -172,24 +173,30 @@ class Item
         $this->rarity = $rarity;
     }
 
+
     /**
-     * @deprecated move this to gearCollection
-     * @return int
+     * @return bool
      */
-    public function getSlot()
+    public function isSetItem()
     {
-        return $this->slot;
+        return $this->getSet()->getId() != 0;
     }
 
     /**
-     * @deprecated move this to gearCollection
-     * @param mixed $slot
+     * @param ItemSet $set
      */
-    public function setSlot($slot)
+    public function setSet(ItemSet $set)
     {
-        $this->slot = $slot;
+        $this->set = $set;
     }
 
+    /**
+     * @return ItemSet
+     */
+    public function getSet()
+    {
+        return $this->set;
+    }
     /**
      * @param bool $onlyItemItSelf
      * @return StatCollection
@@ -267,7 +274,7 @@ class Item
      */
     public function hasSocketBonus()
     {
-        return (bool)($this->getGemCollection()->getSocketBonus()->getValue() >= 0);
+        return $this->getGemCollection()->getSocketBonus()->getValue() > 0;
     }
 
     public function getRequiredLevel()

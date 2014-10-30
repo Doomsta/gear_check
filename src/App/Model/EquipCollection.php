@@ -7,6 +7,7 @@ use App\Model\Entity\Item;
 
 class EquipCollection implements \ArrayAccess
 {
+    /** @var Item[] */
     private $items;
     private $slotOrder = array( 1, 2, 3, 15, 5, 4, 19, 9, 10, 6, 7, 8, 11, 12, 13, 14, 16, 17, 18);
 
@@ -27,7 +28,8 @@ class EquipCollection implements \ArrayAccess
      */
     public function setItem($slot, Item $item)
     {
-        $this->items[$slot] = $item;
+        $this->items[$slot] = clone $item;
+        $this->items[$slot]->getSet()->setEquipCollection($this);
     }
 
     public function removeItem($slot)

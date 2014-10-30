@@ -14,27 +14,14 @@ class Char extends AbstractChar
     private $name;
     /** @var EquipCollection  */
     private $equipment;
-    private $stats = array();
     private $talents = array();
     private $professions = array();
-    private $slotOrder = array(1, 2, 3, 15, 5, 4, 19, 9, 10, 6, 7, 8, 11, 12, 13, 14, 16, 17, 18);
+    private $levelStats;
 
     public function __construct($name)
     {
         $this->name = $name;
         $this->equipment = new EquipCollection();
-    }
-
-
-    public function addItemTooltips(&$tooltip)
-    {
-        $itemList = array();
-        foreach ($this->slotOrder as $i) {
-            $itemList[$i] = $this->equipment[$i]['id'];
-        }
-        foreach ($this->slotOrder as $i) {
-            $this->equipment[$i]['tooltip'] = $tooltip->get_item_tooltip($this->equipment[$i], $itemList);
-        }
     }
 
     public function getTalents()
@@ -97,36 +84,12 @@ class Char extends AbstractChar
     public function getStats()
     {
         $stats = new StatCollection();
-
-        //add base stats
-        #if ($baseStats = $this->getClassBaseStats()) {
         $stats->merge($this->getClassLevelStats());
-
-        //add class stats
-        #if ($classStats = $this->getClassLevelStats()) {
-        #    foreach ($classStats as $statId => $statValue) {
-        #        $stats[$statId] += $statValue;
-        #    }
-        #}
         $stats->merge($this->getEquipmentStats());
-        //add socket boni
-        //add enchants
-        #$enchants = $this->getEnchants();
-        #foreach ($enchants as $enchant) {
-        #    for ($i = 1; $i <= 5; $i++) {
-        #        $stats[$enchant['stat' . $i . '_type']] += $enchant['stat' . $i . '_value'];
-        #    }
-        #}
-        // final calculations
-        #$stats = $this->deriveStats($stats);
-
-
-        #$stats[0] = 10000; #TODO the 1000 is just a placeholder
         return $stats;
     }
 
     /**
-     * @TODO move this into a ItemCollection/Container/Handler or so on
      * @return float
      */
     public function getAvgItemLevel()
@@ -134,50 +97,17 @@ class Char extends AbstractChar
         return $this->equipment->getAvgItemLevel();
     }
 
-    /**
-     * @return array
-     */
-    public function toArray()
+    public function setClassLevelStats(StatCollection $stats)
     {
-        return array(
-            'name' => $this->getName(),
-            'suffix' => $this->getSuffix(),
-            'prefix' => $this->getPrefix(),
-            'raceId' => $this->getRaceId(),
-            'classId' => $this->getClassId(),
-            'genderId' => $this->getGenderId(),
-            'level' => $this->getLevel(),
-            'guild' => $this->getGuildName()
-        );
-
+        $this->levelStats = $stats;
     }
 
     /**
-     * @TODO remove sql stuff
      * @return StatCollection
      */
     public function getClassLevelStats()
     {
-        if (($this->getClassId() === false)) {
-            return false;
-        }
-        if ($this->getLevel() == 0) {
-            return array();
-        }
-        $query = 'SELECT `str`, `agi`, `sta`, `inte`, `spi` 
-            FROM `' . MYSQL_DATABASE_TDB . '`.`player_levelstats`
-            WHERE `race` = ' . $this->getRaceId() . ' AND `class` = ' . $this->getClassId() . ' AND level = ' . $this->getLevel() . '';
-        $result = mysql_query($query);
-
-        $row = mysql_fetch_assoc($result);
-        $stats = new StatCollection();
-        $stats->add(new Stat(Stat::STRENGTH, $row['str']));
-        $stats->add(new Stat(Stat::AGILITY, $row['agi']));
-        $stats->add(new Stat(Stat::STAMINA, $row['sta']));
-        $stats->add(new Stat(Stat::INTELLECT, $row['inte']));
-        $stats->add(new Stat(Stat::SPIRIT, $row['spi']));
-
-        return $stats;
+        return $this->levelStats;
     }
 
     /**

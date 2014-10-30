@@ -26,8 +26,8 @@ class Application extends \Silex\Application
         define("PROJEKTNAME", "Envy Gear-Check");
         $mysql_host = "localhost";
         $mysql_user = "root";
-        $mysql_pass = "";
-        define('MYSQL_DATABASE_TDB', 'world');
+        $mysql_pass = "root";
+        define('MYSQL_DATABASE_TDB', 'gear_check');
         define('MYSQL_DATABASE', 'gear_check');
         define('PROVIDER', 'wow_castle_de');
         mysql_connect($mysql_host, $mysql_user, $mysql_pass);
